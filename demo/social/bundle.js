@@ -54,9 +54,9 @@
   var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
   var __privateAdd = (obj, member2, value) => member2.has(obj) ? __typeError("Cannot add the same private member more than once") : member2 instanceof WeakSet ? member2.add(obj) : member2.set(obj, value);
 
-  // ../../node_modules/base64-js/index.js
+  // node_modules/base64-js/index.js
   var require_base64_js = __commonJS({
-    "../../node_modules/base64-js/index.js"(exports) {
+    "node_modules/base64-js/index.js"(exports) {
       "use strict";
       init_polyfills();
       exports.byteLength = byteLength;
@@ -156,9 +156,9 @@
     }
   });
 
-  // ../../node_modules/ieee754/index.js
+  // node_modules/ieee754/index.js
   var require_ieee754 = __commonJS({
-    "../../node_modules/ieee754/index.js"(exports) {
+    "node_modules/ieee754/index.js"(exports) {
       init_polyfills();
       exports.read = function(buffer, offset, isLE, mLen, nBytes) {
         var e2, m2;
@@ -240,9 +240,9 @@
     }
   });
 
-  // ../../node_modules/buffer/index.js
+  // node_modules/buffer/index.js
   var require_buffer = __commonJS({
-    "../../node_modules/buffer/index.js"(exports) {
+    "node_modules/buffer/index.js"(exports) {
       "use strict";
       init_polyfills();
       var base64 = require_base64_js();
@@ -1833,9 +1833,9 @@
     }
   });
 
-  // ../../node_modules/process/browser.js
+  // node_modules/process/browser.js
   var require_browser = __commonJS({
-    "../../node_modules/process/browser.js"(exports, module) {
+    "node_modules/process/browser.js"(exports, module) {
       init_polyfills();
       var process3 = module.exports = {};
       var cachedSetTimeout;
@@ -2067,9 +2067,9 @@
     }
   });
 
-  // ../../node_modules/react/cjs/react.development.js
+  // node_modules/react/cjs/react.development.js
   var require_react_development = __commonJS({
-    "../../node_modules/react/cjs/react.development.js"(exports, module) {
+    "node_modules/react/cjs/react.development.js"(exports, module) {
       "use strict";
       init_polyfills();
       (function() {
@@ -3040,9 +3040,9 @@
     }
   });
 
-  // ../../node_modules/react/index.js
+  // node_modules/react/index.js
   var require_react = __commonJS({
-    "../../node_modules/react/index.js"(exports, module) {
+    "node_modules/react/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       if (false) {
@@ -3053,9 +3053,9 @@
     }
   });
 
-  // ../../node_modules/scheduler/cjs/scheduler.development.js
+  // node_modules/scheduler/cjs/scheduler.development.js
   var require_scheduler_development = __commonJS({
-    "../../node_modules/scheduler/cjs/scheduler.development.js"(exports) {
+    "node_modules/scheduler/cjs/scheduler.development.js"(exports) {
       "use strict";
       init_polyfills();
       (function() {
@@ -3313,9 +3313,9 @@
     }
   });
 
-  // ../../node_modules/scheduler/index.js
+  // node_modules/scheduler/index.js
   var require_scheduler = __commonJS({
-    "../../node_modules/scheduler/index.js"(exports, module) {
+    "node_modules/scheduler/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       if (false) {
@@ -3326,9 +3326,9 @@
     }
   });
 
-  // ../../node_modules/react-dom/cjs/react-dom.development.js
+  // node_modules/react-dom/cjs/react-dom.development.js
   var require_react_dom_development = __commonJS({
-    "../../node_modules/react-dom/cjs/react-dom.development.js"(exports) {
+    "node_modules/react-dom/cjs/react-dom.development.js"(exports) {
       "use strict";
       init_polyfills();
       (function() {
@@ -3571,9 +3571,9 @@
     }
   });
 
-  // ../../node_modules/react-dom/index.js
+  // node_modules/react-dom/index.js
   var require_react_dom = __commonJS({
-    "../../node_modules/react-dom/index.js"(exports, module) {
+    "node_modules/react-dom/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       if (false) {
@@ -3585,9 +3585,9 @@
     }
   });
 
-  // ../../node_modules/react-dom/cjs/react-dom-client.development.js
+  // node_modules/react-dom/cjs/react-dom-client.development.js
   var require_react_dom_client_development = __commonJS({
-    "../../node_modules/react-dom/cjs/react-dom-client.development.js"(exports) {
+    "node_modules/react-dom/cjs/react-dom-client.development.js"(exports) {
       "use strict";
       init_polyfills();
       (function() {
@@ -23485,9 +23485,9 @@
     }
   });
 
-  // ../../node_modules/react-dom/client.js
+  // node_modules/react-dom/client.js
   var require_client = __commonJS({
-    "../../node_modules/react-dom/client.js"(exports, module) {
+    "node_modules/react-dom/client.js"(exports, module) {
       "use strict";
       init_polyfills();
       if (false) {
@@ -23499,10 +23499,10 @@
     }
   });
 
-  // ../../node_modules/@smithy/protocol-http/dist-es/extensions/httpExtensionConfiguration.js
+  // node_modules/@smithy/protocol-http/dist-es/extensions/httpExtensionConfiguration.js
   var getHttpHandlerExtensionConfiguration, resolveHttpHandlerRuntimeConfig;
   var init_httpExtensionConfiguration = __esm({
-    "../../node_modules/@smithy/protocol-http/dist-es/extensions/httpExtensionConfiguration.js"() {
+    "node_modules/@smithy/protocol-http/dist-es/extensions/httpExtensionConfiguration.js"() {
       init_polyfills();
       getHttpHandlerExtensionConfiguration = (runtimeConfig) => {
         return {
@@ -23528,25 +23528,25 @@
     }
   });
 
-  // ../../node_modules/@smithy/protocol-http/dist-es/extensions/index.js
+  // node_modules/@smithy/protocol-http/dist-es/extensions/index.js
   var init_extensions = __esm({
-    "../../node_modules/@smithy/protocol-http/dist-es/extensions/index.js"() {
+    "node_modules/@smithy/protocol-http/dist-es/extensions/index.js"() {
       init_polyfills();
       init_httpExtensionConfiguration();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/abort.js
+  // node_modules/@smithy/types/dist-es/abort.js
   var init_abort = __esm({
-    "../../node_modules/@smithy/types/dist-es/abort.js"() {
+    "node_modules/@smithy/types/dist-es/abort.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/auth/auth.js
+  // node_modules/@smithy/types/dist-es/auth/auth.js
   var HttpAuthLocation;
   var init_auth = __esm({
-    "../../node_modules/@smithy/types/dist-es/auth/auth.js"() {
+    "node_modules/@smithy/types/dist-es/auth/auth.js"() {
       init_polyfills();
       (function(HttpAuthLocation2) {
         HttpAuthLocation2["HEADER"] = "header";
@@ -23555,10 +23555,10 @@
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/auth/HttpApiKeyAuth.js
+  // node_modules/@smithy/types/dist-es/auth/HttpApiKeyAuth.js
   var HttpApiKeyAuthLocation;
   var init_HttpApiKeyAuth = __esm({
-    "../../node_modules/@smithy/types/dist-es/auth/HttpApiKeyAuth.js"() {
+    "node_modules/@smithy/types/dist-es/auth/HttpApiKeyAuth.js"() {
       init_polyfills();
       (function(HttpApiKeyAuthLocation2) {
         HttpApiKeyAuthLocation2["HEADER"] = "header";
@@ -23567,37 +23567,37 @@
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/auth/HttpAuthScheme.js
+  // node_modules/@smithy/types/dist-es/auth/HttpAuthScheme.js
   var init_HttpAuthScheme = __esm({
-    "../../node_modules/@smithy/types/dist-es/auth/HttpAuthScheme.js"() {
+    "node_modules/@smithy/types/dist-es/auth/HttpAuthScheme.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/auth/HttpAuthSchemeProvider.js
+  // node_modules/@smithy/types/dist-es/auth/HttpAuthSchemeProvider.js
   var init_HttpAuthSchemeProvider = __esm({
-    "../../node_modules/@smithy/types/dist-es/auth/HttpAuthSchemeProvider.js"() {
+    "node_modules/@smithy/types/dist-es/auth/HttpAuthSchemeProvider.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/auth/HttpSigner.js
+  // node_modules/@smithy/types/dist-es/auth/HttpSigner.js
   var init_HttpSigner = __esm({
-    "../../node_modules/@smithy/types/dist-es/auth/HttpSigner.js"() {
+    "node_modules/@smithy/types/dist-es/auth/HttpSigner.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/auth/IdentityProviderConfig.js
+  // node_modules/@smithy/types/dist-es/auth/IdentityProviderConfig.js
   var init_IdentityProviderConfig = __esm({
-    "../../node_modules/@smithy/types/dist-es/auth/IdentityProviderConfig.js"() {
+    "node_modules/@smithy/types/dist-es/auth/IdentityProviderConfig.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/auth/index.js
+  // node_modules/@smithy/types/dist-es/auth/index.js
   var init_auth2 = __esm({
-    "../../node_modules/@smithy/types/dist-es/auth/index.js"() {
+    "node_modules/@smithy/types/dist-es/auth/index.js"() {
       init_polyfills();
       init_auth();
       init_HttpApiKeyAuth();
@@ -23608,58 +23608,58 @@
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/blob/blob-payload-input-types.js
+  // node_modules/@smithy/types/dist-es/blob/blob-payload-input-types.js
   var init_blob_payload_input_types = __esm({
-    "../../node_modules/@smithy/types/dist-es/blob/blob-payload-input-types.js"() {
+    "node_modules/@smithy/types/dist-es/blob/blob-payload-input-types.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/checksum.js
+  // node_modules/@smithy/types/dist-es/checksum.js
   var init_checksum = __esm({
-    "../../node_modules/@smithy/types/dist-es/checksum.js"() {
+    "node_modules/@smithy/types/dist-es/checksum.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/client.js
+  // node_modules/@smithy/types/dist-es/client.js
   var init_client = __esm({
-    "../../node_modules/@smithy/types/dist-es/client.js"() {
+    "node_modules/@smithy/types/dist-es/client.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/command.js
+  // node_modules/@smithy/types/dist-es/command.js
   var init_command = __esm({
-    "../../node_modules/@smithy/types/dist-es/command.js"() {
+    "node_modules/@smithy/types/dist-es/command.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/connection/config.js
+  // node_modules/@smithy/types/dist-es/connection/config.js
   var init_config = __esm({
-    "../../node_modules/@smithy/types/dist-es/connection/config.js"() {
+    "node_modules/@smithy/types/dist-es/connection/config.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/connection/manager.js
+  // node_modules/@smithy/types/dist-es/connection/manager.js
   var init_manager = __esm({
-    "../../node_modules/@smithy/types/dist-es/connection/manager.js"() {
+    "node_modules/@smithy/types/dist-es/connection/manager.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/connection/pool.js
+  // node_modules/@smithy/types/dist-es/connection/pool.js
   var init_pool = __esm({
-    "../../node_modules/@smithy/types/dist-es/connection/pool.js"() {
+    "node_modules/@smithy/types/dist-es/connection/pool.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/connection/index.js
+  // node_modules/@smithy/types/dist-es/connection/index.js
   var init_connection = __esm({
-    "../../node_modules/@smithy/types/dist-es/connection/index.js"() {
+    "node_modules/@smithy/types/dist-es/connection/index.js"() {
       init_polyfills();
       init_config();
       init_manager();
@@ -23667,24 +23667,24 @@
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/crypto.js
+  // node_modules/@smithy/types/dist-es/crypto.js
   var init_crypto = __esm({
-    "../../node_modules/@smithy/types/dist-es/crypto.js"() {
+    "node_modules/@smithy/types/dist-es/crypto.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/encode.js
+  // node_modules/@smithy/types/dist-es/encode.js
   var init_encode = __esm({
-    "../../node_modules/@smithy/types/dist-es/encode.js"() {
+    "node_modules/@smithy/types/dist-es/encode.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/endpoint.js
+  // node_modules/@smithy/types/dist-es/endpoint.js
   var EndpointURLScheme;
   var init_endpoint = __esm({
-    "../../node_modules/@smithy/types/dist-es/endpoint.js"() {
+    "node_modules/@smithy/types/dist-es/endpoint.js"() {
       init_polyfills();
       (function(EndpointURLScheme2) {
         EndpointURLScheme2["HTTP"] = "http";
@@ -23693,44 +23693,44 @@
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/endpoints/EndpointRuleObject.js
+  // node_modules/@smithy/types/dist-es/endpoints/EndpointRuleObject.js
   var init_EndpointRuleObject = __esm({
-    "../../node_modules/@smithy/types/dist-es/endpoints/EndpointRuleObject.js"() {
+    "node_modules/@smithy/types/dist-es/endpoints/EndpointRuleObject.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/endpoints/ErrorRuleObject.js
+  // node_modules/@smithy/types/dist-es/endpoints/ErrorRuleObject.js
   var init_ErrorRuleObject = __esm({
-    "../../node_modules/@smithy/types/dist-es/endpoints/ErrorRuleObject.js"() {
+    "node_modules/@smithy/types/dist-es/endpoints/ErrorRuleObject.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/endpoints/RuleSetObject.js
+  // node_modules/@smithy/types/dist-es/endpoints/RuleSetObject.js
   var init_RuleSetObject = __esm({
-    "../../node_modules/@smithy/types/dist-es/endpoints/RuleSetObject.js"() {
+    "node_modules/@smithy/types/dist-es/endpoints/RuleSetObject.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/endpoints/shared.js
+  // node_modules/@smithy/types/dist-es/endpoints/shared.js
   var init_shared = __esm({
-    "../../node_modules/@smithy/types/dist-es/endpoints/shared.js"() {
+    "node_modules/@smithy/types/dist-es/endpoints/shared.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/endpoints/TreeRuleObject.js
+  // node_modules/@smithy/types/dist-es/endpoints/TreeRuleObject.js
   var init_TreeRuleObject = __esm({
-    "../../node_modules/@smithy/types/dist-es/endpoints/TreeRuleObject.js"() {
+    "node_modules/@smithy/types/dist-es/endpoints/TreeRuleObject.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/endpoints/index.js
+  // node_modules/@smithy/types/dist-es/endpoints/index.js
   var init_endpoints = __esm({
-    "../../node_modules/@smithy/types/dist-es/endpoints/index.js"() {
+    "node_modules/@smithy/types/dist-es/endpoints/index.js"() {
       init_polyfills();
       init_EndpointRuleObject();
       init_ErrorRuleObject();
@@ -23740,17 +23740,17 @@
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/eventStream.js
+  // node_modules/@smithy/types/dist-es/eventStream.js
   var init_eventStream = __esm({
-    "../../node_modules/@smithy/types/dist-es/eventStream.js"() {
+    "node_modules/@smithy/types/dist-es/eventStream.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/extensions/checksum.js
+  // node_modules/@smithy/types/dist-es/extensions/checksum.js
   var AlgorithmId;
   var init_checksum2 = __esm({
-    "../../node_modules/@smithy/types/dist-es/extensions/checksum.js"() {
+    "node_modules/@smithy/types/dist-es/extensions/checksum.js"() {
       init_polyfills();
       (function(AlgorithmId2) {
         AlgorithmId2["MD5"] = "md5";
@@ -23762,23 +23762,23 @@
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/extensions/defaultClientConfiguration.js
+  // node_modules/@smithy/types/dist-es/extensions/defaultClientConfiguration.js
   var init_defaultClientConfiguration = __esm({
-    "../../node_modules/@smithy/types/dist-es/extensions/defaultClientConfiguration.js"() {
+    "node_modules/@smithy/types/dist-es/extensions/defaultClientConfiguration.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/extensions/defaultExtensionConfiguration.js
+  // node_modules/@smithy/types/dist-es/extensions/defaultExtensionConfiguration.js
   var init_defaultExtensionConfiguration = __esm({
-    "../../node_modules/@smithy/types/dist-es/extensions/defaultExtensionConfiguration.js"() {
+    "node_modules/@smithy/types/dist-es/extensions/defaultExtensionConfiguration.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/extensions/index.js
+  // node_modules/@smithy/types/dist-es/extensions/index.js
   var init_extensions2 = __esm({
-    "../../node_modules/@smithy/types/dist-es/extensions/index.js"() {
+    "node_modules/@smithy/types/dist-es/extensions/index.js"() {
       init_polyfills();
       init_defaultClientConfiguration();
       init_defaultExtensionConfiguration();
@@ -23786,17 +23786,17 @@
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/feature-ids.js
+  // node_modules/@smithy/types/dist-es/feature-ids.js
   var init_feature_ids = __esm({
-    "../../node_modules/@smithy/types/dist-es/feature-ids.js"() {
+    "node_modules/@smithy/types/dist-es/feature-ids.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/http.js
+  // node_modules/@smithy/types/dist-es/http.js
   var FieldPosition;
   var init_http = __esm({
-    "../../node_modules/@smithy/types/dist-es/http.js"() {
+    "node_modules/@smithy/types/dist-es/http.js"() {
       init_polyfills();
       (function(FieldPosition2) {
         FieldPosition2[FieldPosition2["HEADER"] = 0] = "HEADER";
@@ -23805,44 +23805,44 @@
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/http/httpHandlerInitialization.js
+  // node_modules/@smithy/types/dist-es/http/httpHandlerInitialization.js
   var init_httpHandlerInitialization = __esm({
-    "../../node_modules/@smithy/types/dist-es/http/httpHandlerInitialization.js"() {
+    "node_modules/@smithy/types/dist-es/http/httpHandlerInitialization.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/identity/apiKeyIdentity.js
+  // node_modules/@smithy/types/dist-es/identity/apiKeyIdentity.js
   var init_apiKeyIdentity = __esm({
-    "../../node_modules/@smithy/types/dist-es/identity/apiKeyIdentity.js"() {
+    "node_modules/@smithy/types/dist-es/identity/apiKeyIdentity.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/identity/awsCredentialIdentity.js
+  // node_modules/@smithy/types/dist-es/identity/awsCredentialIdentity.js
   var init_awsCredentialIdentity = __esm({
-    "../../node_modules/@smithy/types/dist-es/identity/awsCredentialIdentity.js"() {
+    "node_modules/@smithy/types/dist-es/identity/awsCredentialIdentity.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/identity/identity.js
+  // node_modules/@smithy/types/dist-es/identity/identity.js
   var init_identity = __esm({
-    "../../node_modules/@smithy/types/dist-es/identity/identity.js"() {
+    "node_modules/@smithy/types/dist-es/identity/identity.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/identity/tokenIdentity.js
+  // node_modules/@smithy/types/dist-es/identity/tokenIdentity.js
   var init_tokenIdentity = __esm({
-    "../../node_modules/@smithy/types/dist-es/identity/tokenIdentity.js"() {
+    "node_modules/@smithy/types/dist-es/identity/tokenIdentity.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/identity/index.js
+  // node_modules/@smithy/types/dist-es/identity/index.js
   var init_identity2 = __esm({
-    "../../node_modules/@smithy/types/dist-es/identity/index.js"() {
+    "node_modules/@smithy/types/dist-es/identity/index.js"() {
       init_polyfills();
       init_apiKeyIdentity();
       init_awsCredentialIdentity();
@@ -23851,33 +23851,33 @@
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/logger.js
+  // node_modules/@smithy/types/dist-es/logger.js
   var init_logger = __esm({
-    "../../node_modules/@smithy/types/dist-es/logger.js"() {
+    "node_modules/@smithy/types/dist-es/logger.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/middleware.js
+  // node_modules/@smithy/types/dist-es/middleware.js
   var SMITHY_CONTEXT_KEY;
   var init_middleware = __esm({
-    "../../node_modules/@smithy/types/dist-es/middleware.js"() {
+    "node_modules/@smithy/types/dist-es/middleware.js"() {
       init_polyfills();
       SMITHY_CONTEXT_KEY = "__smithy_context";
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/pagination.js
+  // node_modules/@smithy/types/dist-es/pagination.js
   var init_pagination = __esm({
-    "../../node_modules/@smithy/types/dist-es/pagination.js"() {
+    "node_modules/@smithy/types/dist-es/pagination.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/profile.js
+  // node_modules/@smithy/types/dist-es/profile.js
   var IniSectionType;
   var init_profile = __esm({
-    "../../node_modules/@smithy/types/dist-es/profile.js"() {
+    "node_modules/@smithy/types/dist-es/profile.js"() {
       init_polyfills();
       (function(IniSectionType2) {
         IniSectionType2["PROFILE"] = "profile";
@@ -23887,108 +23887,108 @@
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/response.js
+  // node_modules/@smithy/types/dist-es/response.js
   var init_response = __esm({
-    "../../node_modules/@smithy/types/dist-es/response.js"() {
+    "node_modules/@smithy/types/dist-es/response.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/retry.js
+  // node_modules/@smithy/types/dist-es/retry.js
   var init_retry = __esm({
-    "../../node_modules/@smithy/types/dist-es/retry.js"() {
+    "node_modules/@smithy/types/dist-es/retry.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/schema/schema.js
+  // node_modules/@smithy/types/dist-es/schema/schema.js
   var init_schema = __esm({
-    "../../node_modules/@smithy/types/dist-es/schema/schema.js"() {
+    "node_modules/@smithy/types/dist-es/schema/schema.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/schema/traits.js
+  // node_modules/@smithy/types/dist-es/schema/traits.js
   var init_traits = __esm({
-    "../../node_modules/@smithy/types/dist-es/schema/traits.js"() {
+    "node_modules/@smithy/types/dist-es/schema/traits.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/schema/schema-deprecated.js
+  // node_modules/@smithy/types/dist-es/schema/schema-deprecated.js
   var init_schema_deprecated = __esm({
-    "../../node_modules/@smithy/types/dist-es/schema/schema-deprecated.js"() {
+    "node_modules/@smithy/types/dist-es/schema/schema-deprecated.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/schema/sentinels.js
+  // node_modules/@smithy/types/dist-es/schema/sentinels.js
   var init_sentinels = __esm({
-    "../../node_modules/@smithy/types/dist-es/schema/sentinels.js"() {
+    "node_modules/@smithy/types/dist-es/schema/sentinels.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/schema/static-schemas.js
+  // node_modules/@smithy/types/dist-es/schema/static-schemas.js
   var init_static_schemas = __esm({
-    "../../node_modules/@smithy/types/dist-es/schema/static-schemas.js"() {
+    "node_modules/@smithy/types/dist-es/schema/static-schemas.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/serde.js
+  // node_modules/@smithy/types/dist-es/serde.js
   var init_serde = __esm({
-    "../../node_modules/@smithy/types/dist-es/serde.js"() {
+    "node_modules/@smithy/types/dist-es/serde.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/shapes.js
+  // node_modules/@smithy/types/dist-es/shapes.js
   var init_shapes = __esm({
-    "../../node_modules/@smithy/types/dist-es/shapes.js"() {
+    "node_modules/@smithy/types/dist-es/shapes.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/signature.js
+  // node_modules/@smithy/types/dist-es/signature.js
   var init_signature = __esm({
-    "../../node_modules/@smithy/types/dist-es/signature.js"() {
+    "node_modules/@smithy/types/dist-es/signature.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/stream.js
+  // node_modules/@smithy/types/dist-es/stream.js
   var init_stream = __esm({
-    "../../node_modules/@smithy/types/dist-es/stream.js"() {
+    "node_modules/@smithy/types/dist-es/stream.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-common-types.js
+  // node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-common-types.js
   var init_streaming_blob_common_types = __esm({
-    "../../node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-common-types.js"() {
+    "node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-common-types.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-input-types.js
+  // node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-input-types.js
   var init_streaming_blob_payload_input_types = __esm({
-    "../../node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-input-types.js"() {
+    "node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-input-types.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-output-types.js
+  // node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-output-types.js
   var init_streaming_blob_payload_output_types = __esm({
-    "../../node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-output-types.js"() {
+    "node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-output-types.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/transfer.js
+  // node_modules/@smithy/types/dist-es/transfer.js
   var RequestHandlerProtocol;
   var init_transfer = __esm({
-    "../../node_modules/@smithy/types/dist-es/transfer.js"() {
+    "node_modules/@smithy/types/dist-es/transfer.js"() {
       init_polyfills();
       (function(RequestHandlerProtocol2) {
         RequestHandlerProtocol2["HTTP_0_9"] = "http/0.9";
@@ -23998,58 +23998,58 @@
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/transform/client-payload-blob-type-narrow.js
+  // node_modules/@smithy/types/dist-es/transform/client-payload-blob-type-narrow.js
   var init_client_payload_blob_type_narrow = __esm({
-    "../../node_modules/@smithy/types/dist-es/transform/client-payload-blob-type-narrow.js"() {
+    "node_modules/@smithy/types/dist-es/transform/client-payload-blob-type-narrow.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/transform/mutable.js
+  // node_modules/@smithy/types/dist-es/transform/mutable.js
   var init_mutable = __esm({
-    "../../node_modules/@smithy/types/dist-es/transform/mutable.js"() {
+    "node_modules/@smithy/types/dist-es/transform/mutable.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/transform/no-undefined.js
+  // node_modules/@smithy/types/dist-es/transform/no-undefined.js
   var init_no_undefined = __esm({
-    "../../node_modules/@smithy/types/dist-es/transform/no-undefined.js"() {
+    "node_modules/@smithy/types/dist-es/transform/no-undefined.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/transform/type-transform.js
+  // node_modules/@smithy/types/dist-es/transform/type-transform.js
   var init_type_transform = __esm({
-    "../../node_modules/@smithy/types/dist-es/transform/type-transform.js"() {
+    "node_modules/@smithy/types/dist-es/transform/type-transform.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/uri.js
+  // node_modules/@smithy/types/dist-es/uri.js
   var init_uri = __esm({
-    "../../node_modules/@smithy/types/dist-es/uri.js"() {
+    "node_modules/@smithy/types/dist-es/uri.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/util.js
+  // node_modules/@smithy/types/dist-es/util.js
   var init_util = __esm({
-    "../../node_modules/@smithy/types/dist-es/util.js"() {
+    "node_modules/@smithy/types/dist-es/util.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/waiter.js
+  // node_modules/@smithy/types/dist-es/waiter.js
   var init_waiter = __esm({
-    "../../node_modules/@smithy/types/dist-es/waiter.js"() {
+    "node_modules/@smithy/types/dist-es/waiter.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/types/dist-es/index.js
+  // node_modules/@smithy/types/dist-es/index.js
   var init_dist_es = __esm({
-    "../../node_modules/@smithy/types/dist-es/index.js"() {
+    "node_modules/@smithy/types/dist-es/index.js"() {
       init_polyfills();
       init_abort();
       init_auth2();
@@ -24097,28 +24097,28 @@
     }
   });
 
-  // ../../node_modules/@smithy/protocol-http/dist-es/Field.js
+  // node_modules/@smithy/protocol-http/dist-es/Field.js
   var init_Field = __esm({
-    "../../node_modules/@smithy/protocol-http/dist-es/Field.js"() {
+    "node_modules/@smithy/protocol-http/dist-es/Field.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/protocol-http/dist-es/Fields.js
+  // node_modules/@smithy/protocol-http/dist-es/Fields.js
   var init_Fields = __esm({
-    "../../node_modules/@smithy/protocol-http/dist-es/Fields.js"() {
+    "node_modules/@smithy/protocol-http/dist-es/Fields.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/protocol-http/dist-es/httpHandler.js
+  // node_modules/@smithy/protocol-http/dist-es/httpHandler.js
   var init_httpHandler = __esm({
-    "../../node_modules/@smithy/protocol-http/dist-es/httpHandler.js"() {
+    "node_modules/@smithy/protocol-http/dist-es/httpHandler.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/protocol-http/dist-es/httpRequest.js
+  // node_modules/@smithy/protocol-http/dist-es/httpRequest.js
   function cloneQuery(query) {
     return Object.keys(query).reduce((carry, paramName) => {
       const param = query[paramName];
@@ -24130,7 +24130,7 @@
   }
   var HttpRequest;
   var init_httpRequest = __esm({
-    "../../node_modules/@smithy/protocol-http/dist-es/httpRequest.js"() {
+    "node_modules/@smithy/protocol-http/dist-es/httpRequest.js"() {
       init_polyfills();
       HttpRequest = class _HttpRequest {
         constructor(options) {
@@ -24181,10 +24181,10 @@
     }
   });
 
-  // ../../node_modules/@smithy/protocol-http/dist-es/httpResponse.js
+  // node_modules/@smithy/protocol-http/dist-es/httpResponse.js
   var HttpResponse;
   var init_httpResponse = __esm({
-    "../../node_modules/@smithy/protocol-http/dist-es/httpResponse.js"() {
+    "node_modules/@smithy/protocol-http/dist-es/httpResponse.js"() {
       init_polyfills();
       HttpResponse = class {
         constructor(options) {
@@ -24207,23 +24207,23 @@
     }
   });
 
-  // ../../node_modules/@smithy/protocol-http/dist-es/isValidHostname.js
+  // node_modules/@smithy/protocol-http/dist-es/isValidHostname.js
   var init_isValidHostname = __esm({
-    "../../node_modules/@smithy/protocol-http/dist-es/isValidHostname.js"() {
+    "node_modules/@smithy/protocol-http/dist-es/isValidHostname.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/protocol-http/dist-es/types.js
+  // node_modules/@smithy/protocol-http/dist-es/types.js
   var init_types = __esm({
-    "../../node_modules/@smithy/protocol-http/dist-es/types.js"() {
+    "node_modules/@smithy/protocol-http/dist-es/types.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/protocol-http/dist-es/index.js
+  // node_modules/@smithy/protocol-http/dist-es/index.js
   var init_dist_es2 = __esm({
-    "../../node_modules/@smithy/protocol-http/dist-es/index.js"() {
+    "node_modules/@smithy/protocol-http/dist-es/index.js"() {
       init_polyfills();
       init_extensions();
       init_Field();
@@ -24236,7 +24236,7 @@
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-expect-continue/dist-es/index.js
+  // node_modules/@aws-sdk/middleware-expect-continue/dist-es/index.js
   function addExpectContinueMiddleware(options) {
     return (next) => async (args) => {
       const { request } = args;
@@ -24263,7 +24263,7 @@
   }
   var addExpectContinueMiddlewareOptions, getAddExpectContinuePlugin;
   var init_dist_es3 = __esm({
-    "../../node_modules/@aws-sdk/middleware-expect-continue/dist-es/index.js"() {
+    "node_modules/@aws-sdk/middleware-expect-continue/dist-es/index.js"() {
       init_polyfills();
       init_dist_es2();
       addExpectContinueMiddlewareOptions = {
@@ -24280,10 +24280,10 @@
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/constants.js
+  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/constants.js
   var RequestChecksumCalculation, DEFAULT_REQUEST_CHECKSUM_CALCULATION, ResponseChecksumValidation, DEFAULT_RESPONSE_CHECKSUM_VALIDATION, ChecksumAlgorithm, ChecksumLocation, DEFAULT_CHECKSUM_ALGORITHM;
   var init_constants = __esm({
-    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/constants.js"() {
+    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/constants.js"() {
       init_polyfills();
       RequestChecksumCalculation = {
         WHEN_SUPPORTED: "WHEN_SUPPORTED",
@@ -24311,28 +24311,28 @@
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_REQUEST_CHECKSUM_CALCULATION_CONFIG_OPTIONS.js
+  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_REQUEST_CHECKSUM_CALCULATION_CONFIG_OPTIONS.js
   var init_NODE_REQUEST_CHECKSUM_CALCULATION_CONFIG_OPTIONS = __esm({
-    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_REQUEST_CHECKSUM_CALCULATION_CONFIG_OPTIONS.js"() {
+    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_REQUEST_CHECKSUM_CALCULATION_CONFIG_OPTIONS.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_RESPONSE_CHECKSUM_VALIDATION_CONFIG_OPTIONS.js
+  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_RESPONSE_CHECKSUM_VALIDATION_CONFIG_OPTIONS.js
   var init_NODE_RESPONSE_CHECKSUM_VALIDATION_CONFIG_OPTIONS = __esm({
-    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_RESPONSE_CHECKSUM_VALIDATION_CONFIG_OPTIONS.js"() {
+    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_RESPONSE_CHECKSUM_VALIDATION_CONFIG_OPTIONS.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/client/emitWarningIfUnsupportedVersion.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/client/emitWarningIfUnsupportedVersion.js
   var init_emitWarningIfUnsupportedVersion = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/client/emitWarningIfUnsupportedVersion.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/client/emitWarningIfUnsupportedVersion.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/client/setCredentialFeature.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/client/setCredentialFeature.js
   function setCredentialFeature(credentials, feature, value) {
     if (!credentials.$source) {
       credentials.$source = {};
@@ -24341,15 +24341,15 @@
     return credentials;
   }
   var init_setCredentialFeature = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/client/setCredentialFeature.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/client/setCredentialFeature.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/util-retry/dist-es/config.js
+  // node_modules/@smithy/util-retry/dist-es/config.js
   var RETRY_MODES, DEFAULT_MAX_ATTEMPTS, DEFAULT_RETRY_MODE;
   var init_config2 = __esm({
-    "../../node_modules/@smithy/util-retry/dist-es/config.js"() {
+    "node_modules/@smithy/util-retry/dist-es/config.js"() {
       init_polyfills();
       (function(RETRY_MODES2) {
         RETRY_MODES2["STANDARD"] = "standard";
@@ -24360,10 +24360,10 @@
     }
   });
 
-  // ../../node_modules/@smithy/service-error-classification/dist-es/constants.js
+  // node_modules/@smithy/service-error-classification/dist-es/constants.js
   var THROTTLING_ERROR_CODES, TRANSIENT_ERROR_CODES, TRANSIENT_ERROR_STATUS_CODES, NODEJS_TIMEOUT_ERROR_CODES, NODEJS_NETWORK_ERROR_CODES;
   var init_constants2 = __esm({
-    "../../node_modules/@smithy/service-error-classification/dist-es/constants.js"() {
+    "node_modules/@smithy/service-error-classification/dist-es/constants.js"() {
       init_polyfills();
       THROTTLING_ERROR_CODES = [
         "BandwidthLimitExceeded",
@@ -24388,13 +24388,13 @@
     }
   });
 
-  // ../../node_modules/@smithy/service-error-classification/dist-es/index.js
+  // node_modules/@smithy/service-error-classification/dist-es/index.js
   function isNodeJsHttp2TransientError(error) {
     return error.code === "ERR_HTTP2_STREAM_ERROR" && error.message.includes("NGHTTP2_REFUSED_STREAM");
   }
   var isRetryableByTrait, isClockSkewCorrectedError, isBrowserNetworkError, isThrottlingError, isTransientError, isServerError;
   var init_dist_es4 = __esm({
-    "../../node_modules/@smithy/service-error-classification/dist-es/index.js"() {
+    "node_modules/@smithy/service-error-classification/dist-es/index.js"() {
       init_polyfills();
       init_constants2();
       isRetryableByTrait = (error) => error?.$retryable !== void 0;
@@ -24428,10 +24428,10 @@
     }
   });
 
-  // ../../node_modules/@smithy/util-retry/dist-es/DefaultRateLimiter.js
+  // node_modules/@smithy/util-retry/dist-es/DefaultRateLimiter.js
   var _DefaultRateLimiter, DefaultRateLimiter;
   var init_DefaultRateLimiter = __esm({
-    "../../node_modules/@smithy/util-retry/dist-es/DefaultRateLimiter.js"() {
+    "node_modules/@smithy/util-retry/dist-es/DefaultRateLimiter.js"() {
       init_polyfills();
       init_dist_es4();
       _DefaultRateLimiter = class _DefaultRateLimiter {
@@ -24547,10 +24547,10 @@
     }
   });
 
-  // ../../node_modules/@smithy/util-retry/dist-es/constants.js
+  // node_modules/@smithy/util-retry/dist-es/constants.js
   var MAXIMUM_RETRY_DELAY, INITIAL_RETRY_TOKENS, NO_RETRY_INCREMENT, INVOCATION_ID_HEADER, REQUEST_HEADER;
   var init_constants3 = __esm({
-    "../../node_modules/@smithy/util-retry/dist-es/constants.js"() {
+    "node_modules/@smithy/util-retry/dist-es/constants.js"() {
       init_polyfills();
       MAXIMUM_RETRY_DELAY = 20 * 1e3;
       INITIAL_RETRY_TOKENS = 500;
@@ -24560,10 +24560,10 @@
     }
   });
 
-  // ../../node_modules/@smithy/util-retry/dist-es/retries-2026-config.js
+  // node_modules/@smithy/util-retry/dist-es/retries-2026-config.js
   var _Retry, Retry;
   var init_retries_2026_config = __esm({
-    "../../node_modules/@smithy/util-retry/dist-es/retries-2026-config.js"() {
+    "node_modules/@smithy/util-retry/dist-es/retries-2026-config.js"() {
       init_polyfills();
       _Retry = class _Retry {
         static delay() {
@@ -24587,10 +24587,10 @@
     }
   });
 
-  // ../../node_modules/@smithy/util-retry/dist-es/DefaultRetryBackoffStrategy.js
+  // node_modules/@smithy/util-retry/dist-es/DefaultRetryBackoffStrategy.js
   var DefaultRetryBackoffStrategy;
   var init_DefaultRetryBackoffStrategy = __esm({
-    "../../node_modules/@smithy/util-retry/dist-es/DefaultRetryBackoffStrategy.js"() {
+    "node_modules/@smithy/util-retry/dist-es/DefaultRetryBackoffStrategy.js"() {
       init_polyfills();
       init_constants3();
       init_retries_2026_config();
@@ -24611,10 +24611,10 @@
     }
   });
 
-  // ../../node_modules/@smithy/util-retry/dist-es/DefaultRetryToken.js
+  // node_modules/@smithy/util-retry/dist-es/DefaultRetryToken.js
   var DefaultRetryToken;
   var init_DefaultRetryToken = __esm({
-    "../../node_modules/@smithy/util-retry/dist-es/DefaultRetryToken.js"() {
+    "node_modules/@smithy/util-retry/dist-es/DefaultRetryToken.js"() {
       init_polyfills();
       init_constants3();
       DefaultRetryToken = class {
@@ -24644,10 +24644,10 @@
     }
   });
 
-  // ../../node_modules/@smithy/util-retry/dist-es/StandardRetryStrategy.js
+  // node_modules/@smithy/util-retry/dist-es/StandardRetryStrategy.js
   var refusal, StandardRetryStrategy;
   var init_StandardRetryStrategy = __esm({
-    "../../node_modules/@smithy/util-retry/dist-es/StandardRetryStrategy.js"() {
+    "node_modules/@smithy/util-retry/dist-es/StandardRetryStrategy.js"() {
       init_polyfills();
       init_config2();
       init_constants3();
@@ -24741,10 +24741,10 @@
     }
   });
 
-  // ../../node_modules/@smithy/util-retry/dist-es/AdaptiveRetryStrategy.js
+  // node_modules/@smithy/util-retry/dist-es/AdaptiveRetryStrategy.js
   var AdaptiveRetryStrategy;
   var init_AdaptiveRetryStrategy = __esm({
-    "../../node_modules/@smithy/util-retry/dist-es/AdaptiveRetryStrategy.js"() {
+    "node_modules/@smithy/util-retry/dist-es/AdaptiveRetryStrategy.js"() {
       init_polyfills();
       init_config2();
       init_DefaultRateLimiter();
@@ -24783,23 +24783,23 @@
     }
   });
 
-  // ../../node_modules/@smithy/util-retry/dist-es/ConfiguredRetryStrategy.js
+  // node_modules/@smithy/util-retry/dist-es/ConfiguredRetryStrategy.js
   var init_ConfiguredRetryStrategy = __esm({
-    "../../node_modules/@smithy/util-retry/dist-es/ConfiguredRetryStrategy.js"() {
+    "node_modules/@smithy/util-retry/dist-es/ConfiguredRetryStrategy.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/util-retry/dist-es/types.js
+  // node_modules/@smithy/util-retry/dist-es/types.js
   var init_types2 = __esm({
-    "../../node_modules/@smithy/util-retry/dist-es/types.js"() {
+    "node_modules/@smithy/util-retry/dist-es/types.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/util-retry/dist-es/index.js
+  // node_modules/@smithy/util-retry/dist-es/index.js
   var init_dist_es5 = __esm({
-    "../../node_modules/@smithy/util-retry/dist-es/index.js"() {
+    "node_modules/@smithy/util-retry/dist-es/index.js"() {
       init_polyfills();
       init_AdaptiveRetryStrategy();
       init_ConfiguredRetryStrategy();
@@ -24812,7 +24812,7 @@
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/client/setFeature.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/client/setFeature.js
   function setFeature(context, feature, value) {
     if (!context.__aws_sdk_context) {
       context.__aws_sdk_context = {
@@ -24825,23 +24825,23 @@
   }
   var _a;
   var init_setFeature = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/client/setFeature.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/client/setFeature.js"() {
       init_polyfills();
       init_dist_es5();
       (_a = Retry).v2026 || (_a.v2026 = typeof process === "object" && process.env?.AWS_NEW_RETRIES_2026 === "true");
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/client/setTokenFeature.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/client/setTokenFeature.js
   var init_setTokenFeature = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/client/setTokenFeature.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/client/setTokenFeature.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/client/index.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/client/index.js
   var init_client2 = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/client/index.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/client/index.js"() {
       init_polyfills();
       init_emitWarningIfUnsupportedVersion();
       init_setCredentialFeature();
@@ -24850,10 +24850,10 @@
     }
   });
 
-  // ../../node_modules/@smithy/util-base64/dist-es/constants.browser.js
+  // node_modules/@smithy/util-base64/dist-es/constants.browser.js
   var chars, alphabetByEncoding, alphabetByValue, bitsPerLetter, bitsPerByte, maxLetterValue;
   var init_constants_browser = __esm({
-    "../../node_modules/@smithy/util-base64/dist-es/constants.browser.js"() {
+    "node_modules/@smithy/util-base64/dist-es/constants.browser.js"() {
       init_polyfills();
       chars = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/`;
       alphabetByEncoding = Object.entries(chars).reduce((acc, [i2, c2]) => {
@@ -24867,10 +24867,10 @@
     }
   });
 
-  // ../../node_modules/@smithy/util-base64/dist-es/fromBase64.browser.js
+  // node_modules/@smithy/util-base64/dist-es/fromBase64.browser.js
   var fromBase64;
   var init_fromBase64_browser = __esm({
-    "../../node_modules/@smithy/util-base64/dist-es/fromBase64.browser.js"() {
+    "node_modules/@smithy/util-base64/dist-es/fromBase64.browser.js"() {
       init_polyfills();
       init_constants_browser();
       fromBase64 = (input) => {
@@ -24909,19 +24909,19 @@
     }
   });
 
-  // ../../node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js
+  // node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js
   var fromUtf8;
   var init_fromUtf8_browser = __esm({
-    "../../node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js"() {
+    "node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js"() {
       init_polyfills();
       fromUtf8 = (input) => new TextEncoder().encode(input);
     }
   });
 
-  // ../../node_modules/@smithy/util-utf8/dist-es/toUint8Array.js
+  // node_modules/@smithy/util-utf8/dist-es/toUint8Array.js
   var toUint8Array;
   var init_toUint8Array = __esm({
-    "../../node_modules/@smithy/util-utf8/dist-es/toUint8Array.js"() {
+    "node_modules/@smithy/util-utf8/dist-es/toUint8Array.js"() {
       init_polyfills();
       init_fromUtf8_browser();
       toUint8Array = (data) => {
@@ -24936,10 +24936,10 @@
     }
   });
 
-  // ../../node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js
+  // node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js
   var toUtf8;
   var init_toUtf8_browser = __esm({
-    "../../node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js"() {
+    "node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js"() {
       init_polyfills();
       toUtf8 = (input) => {
         if (typeof input === "string") {
@@ -24953,9 +24953,9 @@
     }
   });
 
-  // ../../node_modules/@smithy/util-utf8/dist-es/index.js
+  // node_modules/@smithy/util-utf8/dist-es/index.js
   var init_dist_es6 = __esm({
-    "../../node_modules/@smithy/util-utf8/dist-es/index.js"() {
+    "node_modules/@smithy/util-utf8/dist-es/index.js"() {
       init_polyfills();
       init_fromUtf8_browser();
       init_toUint8Array();
@@ -24963,7 +24963,7 @@
     }
   });
 
-  // ../../node_modules/@smithy/util-base64/dist-es/toBase64.browser.js
+  // node_modules/@smithy/util-base64/dist-es/toBase64.browser.js
   function toBase64(_input) {
     let input;
     if (typeof _input === "string") {
@@ -24995,26 +24995,26 @@
     return str;
   }
   var init_toBase64_browser = __esm({
-    "../../node_modules/@smithy/util-base64/dist-es/toBase64.browser.js"() {
+    "node_modules/@smithy/util-base64/dist-es/toBase64.browser.js"() {
       init_polyfills();
       init_dist_es6();
       init_constants_browser();
     }
   });
 
-  // ../../node_modules/@smithy/util-base64/dist-es/index.js
+  // node_modules/@smithy/util-base64/dist-es/index.js
   var init_dist_es7 = __esm({
-    "../../node_modules/@smithy/util-base64/dist-es/index.js"() {
+    "node_modules/@smithy/util-base64/dist-es/index.js"() {
       init_polyfills();
       init_fromBase64_browser();
       init_toBase64_browser();
     }
   });
 
-  // ../../node_modules/@smithy/util-stream/dist-es/blob/Uint8ArrayBlobAdapter.js
+  // node_modules/@smithy/util-stream/dist-es/blob/Uint8ArrayBlobAdapter.js
   var Uint8ArrayBlobAdapter;
   var init_Uint8ArrayBlobAdapter = __esm({
-    "../../node_modules/@smithy/util-stream/dist-es/blob/Uint8ArrayBlobAdapter.js"() {
+    "node_modules/@smithy/util-stream/dist-es/blob/Uint8ArrayBlobAdapter.js"() {
       init_polyfills();
       init_dist_es7();
       init_dist_es6();
@@ -25042,10 +25042,10 @@
     }
   });
 
-  // ../../node_modules/@smithy/util-stream/dist-es/checksum/ChecksumStream.browser.js
+  // node_modules/@smithy/util-stream/dist-es/checksum/ChecksumStream.browser.js
   var ReadableStreamRef, ChecksumStream;
   var init_ChecksumStream_browser = __esm({
-    "../../node_modules/@smithy/util-stream/dist-es/checksum/ChecksumStream.browser.js"() {
+    "node_modules/@smithy/util-stream/dist-es/checksum/ChecksumStream.browser.js"() {
       init_polyfills();
       ReadableStreamRef = typeof ReadableStream === "function" ? ReadableStream : function() {
       };
@@ -25054,19 +25054,19 @@
     }
   });
 
-  // ../../node_modules/@smithy/util-stream/dist-es/stream-type-check.js
+  // node_modules/@smithy/util-stream/dist-es/stream-type-check.js
   var isReadableStream;
   var init_stream_type_check = __esm({
-    "../../node_modules/@smithy/util-stream/dist-es/stream-type-check.js"() {
+    "node_modules/@smithy/util-stream/dist-es/stream-type-check.js"() {
       init_polyfills();
       isReadableStream = (stream) => typeof ReadableStream === "function" && (stream?.constructor?.name === ReadableStream.name || stream instanceof ReadableStream);
     }
   });
 
-  // ../../node_modules/@smithy/util-stream/dist-es/checksum/createChecksumStream.browser.js
+  // node_modules/@smithy/util-stream/dist-es/checksum/createChecksumStream.browser.js
   var createChecksumStream;
   var init_createChecksumStream_browser = __esm({
-    "../../node_modules/@smithy/util-stream/dist-es/checksum/createChecksumStream.browser.js"() {
+    "node_modules/@smithy/util-stream/dist-es/checksum/createChecksumStream.browser.js"() {
       init_polyfills();
       init_dist_es7();
       init_stream_type_check();
@@ -25105,10 +25105,10 @@
     }
   });
 
-  // ../../node_modules/@smithy/util-stream/dist-es/ByteArrayCollector.js
+  // node_modules/@smithy/util-stream/dist-es/ByteArrayCollector.js
   var ByteArrayCollector;
   var init_ByteArrayCollector = __esm({
-    "../../node_modules/@smithy/util-stream/dist-es/ByteArrayCollector.js"() {
+    "node_modules/@smithy/util-stream/dist-es/ByteArrayCollector.js"() {
       init_polyfills();
       ByteArrayCollector = class {
         constructor(allocByteArray) {
@@ -25145,7 +25145,7 @@
     }
   });
 
-  // ../../node_modules/@smithy/util-stream/dist-es/createBufferedReadableStream.js
+  // node_modules/@smithy/util-stream/dist-es/createBufferedReadableStream.js
   function createBufferedReadableStream(upstream, size, logger2) {
     const reader = upstream.getReader();
     let streamBufferingLoggedWarning = false;
@@ -25238,17 +25238,17 @@
   }
   var createBufferedReadable;
   var init_createBufferedReadableStream = __esm({
-    "../../node_modules/@smithy/util-stream/dist-es/createBufferedReadableStream.js"() {
+    "node_modules/@smithy/util-stream/dist-es/createBufferedReadableStream.js"() {
       init_polyfills();
       init_ByteArrayCollector();
       createBufferedReadable = createBufferedReadableStream;
     }
   });
 
-  // ../../node_modules/@smithy/util-stream/dist-es/getAwsChunkedEncodingStream.browser.js
+  // node_modules/@smithy/util-stream/dist-es/getAwsChunkedEncodingStream.browser.js
   var getAwsChunkedEncodingStream;
   var init_getAwsChunkedEncodingStream_browser = __esm({
-    "../../node_modules/@smithy/util-stream/dist-es/getAwsChunkedEncodingStream.browser.js"() {
+    "node_modules/@smithy/util-stream/dist-es/getAwsChunkedEncodingStream.browser.js"() {
       init_polyfills();
       getAwsChunkedEncodingStream = (readableStream, options) => {
         const { base64Encoder, bodyLengthChecker, checksumAlgorithmFn, checksumLocationName, streamHasher } = options;
@@ -25280,40 +25280,40 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/util-stream/dist-es/headStream.browser.js
+  // node_modules/@smithy/util-stream/dist-es/headStream.browser.js
   var init_headStream_browser = __esm({
-    "../../node_modules/@smithy/util-stream/dist-es/headStream.browser.js"() {
+    "node_modules/@smithy/util-stream/dist-es/headStream.browser.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/util-uri-escape/dist-es/escape-uri.js
+  // node_modules/@smithy/util-uri-escape/dist-es/escape-uri.js
   var escapeUri, hexEncode;
   var init_escape_uri = __esm({
-    "../../node_modules/@smithy/util-uri-escape/dist-es/escape-uri.js"() {
+    "node_modules/@smithy/util-uri-escape/dist-es/escape-uri.js"() {
       init_polyfills();
       escapeUri = (uri) => encodeURIComponent(uri).replace(/[!'()*]/g, hexEncode);
       hexEncode = (c2) => `%${c2.charCodeAt(0).toString(16).toUpperCase()}`;
     }
   });
 
-  // ../../node_modules/@smithy/util-uri-escape/dist-es/escape-uri-path.js
+  // node_modules/@smithy/util-uri-escape/dist-es/escape-uri-path.js
   var init_escape_uri_path = __esm({
-    "../../node_modules/@smithy/util-uri-escape/dist-es/escape-uri-path.js"() {
+    "node_modules/@smithy/util-uri-escape/dist-es/escape-uri-path.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/util-uri-escape/dist-es/index.js
+  // node_modules/@smithy/util-uri-escape/dist-es/index.js
   var init_dist_es8 = __esm({
-    "../../node_modules/@smithy/util-uri-escape/dist-es/index.js"() {
+    "node_modules/@smithy/util-uri-escape/dist-es/index.js"() {
       init_polyfills();
       init_escape_uri();
       init_escape_uri_path();
     }
   });
 
-  // ../../node_modules/@smithy/querystring-builder/dist-es/index.js
+  // node_modules/@smithy/querystring-builder/dist-es/index.js
   function buildQueryString(query) {
     const parts = [];
     for (let key of Object.keys(query).sort()) {
@@ -25334,23 +25334,23 @@ ${value}\r
     return parts.join("&");
   }
   var init_dist_es9 = __esm({
-    "../../node_modules/@smithy/querystring-builder/dist-es/index.js"() {
+    "node_modules/@smithy/querystring-builder/dist-es/index.js"() {
       init_polyfills();
       init_dist_es8();
     }
   });
 
-  // ../../node_modules/@smithy/fetch-http-handler/dist-es/create-request.js
+  // node_modules/@smithy/fetch-http-handler/dist-es/create-request.js
   function createRequest(url, requestOptions) {
     return new Request(url, requestOptions);
   }
   var init_create_request = __esm({
-    "../../node_modules/@smithy/fetch-http-handler/dist-es/create-request.js"() {
+    "node_modules/@smithy/fetch-http-handler/dist-es/create-request.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/fetch-http-handler/dist-es/request-timeout.js
+  // node_modules/@smithy/fetch-http-handler/dist-es/request-timeout.js
   function requestTimeout(timeoutInMs = 0) {
     return new Promise((resolve, reject) => {
       if (timeoutInMs) {
@@ -25363,12 +25363,12 @@ ${value}\r
     });
   }
   var init_request_timeout = __esm({
-    "../../node_modules/@smithy/fetch-http-handler/dist-es/request-timeout.js"() {
+    "node_modules/@smithy/fetch-http-handler/dist-es/request-timeout.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/fetch-http-handler/dist-es/fetch-http-handler.js
+  // node_modules/@smithy/fetch-http-handler/dist-es/fetch-http-handler.js
   function buildAbortError(abortSignal) {
     const reason = abortSignal && typeof abortSignal === "object" && "reason" in abortSignal ? abortSignal.reason : void 0;
     if (reason) {
@@ -25388,7 +25388,7 @@ ${value}\r
   }
   var keepAliveSupport, FetchHttpHandler;
   var init_fetch_http_handler = __esm({
-    "../../node_modules/@smithy/fetch-http-handler/dist-es/fetch-http-handler.js"() {
+    "node_modules/@smithy/fetch-http-handler/dist-es/fetch-http-handler.js"() {
       init_polyfills();
       init_dist_es2();
       init_dist_es9();
@@ -25531,7 +25531,7 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/fetch-http-handler/dist-es/stream-collector.js
+  // node_modules/@smithy/fetch-http-handler/dist-es/stream-collector.js
   async function collectBlob(blob) {
     const base64 = await readToBase64(blob);
     const arrayBuffer = fromBase64(base64);
@@ -25577,7 +25577,7 @@ ${value}\r
   }
   var streamCollector;
   var init_stream_collector = __esm({
-    "../../node_modules/@smithy/fetch-http-handler/dist-es/stream-collector.js"() {
+    "node_modules/@smithy/fetch-http-handler/dist-es/stream-collector.js"() {
       init_polyfills();
       init_dist_es7();
       streamCollector = async (stream) => {
@@ -25592,16 +25592,16 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/fetch-http-handler/dist-es/index.js
+  // node_modules/@smithy/fetch-http-handler/dist-es/index.js
   var init_dist_es10 = __esm({
-    "../../node_modules/@smithy/fetch-http-handler/dist-es/index.js"() {
+    "node_modules/@smithy/fetch-http-handler/dist-es/index.js"() {
       init_polyfills();
       init_fetch_http_handler();
       init_stream_collector();
     }
   });
 
-  // ../../node_modules/@smithy/util-hex-encoding/dist-es/index.js
+  // node_modules/@smithy/util-hex-encoding/dist-es/index.js
   function fromHex(encoded) {
     if (encoded.length % 2 !== 0) {
       throw new Error("Hex encoded strings must have an even number length");
@@ -25626,7 +25626,7 @@ ${value}\r
   }
   var SHORT_TO_HEX, HEX_TO_SHORT;
   var init_dist_es11 = __esm({
-    "../../node_modules/@smithy/util-hex-encoding/dist-es/index.js"() {
+    "node_modules/@smithy/util-hex-encoding/dist-es/index.js"() {
       init_polyfills();
       SHORT_TO_HEX = {};
       HEX_TO_SHORT = {};
@@ -25641,10 +25641,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/util-stream/dist-es/sdk-stream-mixin.browser.js
+  // node_modules/@smithy/util-stream/dist-es/sdk-stream-mixin.browser.js
   var ERR_MSG_STREAM_HAS_BEEN_TRANSFORMED, sdkStreamMixin, isBlobInstance;
   var init_sdk_stream_mixin_browser = __esm({
-    "../../node_modules/@smithy/util-stream/dist-es/sdk-stream-mixin.browser.js"() {
+    "node_modules/@smithy/util-stream/dist-es/sdk-stream-mixin.browser.js"() {
       init_polyfills();
       init_dist_es10();
       init_dist_es7();
@@ -25706,16 +25706,16 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/util-stream/dist-es/splitStream.browser.js
+  // node_modules/@smithy/util-stream/dist-es/splitStream.browser.js
   var init_splitStream_browser = __esm({
-    "../../node_modules/@smithy/util-stream/dist-es/splitStream.browser.js"() {
+    "node_modules/@smithy/util-stream/dist-es/splitStream.browser.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/util-stream/dist-es/index.js
+  // node_modules/@smithy/util-stream/dist-es/index.js
   var init_dist_es12 = __esm({
-    "../../node_modules/@smithy/util-stream/dist-es/index.js"() {
+    "node_modules/@smithy/util-stream/dist-es/index.js"() {
       init_polyfills();
       init_Uint8ArrayBlobAdapter();
       init_ChecksumStream_browser();
@@ -25728,10 +25728,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmForRequest.js
+  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmForRequest.js
   var getChecksumAlgorithmForRequest;
   var init_getChecksumAlgorithmForRequest = __esm({
-    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmForRequest.js"() {
+    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmForRequest.js"() {
       init_polyfills();
       init_constants();
       getChecksumAlgorithmForRequest = (input, { requestChecksumRequired, requestAlgorithmMember, requestChecksumCalculation }) => {
@@ -25747,20 +25747,20 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumLocationName.js
+  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumLocationName.js
   var getChecksumLocationName;
   var init_getChecksumLocationName = __esm({
-    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumLocationName.js"() {
+    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumLocationName.js"() {
       init_polyfills();
       init_constants();
       getChecksumLocationName = (algorithm) => algorithm === ChecksumAlgorithm.MD5 ? "content-md5" : `x-amz-checksum-${algorithm.toLowerCase()}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeader.js
+  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeader.js
   var hasHeader;
   var init_hasHeader = __esm({
-    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeader.js"() {
+    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeader.js"() {
       init_polyfills();
       hasHeader = (header, headers) => {
         const soughtHeader = header.toLowerCase();
@@ -25774,10 +25774,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeaderWithPrefix.js
+  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeaderWithPrefix.js
   var hasHeaderWithPrefix;
   var init_hasHeaderWithPrefix = __esm({
-    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeaderWithPrefix.js"() {
+    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeaderWithPrefix.js"() {
       init_polyfills();
       hasHeaderWithPrefix = (headerPrefix, headers) => {
         const soughtHeaderPrefix = headerPrefix.toLowerCase();
@@ -25791,26 +25791,26 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/is-array-buffer/dist-es/index.js
+  // node_modules/@smithy/is-array-buffer/dist-es/index.js
   var isArrayBuffer;
   var init_dist_es13 = __esm({
-    "../../node_modules/@smithy/is-array-buffer/dist-es/index.js"() {
+    "node_modules/@smithy/is-array-buffer/dist-es/index.js"() {
       init_polyfills();
       isArrayBuffer = (arg) => typeof ArrayBuffer === "function" && arg instanceof ArrayBuffer || Object.prototype.toString.call(arg) === "[object ArrayBuffer]";
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isStreaming.js
+  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isStreaming.js
   var isStreaming;
   var init_isStreaming = __esm({
-    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isStreaming.js"() {
+    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isStreaming.js"() {
       init_polyfills();
       init_dist_es13();
       isStreaming = (body) => body !== void 0 && typeof body !== "string" && !ArrayBuffer.isView(body) && !isArrayBuffer(body);
     }
   });
 
-  // ../../node_modules/tslib/tslib.es6.mjs
+  // node_modules/tslib/tslib.es6.mjs
   function __awaiter(thisArg, _arguments, P2, generator) {
     function adopt(value) {
       return value instanceof P2 ? value : new P2(function(resolve) {
@@ -25919,38 +25919,38 @@ ${value}\r
     throw new TypeError(s2 ? "Object is not iterable." : "Symbol.iterator is not defined.");
   }
   var init_tslib_es6 = __esm({
-    "../../node_modules/tslib/tslib.es6.mjs"() {
+    "node_modules/tslib/tslib.es6.mjs"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js
+  // node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js
   var fromUtf82;
   var init_fromUtf8_browser2 = __esm({
-    "../../node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js"() {
+    "node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js"() {
       init_polyfills();
       fromUtf82 = (input) => new TextEncoder().encode(input);
     }
   });
 
-  // ../../node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js
+  // node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js
   var init_toUint8Array2 = __esm({
-    "../../node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js"() {
+    "node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js"() {
       init_polyfills();
       init_fromUtf8_browser2();
     }
   });
 
-  // ../../node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js
+  // node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js
   var init_toUtf8_browser2 = __esm({
-    "../../node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js"() {
+    "node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/index.js
+  // node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/index.js
   var init_dist_es14 = __esm({
-    "../../node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/index.js"() {
+    "node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/index.js"() {
       init_polyfills();
       init_fromUtf8_browser2();
       init_toUint8Array2();
@@ -25958,7 +25958,7 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@aws-crypto/util/build/module/convertToBuffer.js
+  // node_modules/@aws-crypto/util/build/module/convertToBuffer.js
   function convertToBuffer(data) {
     if (data instanceof Uint8Array)
       return data;
@@ -25972,7 +25972,7 @@ ${value}\r
   }
   var fromUtf83;
   var init_convertToBuffer = __esm({
-    "../../node_modules/@aws-crypto/util/build/module/convertToBuffer.js"() {
+    "node_modules/@aws-crypto/util/build/module/convertToBuffer.js"() {
       init_polyfills();
       init_dist_es14();
       fromUtf83 = typeof Buffer !== "undefined" && Buffer.from ? function(input) {
@@ -25981,7 +25981,7 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@aws-crypto/util/build/module/isEmptyData.js
+  // node_modules/@aws-crypto/util/build/module/isEmptyData.js
   function isEmptyData(data) {
     if (typeof data === "string") {
       return data.length === 0;
@@ -25989,12 +25989,12 @@ ${value}\r
     return data.byteLength === 0;
   }
   var init_isEmptyData = __esm({
-    "../../node_modules/@aws-crypto/util/build/module/isEmptyData.js"() {
+    "node_modules/@aws-crypto/util/build/module/isEmptyData.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-crypto/util/build/module/numToUint8.js
+  // node_modules/@aws-crypto/util/build/module/numToUint8.js
   function numToUint8(num) {
     return new Uint8Array([
       (num & 4278190080) >> 24,
@@ -26004,12 +26004,12 @@ ${value}\r
     ]);
   }
   var init_numToUint8 = __esm({
-    "../../node_modules/@aws-crypto/util/build/module/numToUint8.js"() {
+    "node_modules/@aws-crypto/util/build/module/numToUint8.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-crypto/util/build/module/uint32ArrayFrom.js
+  // node_modules/@aws-crypto/util/build/module/uint32ArrayFrom.js
   function uint32ArrayFrom(a_lookUpTable2) {
     if (!Uint32Array.from) {
       var return_array = new Uint32Array(a_lookUpTable2.length);
@@ -26023,14 +26023,14 @@ ${value}\r
     return Uint32Array.from(a_lookUpTable2);
   }
   var init_uint32ArrayFrom = __esm({
-    "../../node_modules/@aws-crypto/util/build/module/uint32ArrayFrom.js"() {
+    "node_modules/@aws-crypto/util/build/module/uint32ArrayFrom.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-crypto/util/build/module/index.js
+  // node_modules/@aws-crypto/util/build/module/index.js
   var init_module = __esm({
-    "../../node_modules/@aws-crypto/util/build/module/index.js"() {
+    "node_modules/@aws-crypto/util/build/module/index.js"() {
       init_polyfills();
       init_convertToBuffer();
       init_isEmptyData();
@@ -26039,10 +26039,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@aws-crypto/crc32c/build/module/aws_crc32c.js
+  // node_modules/@aws-crypto/crc32c/build/module/aws_crc32c.js
   var AwsCrc32c;
   var init_aws_crc32c = __esm({
-    "../../node_modules/@aws-crypto/crc32c/build/module/aws_crc32c.js"() {
+    "node_modules/@aws-crypto/crc32c/build/module/aws_crc32c.js"() {
       init_polyfills();
       init_tslib_es6();
       init_module();
@@ -26072,10 +26072,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@aws-crypto/crc32c/build/module/index.js
+  // node_modules/@aws-crypto/crc32c/build/module/index.js
   var Crc32c, a_lookupTable, lookupTable;
   var init_module2 = __esm({
-    "../../node_modules/@aws-crypto/crc32c/build/module/index.js"() {
+    "node_modules/@aws-crypto/crc32c/build/module/index.js"() {
       init_polyfills();
       init_tslib_es6();
       init_module();
@@ -26370,10 +26370,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@aws-sdk/crc64-nvme/dist-es/Crc64Nvme.js
+  // node_modules/@aws-sdk/crc64-nvme/dist-es/Crc64Nvme.js
   var generateCRC64NVMETable, CRC64_NVME_REVERSED_TABLE, t0, t1, t2, t3, t4, t5, t6, t7, ensureTablesInitialized, Crc64Nvme;
   var init_Crc64Nvme = __esm({
-    "../../node_modules/@aws-sdk/crc64-nvme/dist-es/Crc64Nvme.js"() {
+    "node_modules/@aws-sdk/crc64-nvme/dist-es/Crc64Nvme.js"() {
       init_polyfills();
       generateCRC64NVMETable = () => {
         const sliceLength = 8;
@@ -26458,10 +26458,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@aws-sdk/crc64-nvme/dist-es/crc64-nvme-crt-container.js
+  // node_modules/@aws-sdk/crc64-nvme/dist-es/crc64-nvme-crt-container.js
   var crc64NvmeCrtContainer;
   var init_crc64_nvme_crt_container = __esm({
-    "../../node_modules/@aws-sdk/crc64-nvme/dist-es/crc64-nvme-crt-container.js"() {
+    "node_modules/@aws-sdk/crc64-nvme/dist-es/crc64-nvme-crt-container.js"() {
       init_polyfills();
       crc64NvmeCrtContainer = {
         CrtCrc64Nvme: null
@@ -26469,19 +26469,19 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@aws-sdk/crc64-nvme/dist-es/index.js
+  // node_modules/@aws-sdk/crc64-nvme/dist-es/index.js
   var init_dist_es15 = __esm({
-    "../../node_modules/@aws-sdk/crc64-nvme/dist-es/index.js"() {
+    "node_modules/@aws-sdk/crc64-nvme/dist-es/index.js"() {
       init_polyfills();
       init_Crc64Nvme();
       init_crc64_nvme_crt_container();
     }
   });
 
-  // ../../node_modules/@aws-crypto/crc32/build/module/aws_crc32.js
+  // node_modules/@aws-crypto/crc32/build/module/aws_crc32.js
   var AwsCrc32;
   var init_aws_crc32 = __esm({
-    "../../node_modules/@aws-crypto/crc32/build/module/aws_crc32.js"() {
+    "node_modules/@aws-crypto/crc32/build/module/aws_crc32.js"() {
       init_polyfills();
       init_tslib_es6();
       init_module();
@@ -26511,10 +26511,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@aws-crypto/crc32/build/module/index.js
+  // node_modules/@aws-crypto/crc32/build/module/index.js
   var Crc32, a_lookUpTable, lookupTable2;
   var init_module3 = __esm({
-    "../../node_modules/@aws-crypto/crc32/build/module/index.js"() {
+    "node_modules/@aws-crypto/crc32/build/module/index.js"() {
       init_polyfills();
       init_tslib_es6();
       init_module();
@@ -26809,20 +26809,20 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getCrc32ChecksumAlgorithmFunction.browser.js
+  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getCrc32ChecksumAlgorithmFunction.browser.js
   var getCrc32ChecksumAlgorithmFunction;
   var init_getCrc32ChecksumAlgorithmFunction_browser = __esm({
-    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getCrc32ChecksumAlgorithmFunction.browser.js"() {
+    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getCrc32ChecksumAlgorithmFunction.browser.js"() {
       init_polyfills();
       init_module3();
       getCrc32ChecksumAlgorithmFunction = () => AwsCrc32;
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/types.js
+  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/types.js
   var CLIENT_SUPPORTED_ALGORITHMS, PRIORITY_ORDER_ALGORITHMS;
   var init_types3 = __esm({
-    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/types.js"() {
+    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/types.js"() {
       init_polyfills();
       init_constants();
       CLIENT_SUPPORTED_ALGORITHMS = [
@@ -26842,10 +26842,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/selectChecksumAlgorithmFunction.js
+  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/selectChecksumAlgorithmFunction.js
   var selectChecksumAlgorithmFunction;
   var init_selectChecksumAlgorithmFunction = __esm({
-    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/selectChecksumAlgorithmFunction.js"() {
+    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/selectChecksumAlgorithmFunction.js"() {
       init_polyfills();
       init_module2();
       init_dist_es15();
@@ -26880,10 +26880,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/stringHasher.js
+  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/stringHasher.js
   var stringHasher;
   var init_stringHasher = __esm({
-    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/stringHasher.js"() {
+    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/stringHasher.js"() {
       init_polyfills();
       init_dist_es6();
       stringHasher = (checksumAlgorithmFn, body) => {
@@ -26894,10 +26894,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsMiddleware.js
+  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsMiddleware.js
   var flexibleChecksumsMiddlewareOptions, flexibleChecksumsMiddleware;
   var init_flexibleChecksumsMiddleware = __esm({
-    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsMiddleware.js"() {
+    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsMiddleware.js"() {
       init_polyfills();
       init_client2();
       init_dist_es2();
@@ -27017,10 +27017,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsInputMiddleware.js
+  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsInputMiddleware.js
   var flexibleChecksumsInputMiddlewareOptions, flexibleChecksumsInputMiddleware;
   var init_flexibleChecksumsInputMiddleware = __esm({
-    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsInputMiddleware.js"() {
+    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsInputMiddleware.js"() {
       init_polyfills();
       init_client2();
       init_constants();
@@ -27062,10 +27062,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmListForResponse.js
+  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmListForResponse.js
   var getChecksumAlgorithmListForResponse;
   var init_getChecksumAlgorithmListForResponse = __esm({
-    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmListForResponse.js"() {
+    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmListForResponse.js"() {
       init_polyfills();
       init_types3();
       getChecksumAlgorithmListForResponse = (responseAlgorithms = []) => {
@@ -27084,10 +27084,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isChecksumWithPartNumber.js
+  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isChecksumWithPartNumber.js
   var isChecksumWithPartNumber;
   var init_isChecksumWithPartNumber = __esm({
-    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isChecksumWithPartNumber.js"() {
+    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isChecksumWithPartNumber.js"() {
       init_polyfills();
       isChecksumWithPartNumber = (checksum) => {
         const lastHyphenIndex = checksum.lastIndexOf("-");
@@ -27105,20 +27105,20 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksum.js
+  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksum.js
   var getChecksum;
   var init_getChecksum = __esm({
-    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksum.js"() {
+    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksum.js"() {
       init_polyfills();
       init_stringHasher();
       getChecksum = async (body, { checksumAlgorithmFn, base64Encoder }) => base64Encoder(await stringHasher(checksumAlgorithmFn, body));
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/validateChecksumFromResponse.js
+  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/validateChecksumFromResponse.js
   var validateChecksumFromResponse;
   var init_validateChecksumFromResponse = __esm({
-    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/validateChecksumFromResponse.js"() {
+    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/validateChecksumFromResponse.js"() {
       init_polyfills();
       init_dist_es12();
       init_constants();
@@ -27166,10 +27166,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsResponseMiddleware.js
+  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsResponseMiddleware.js
   var flexibleChecksumsResponseMiddlewareOptions, flexibleChecksumsResponseMiddleware;
   var init_flexibleChecksumsResponseMiddleware = __esm({
-    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsResponseMiddleware.js"() {
+    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsResponseMiddleware.js"() {
       init_polyfills();
       init_dist_es2();
       init_getChecksumAlgorithmListForResponse();
@@ -27220,10 +27220,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getFlexibleChecksumsPlugin.js
+  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getFlexibleChecksumsPlugin.js
   var getFlexibleChecksumsPlugin;
   var init_getFlexibleChecksumsPlugin = __esm({
-    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getFlexibleChecksumsPlugin.js"() {
+    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getFlexibleChecksumsPlugin.js"() {
       init_polyfills();
       init_flexibleChecksumsInputMiddleware();
       init_flexibleChecksumsMiddleware();
@@ -27238,20 +27238,20 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/util-middleware/dist-es/getSmithyContext.js
+  // node_modules/@smithy/util-middleware/dist-es/getSmithyContext.js
   var getSmithyContext;
   var init_getSmithyContext = __esm({
-    "../../node_modules/@smithy/util-middleware/dist-es/getSmithyContext.js"() {
+    "node_modules/@smithy/util-middleware/dist-es/getSmithyContext.js"() {
       init_polyfills();
       init_dist_es();
       getSmithyContext = (context) => context[SMITHY_CONTEXT_KEY] || (context[SMITHY_CONTEXT_KEY] = {});
     }
   });
 
-  // ../../node_modules/@smithy/util-middleware/dist-es/normalizeProvider.js
+  // node_modules/@smithy/util-middleware/dist-es/normalizeProvider.js
   var normalizeProvider;
   var init_normalizeProvider = __esm({
-    "../../node_modules/@smithy/util-middleware/dist-es/normalizeProvider.js"() {
+    "node_modules/@smithy/util-middleware/dist-es/normalizeProvider.js"() {
       init_polyfills();
       normalizeProvider = (input) => {
         if (typeof input === "function")
@@ -27262,19 +27262,19 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/util-middleware/dist-es/index.js
+  // node_modules/@smithy/util-middleware/dist-es/index.js
   var init_dist_es16 = __esm({
-    "../../node_modules/@smithy/util-middleware/dist-es/index.js"() {
+    "node_modules/@smithy/util-middleware/dist-es/index.js"() {
       init_polyfills();
       init_getSmithyContext();
       init_normalizeProvider();
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/resolveFlexibleChecksumsConfig.js
+  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/resolveFlexibleChecksumsConfig.js
   var resolveFlexibleChecksumsConfig;
   var init_resolveFlexibleChecksumsConfig = __esm({
-    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/resolveFlexibleChecksumsConfig.js"() {
+    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/resolveFlexibleChecksumsConfig.js"() {
       init_polyfills();
       init_dist_es16();
       init_constants();
@@ -27290,9 +27290,9 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/index.js
+  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/index.js
   var init_dist_es17 = __esm({
-    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/index.js"() {
+    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/index.js"() {
       init_polyfills();
       init_NODE_REQUEST_CHECKSUM_CALCULATION_CONFIG_OPTIONS();
       init_NODE_RESPONSE_CHECKSUM_VALIDATION_CONFIG_OPTIONS();
@@ -27303,13 +27303,13 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-host-header/dist-es/index.js
+  // node_modules/@aws-sdk/middleware-host-header/dist-es/index.js
   function resolveHostHeaderConfig(input) {
     return input;
   }
   var hostHeaderMiddleware, hostHeaderMiddlewareOptions, getHostHeaderPlugin;
   var init_dist_es18 = __esm({
-    "../../node_modules/@aws-sdk/middleware-host-header/dist-es/index.js"() {
+    "node_modules/@aws-sdk/middleware-host-header/dist-es/index.js"() {
       init_polyfills();
       init_dist_es2();
       hostHeaderMiddleware = (options) => (next) => async (args) => {
@@ -27343,10 +27343,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-logger/dist-es/loggerMiddleware.js
+  // node_modules/@aws-sdk/middleware-logger/dist-es/loggerMiddleware.js
   var loggerMiddleware, loggerMiddlewareOptions, getLoggerPlugin;
   var init_loggerMiddleware = __esm({
-    "../../node_modules/@aws-sdk/middleware-logger/dist-es/loggerMiddleware.js"() {
+    "node_modules/@aws-sdk/middleware-logger/dist-es/loggerMiddleware.js"() {
       init_polyfills();
       loggerMiddleware = () => (next, context) => async (args) => {
         try {
@@ -27392,18 +27392,18 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-logger/dist-es/index.js
+  // node_modules/@aws-sdk/middleware-logger/dist-es/index.js
   var init_dist_es19 = __esm({
-    "../../node_modules/@aws-sdk/middleware-logger/dist-es/index.js"() {
+    "node_modules/@aws-sdk/middleware-logger/dist-es/index.js"() {
       init_polyfills();
       init_loggerMiddleware();
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-recursion-detection/dist-es/configuration.js
+  // node_modules/@aws-sdk/middleware-recursion-detection/dist-es/configuration.js
   var recursionDetectionMiddlewareOptions;
   var init_configuration = __esm({
-    "../../node_modules/@aws-sdk/middleware-recursion-detection/dist-es/configuration.js"() {
+    "node_modules/@aws-sdk/middleware-recursion-detection/dist-es/configuration.js"() {
       init_polyfills();
       recursionDetectionMiddlewareOptions = {
         step: "build",
@@ -27415,19 +27415,19 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-recursion-detection/dist-es/recursionDetectionMiddleware.browser.js
+  // node_modules/@aws-sdk/middleware-recursion-detection/dist-es/recursionDetectionMiddleware.browser.js
   var recursionDetectionMiddleware;
   var init_recursionDetectionMiddleware_browser = __esm({
-    "../../node_modules/@aws-sdk/middleware-recursion-detection/dist-es/recursionDetectionMiddleware.browser.js"() {
+    "node_modules/@aws-sdk/middleware-recursion-detection/dist-es/recursionDetectionMiddleware.browser.js"() {
       init_polyfills();
       recursionDetectionMiddleware = () => (next) => async (args) => next(args);
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-recursion-detection/dist-es/getRecursionDetectionPlugin.js
+  // node_modules/@aws-sdk/middleware-recursion-detection/dist-es/getRecursionDetectionPlugin.js
   var getRecursionDetectionPlugin;
   var init_getRecursionDetectionPlugin = __esm({
-    "../../node_modules/@aws-sdk/middleware-recursion-detection/dist-es/getRecursionDetectionPlugin.js"() {
+    "node_modules/@aws-sdk/middleware-recursion-detection/dist-es/getRecursionDetectionPlugin.js"() {
       init_polyfills();
       init_configuration();
       init_recursionDetectionMiddleware_browser();
@@ -27439,19 +27439,19 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-recursion-detection/dist-es/index.js
+  // node_modules/@aws-sdk/middleware-recursion-detection/dist-es/index.js
   var init_dist_es20 = __esm({
-    "../../node_modules/@aws-sdk/middleware-recursion-detection/dist-es/index.js"() {
+    "node_modules/@aws-sdk/middleware-recursion-detection/dist-es/index.js"() {
       init_polyfills();
       init_getRecursionDetectionPlugin();
       init_recursionDetectionMiddleware_browser();
     }
   });
 
-  // ../../node_modules/@smithy/middleware-stack/dist-es/MiddlewareStack.js
+  // node_modules/@smithy/middleware-stack/dist-es/MiddlewareStack.js
   var getAllAliases, getMiddlewareNameWithAliases, constructStack, stepWeights, priorityWeights;
   var init_MiddlewareStack = __esm({
-    "../../node_modules/@smithy/middleware-stack/dist-es/MiddlewareStack.js"() {
+    "node_modules/@smithy/middleware-stack/dist-es/MiddlewareStack.js"() {
       init_polyfills();
       getAllAliases = (name, aliases) => {
         const _aliases = [];
@@ -27719,18 +27719,18 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/middleware-stack/dist-es/index.js
+  // node_modules/@smithy/middleware-stack/dist-es/index.js
   var init_dist_es21 = __esm({
-    "../../node_modules/@smithy/middleware-stack/dist-es/index.js"() {
+    "node_modules/@smithy/middleware-stack/dist-es/index.js"() {
       init_polyfills();
       init_MiddlewareStack();
     }
   });
 
-  // ../../node_modules/@smithy/smithy-client/dist-es/client.js
+  // node_modules/@smithy/smithy-client/dist-es/client.js
   var Client;
   var init_client3 = __esm({
-    "../../node_modules/@smithy/smithy-client/dist-es/client.js"() {
+    "node_modules/@smithy/smithy-client/dist-es/client.js"() {
       init_polyfills();
       init_dist_es21();
       Client = class {
@@ -27782,10 +27782,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/protocols/collect-stream-body.js
+  // node_modules/@smithy/core/dist-es/submodules/protocols/collect-stream-body.js
   var collectBody;
   var init_collect_stream_body = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/protocols/collect-stream-body.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/protocols/collect-stream-body.js"() {
       init_polyfills();
       init_dist_es12();
       collectBody = async (streamBody = new Uint8Array(), context) => {
@@ -27801,22 +27801,22 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/protocols/extended-encode-uri-component.js
+  // node_modules/@smithy/core/dist-es/submodules/protocols/extended-encode-uri-component.js
   function extendedEncodeURIComponent(str) {
     return encodeURIComponent(str).replace(/[!'()*]/g, function(c2) {
       return "%" + c2.charCodeAt(0).toString(16).toUpperCase();
     });
   }
   var init_extended_encode_uri_component = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/protocols/extended-encode-uri-component.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/protocols/extended-encode-uri-component.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/schema/deref.js
+  // node_modules/@smithy/core/dist-es/submodules/schema/deref.js
   var deref;
   var init_deref = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/schema/deref.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/schema/deref.js"() {
       init_polyfills();
       deref = (schemaRef) => {
         if (typeof schemaRef === "function") {
@@ -27827,10 +27827,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/operation.js
+  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/operation.js
   var operation;
   var init_operation = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/operation.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/operation.js"() {
       init_polyfills();
       operation = (namespace, name, traits, input, output) => ({
         name,
@@ -27842,10 +27842,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaDeserializationMiddleware.js
+  // node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaDeserializationMiddleware.js
   var schemaDeserializationMiddleware, findHeader;
   var init_schemaDeserializationMiddleware = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaDeserializationMiddleware.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaDeserializationMiddleware.js"() {
       init_polyfills();
       init_dist_es2();
       init_dist_es16();
@@ -27911,7 +27911,7 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/querystring-parser/dist-es/index.js
+  // node_modules/@smithy/querystring-parser/dist-es/index.js
   function parseQueryString(querystring) {
     const query = {};
     querystring = querystring.replace(/^\?/, "");
@@ -27934,15 +27934,15 @@ ${value}\r
     return query;
   }
   var init_dist_es22 = __esm({
-    "../../node_modules/@smithy/querystring-parser/dist-es/index.js"() {
+    "node_modules/@smithy/querystring-parser/dist-es/index.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/url-parser/dist-es/index.js
+  // node_modules/@smithy/url-parser/dist-es/index.js
   var parseUrl;
   var init_dist_es23 = __esm({
-    "../../node_modules/@smithy/url-parser/dist-es/index.js"() {
+    "node_modules/@smithy/url-parser/dist-es/index.js"() {
       init_polyfills();
       init_dist_es22();
       parseUrl = (url) => {
@@ -27965,10 +27965,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/endpoints/toEndpointV1.js
+  // node_modules/@smithy/core/dist-es/submodules/endpoints/toEndpointV1.js
   var toEndpointV1;
   var init_toEndpointV1 = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/endpoints/toEndpointV1.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/endpoints/toEndpointV1.js"() {
       init_polyfills();
       init_dist_es23();
       toEndpointV1 = (endpoint) => {
@@ -27990,18 +27990,18 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/endpoints/index.js
+  // node_modules/@smithy/core/dist-es/submodules/endpoints/index.js
   var init_endpoints2 = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/endpoints/index.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/endpoints/index.js"() {
       init_polyfills();
       init_toEndpointV1();
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaSerializationMiddleware.js
+  // node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaSerializationMiddleware.js
   var schemaSerializationMiddleware;
   var init_schemaSerializationMiddleware = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaSerializationMiddleware.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaSerializationMiddleware.js"() {
       init_polyfills();
       init_endpoints2();
       init_dist_es16();
@@ -28023,7 +28023,7 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/schema/middleware/getSchemaSerdePlugin.js
+  // node_modules/@smithy/core/dist-es/submodules/schema/middleware/getSchemaSerdePlugin.js
   function getSchemaSerdePlugin(config) {
     return {
       applyToStack: (commandStack) => {
@@ -28035,7 +28035,7 @@ ${value}\r
   }
   var deserializerMiddlewareOption, serializerMiddlewareOption;
   var init_getSchemaSerdePlugin = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/schema/middleware/getSchemaSerdePlugin.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/schema/middleware/getSchemaSerdePlugin.js"() {
       init_polyfills();
       init_schemaDeserializationMiddleware();
       init_schemaSerializationMiddleware();
@@ -28054,49 +28054,49 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/Schema.js
+  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/Schema.js
   var init_Schema = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/Schema.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/Schema.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/ListSchema.js
+  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/ListSchema.js
   var init_ListSchema = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/ListSchema.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/ListSchema.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/MapSchema.js
+  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/MapSchema.js
   var init_MapSchema = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/MapSchema.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/MapSchema.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/OperationSchema.js
+  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/OperationSchema.js
   var init_OperationSchema = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/OperationSchema.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/OperationSchema.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/StructureSchema.js
+  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/StructureSchema.js
   var init_StructureSchema = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/StructureSchema.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/StructureSchema.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/ErrorSchema.js
+  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/ErrorSchema.js
   var init_ErrorSchema = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/ErrorSchema.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/ErrorSchema.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/translateTraits.js
+  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/translateTraits.js
   function translateTraits(indicator) {
     if (typeof indicator === "object") {
       return indicator;
@@ -28124,13 +28124,13 @@ ${value}\r
   }
   var traitsCache;
   var init_translateTraits = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/translateTraits.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/translateTraits.js"() {
       init_polyfills();
       traitsCache = [];
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/NormalizedSchema.js
+  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/NormalizedSchema.js
   function member(memberSchema, memberName) {
     if (memberSchema instanceof NormalizedSchema) {
       return Object.assign(memberSchema, {
@@ -28143,7 +28143,7 @@ ${value}\r
   }
   var anno, simpleSchemaCacheN, simpleSchemaCacheS, _NormalizedSchema, NormalizedSchema, isMemberSchema, isStaticSchema;
   var init_NormalizedSchema = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/NormalizedSchema.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/NormalizedSchema.js"() {
       init_polyfills();
       init_deref();
       init_translateTraits();
@@ -28421,24 +28421,24 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/SimpleSchema.js
+  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/SimpleSchema.js
   var init_SimpleSchema = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/SimpleSchema.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/SimpleSchema.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/sentinels.js
+  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/sentinels.js
   var init_sentinels2 = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/sentinels.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/sentinels.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/schema/TypeRegistry.js
+  // node_modules/@smithy/core/dist-es/submodules/schema/TypeRegistry.js
   var _TypeRegistry, TypeRegistry;
   var init_TypeRegistry = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/schema/TypeRegistry.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/schema/TypeRegistry.js"() {
       init_polyfills();
       _TypeRegistry = class _TypeRegistry {
         constructor(namespace, schemas = /* @__PURE__ */ new Map(), exceptions = /* @__PURE__ */ new Map()) {
@@ -28533,9 +28533,9 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/schema/index.js
+  // node_modules/@smithy/core/dist-es/submodules/schema/index.js
   var init_schema2 = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/schema/index.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/schema/index.js"() {
       init_polyfills();
       init_deref();
       init_getSchemaSerdePlugin();
@@ -28554,17 +28554,17 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/serde/copyDocumentWithTransform.js
+  // node_modules/@smithy/core/dist-es/submodules/serde/copyDocumentWithTransform.js
   var init_copyDocumentWithTransform = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/serde/copyDocumentWithTransform.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/serde/copyDocumentWithTransform.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/serde/parse-utils.js
+  // node_modules/@smithy/core/dist-es/submodules/serde/parse-utils.js
   var expectNumber, MAX_FLOAT, expectFloat32, expectLong, expectShort, expectByte, expectSizedInt, castInt, strictParseFloat32, NUMBER_REGEX, parseNumber, strictParseShort, strictParseByte, stackTraceWarning, logger;
   var init_parse_utils = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/serde/parse-utils.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/serde/parse-utils.js"() {
       init_polyfills();
       expectNumber = (value) => {
         if (value === null || value === void 0) {
@@ -28657,7 +28657,7 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/serde/date-utils.js
+  // node_modules/@smithy/core/dist-es/submodules/serde/date-utils.js
   function dateToUtcString(date2) {
     const year2 = date2.getUTCFullYear();
     const month = date2.getUTCMonth();
@@ -28674,7 +28674,7 @@ ${value}\r
   }
   var DAYS, MONTHS, RFC3339, RFC3339_WITH_OFFSET, IMF_FIXDATE, RFC_850_DATE, ASC_TIME, parseRfc7231DateTime, buildDate, parseTwoDigitYear, FIFTY_YEARS_IN_MILLIS, adjustRfc850Year, parseMonthByShortName, DAYS_IN_MONTH, validateDayOfMonth, isLeapYear, parseDateValue, parseMilliseconds, stripLeadingZeroes;
   var init_date_utils = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/serde/date-utils.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/serde/date-utils.js"() {
       init_polyfills();
       init_parse_utils();
       DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -28779,19 +28779,19 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/uuid/dist-es/randomUUID.browser.js
+  // node_modules/@smithy/uuid/dist-es/randomUUID.browser.js
   var randomUUID;
   var init_randomUUID_browser = __esm({
-    "../../node_modules/@smithy/uuid/dist-es/randomUUID.browser.js"() {
+    "node_modules/@smithy/uuid/dist-es/randomUUID.browser.js"() {
       init_polyfills();
       randomUUID = typeof crypto !== "undefined" && crypto.randomUUID && crypto.randomUUID.bind(crypto);
     }
   });
 
-  // ../../node_modules/@smithy/uuid/dist-es/v4.js
+  // node_modules/@smithy/uuid/dist-es/v4.js
   var decimalToHex, v4;
   var init_v4 = __esm({
-    "../../node_modules/@smithy/uuid/dist-es/v4.js"() {
+    "node_modules/@smithy/uuid/dist-es/v4.js"() {
       init_polyfills();
       init_randomUUID_browser();
       decimalToHex = Array.from({ length: 256 }, (_, i2) => i2.toString(16).padStart(2, "0"));
@@ -28808,26 +28808,26 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/uuid/dist-es/index.js
+  // node_modules/@smithy/uuid/dist-es/index.js
   var init_dist_es24 = __esm({
-    "../../node_modules/@smithy/uuid/dist-es/index.js"() {
+    "node_modules/@smithy/uuid/dist-es/index.js"() {
       init_polyfills();
       init_v4();
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/serde/generateIdempotencyToken.js
+  // node_modules/@smithy/core/dist-es/submodules/serde/generateIdempotencyToken.js
   var init_generateIdempotencyToken = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/serde/generateIdempotencyToken.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/serde/generateIdempotencyToken.js"() {
       init_polyfills();
       init_dist_es24();
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/serde/lazy-json.js
+  // node_modules/@smithy/core/dist-es/submodules/serde/lazy-json.js
   var LazyJsonString;
   var init_lazy_json = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/serde/lazy-json.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/serde/lazy-json.js"() {
       init_polyfills();
       LazyJsonString = function LazyJsonString2(val) {
         const str = Object.assign(new String(val), {
@@ -28855,7 +28855,7 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/serde/quote-header.js
+  // node_modules/@smithy/core/dist-es/submodules/serde/quote-header.js
   function quoteHeader(part) {
     if (part.includes(",") || part.includes('"')) {
       part = `"${part.replace(/"/g, '\\"')}"`;
@@ -28863,12 +28863,12 @@ ${value}\r
     return part;
   }
   var init_quote_header = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/serde/quote-header.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/serde/quote-header.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/serde/schema-serde-lib/schema-date-utils.js
+  // node_modules/@smithy/core/dist-es/submodules/serde/schema-serde-lib/schema-date-utils.js
   function range(v2, min, max) {
     const _v = Number(v2);
     if (_v < min || _v > max) {
@@ -28877,7 +28877,7 @@ ${value}\r
   }
   var ddd, mmm, time, date, year, RFC3339_WITH_OFFSET2, IMF_FIXDATE2, RFC_850_DATE2, ASC_TIME2, months, _parseEpochTimestamp, _parseRfc3339DateTimeWithOffset, _parseRfc7231DateTime;
   var init_schema_date_utils = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/serde/schema-serde-lib/schema-date-utils.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/serde/schema-serde-lib/schema-date-utils.js"() {
       init_polyfills();
       ddd = `(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)(?:[ne|u?r]?s?day)?`;
       mmm = `(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)`;
@@ -28973,7 +28973,7 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/serde/split-every.js
+  // node_modules/@smithy/core/dist-es/submodules/serde/split-every.js
   function splitEvery(value, delimiter, numDelimiters) {
     if (numDelimiters <= 0 || !Number.isInteger(numDelimiters)) {
       throw new Error("Invalid number of delimiters (" + numDelimiters + ") for splitEvery.");
@@ -29001,15 +29001,15 @@ ${value}\r
     return compoundSegments;
   }
   var init_split_every = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/serde/split-every.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/serde/split-every.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/serde/split-header.js
+  // node_modules/@smithy/core/dist-es/submodules/serde/split-header.js
   var splitHeader;
   var init_split_header = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/serde/split-header.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/serde/split-header.js"() {
       init_polyfills();
       splitHeader = (value) => {
         const z2 = value.length;
@@ -29051,10 +29051,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/serde/value/NumericValue.js
+  // node_modules/@smithy/core/dist-es/submodules/serde/value/NumericValue.js
   var format, NumericValue;
   var init_NumericValue = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/serde/value/NumericValue.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/serde/value/NumericValue.js"() {
       init_polyfills();
       format = /^-?\d*(\.\d+)?$/;
       NumericValue = class _NumericValue {
@@ -29081,9 +29081,9 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/serde/index.js
+  // node_modules/@smithy/core/dist-es/submodules/serde/index.js
   var init_serde2 = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/serde/index.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/serde/index.js"() {
       init_polyfills();
       init_copyDocumentWithTransform();
       init_date_utils();
@@ -29098,10 +29098,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/protocols/SerdeContext.js
+  // node_modules/@smithy/core/dist-es/submodules/protocols/SerdeContext.js
   var SerdeContext;
   var init_SerdeContext = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/protocols/SerdeContext.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/protocols/SerdeContext.js"() {
       init_polyfills();
       SerdeContext = class {
         constructor() {
@@ -29114,10 +29114,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/event-streams/EventStreamSerde.js
+  // node_modules/@smithy/core/dist-es/submodules/event-streams/EventStreamSerde.js
   var EventStreamSerde;
   var init_EventStreamSerde = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/event-streams/EventStreamSerde.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/event-streams/EventStreamSerde.js"() {
       init_polyfills();
       init_dist_es6();
       EventStreamSerde = class {
@@ -29365,22 +29365,22 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/event-streams/index.js
+  // node_modules/@smithy/core/dist-es/submodules/event-streams/index.js
   var event_streams_exports = {};
   __export(event_streams_exports, {
     EventStreamSerde: () => EventStreamSerde
   });
   var init_event_streams = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/event-streams/index.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/event-streams/index.js"() {
       init_polyfills();
       init_EventStreamSerde();
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/protocols/HttpProtocol.js
+  // node_modules/@smithy/core/dist-es/submodules/protocols/HttpProtocol.js
   var HttpProtocol;
   var init_HttpProtocol = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/protocols/HttpProtocol.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/protocols/HttpProtocol.js"() {
       init_polyfills();
       init_schema2();
       init_dist_es2();
@@ -29526,10 +29526,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/protocols/HttpBindingProtocol.js
+  // node_modules/@smithy/core/dist-es/submodules/protocols/HttpBindingProtocol.js
   var HttpBindingProtocol;
   var init_HttpBindingProtocol = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/protocols/HttpBindingProtocol.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/protocols/HttpBindingProtocol.js"() {
       init_polyfills();
       init_schema2();
       init_serde2();
@@ -29803,28 +29803,28 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/protocols/RpcProtocol.js
+  // node_modules/@smithy/core/dist-es/submodules/protocols/RpcProtocol.js
   var init_RpcProtocol = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/protocols/RpcProtocol.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/protocols/RpcProtocol.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/protocols/resolve-path.js
+  // node_modules/@smithy/core/dist-es/submodules/protocols/resolve-path.js
   var init_resolve_path = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/protocols/resolve-path.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/protocols/resolve-path.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/protocols/requestBuilder.js
+  // node_modules/@smithy/core/dist-es/submodules/protocols/requestBuilder.js
   var init_requestBuilder = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/protocols/requestBuilder.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/protocols/requestBuilder.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/protocols/serde/determineTimestampFormat.js
+  // node_modules/@smithy/core/dist-es/submodules/protocols/serde/determineTimestampFormat.js
   function determineTimestampFormat(ns, settings) {
     if (settings.timestampFormat.useTrait) {
       if (ns.isTimestampSchema() && (ns.getSchema() === 5 || ns.getSchema() === 6 || ns.getSchema() === 7)) {
@@ -29836,15 +29836,15 @@ ${value}\r
     return bindingFormat ?? settings.timestampFormat.default;
   }
   var init_determineTimestampFormat = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/protocols/serde/determineTimestampFormat.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/protocols/serde/determineTimestampFormat.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/protocols/serde/FromStringShapeDeserializer.js
+  // node_modules/@smithy/core/dist-es/submodules/protocols/serde/FromStringShapeDeserializer.js
   var FromStringShapeDeserializer;
   var init_FromStringShapeDeserializer = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/protocols/serde/FromStringShapeDeserializer.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/protocols/serde/FromStringShapeDeserializer.js"() {
       init_polyfills();
       init_schema2();
       init_serde2();
@@ -29915,10 +29915,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeDeserializer.js
+  // node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeDeserializer.js
   var HttpInterceptingShapeDeserializer;
   var init_HttpInterceptingShapeDeserializer = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeDeserializer.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeDeserializer.js"() {
       init_polyfills();
       init_schema2();
       init_dist_es6();
@@ -29964,10 +29964,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/protocols/serde/ToStringShapeSerializer.js
+  // node_modules/@smithy/core/dist-es/submodules/protocols/serde/ToStringShapeSerializer.js
   var ToStringShapeSerializer;
   var init_ToStringShapeSerializer = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/protocols/serde/ToStringShapeSerializer.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/protocols/serde/ToStringShapeSerializer.js"() {
       init_polyfills();
       init_schema2();
       init_serde2();
@@ -30062,10 +30062,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeSerializer.js
+  // node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeSerializer.js
   var HttpInterceptingShapeSerializer;
   var init_HttpInterceptingShapeSerializer = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeSerializer.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeSerializer.js"() {
       init_polyfills();
       init_schema2();
       init_ToStringShapeSerializer();
@@ -30103,9 +30103,9 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/submodules/protocols/index.js
+  // node_modules/@smithy/core/dist-es/submodules/protocols/index.js
   var init_protocols = __esm({
-    "../../node_modules/@smithy/core/dist-es/submodules/protocols/index.js"() {
+    "node_modules/@smithy/core/dist-es/submodules/protocols/index.js"() {
       init_polyfills();
       init_collect_stream_body();
       init_extended_encode_uri_component();
@@ -30123,14 +30123,14 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/smithy-client/dist-es/collect-stream-body.js
+  // node_modules/@smithy/smithy-client/dist-es/collect-stream-body.js
   var init_collect_stream_body2 = __esm({
-    "../../node_modules/@smithy/smithy-client/dist-es/collect-stream-body.js"() {
+    "node_modules/@smithy/smithy-client/dist-es/collect-stream-body.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/smithy-client/dist-es/schemaLogFilter.js
+  // node_modules/@smithy/smithy-client/dist-es/schemaLogFilter.js
   function schemaLogFilter(schema, data) {
     if (data == null) {
       return data;
@@ -30163,17 +30163,17 @@ ${value}\r
   }
   var SENSITIVE_STRING;
   var init_schemaLogFilter = __esm({
-    "../../node_modules/@smithy/smithy-client/dist-es/schemaLogFilter.js"() {
+    "node_modules/@smithy/smithy-client/dist-es/schemaLogFilter.js"() {
       init_polyfills();
       init_schema2();
       SENSITIVE_STRING = "***SensitiveInformation***";
     }
   });
 
-  // ../../node_modules/@smithy/smithy-client/dist-es/command.js
+  // node_modules/@smithy/smithy-client/dist-es/command.js
   var Command, ClassBuilder;
   var init_command2 = __esm({
-    "../../node_modules/@smithy/smithy-client/dist-es/command.js"() {
+    "node_modules/@smithy/smithy-client/dist-es/command.js"() {
       init_polyfills();
       init_dist_es21();
       init_dist_es();
@@ -30314,17 +30314,17 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/smithy-client/dist-es/constants.js
+  // node_modules/@smithy/smithy-client/dist-es/constants.js
   var init_constants4 = __esm({
-    "../../node_modules/@smithy/smithy-client/dist-es/constants.js"() {
+    "node_modules/@smithy/smithy-client/dist-es/constants.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/smithy-client/dist-es/create-aggregated-client.js
+  // node_modules/@smithy/smithy-client/dist-es/create-aggregated-client.js
   var createAggregatedClient;
   var init_create_aggregated_client = __esm({
-    "../../node_modules/@smithy/smithy-client/dist-es/create-aggregated-client.js"() {
+    "node_modules/@smithy/smithy-client/dist-es/create-aggregated-client.js"() {
       init_polyfills();
       createAggregatedClient = (commands2, Client2, options) => {
         for (const [command, CommandCtor] of Object.entries(commands2)) {
@@ -30374,10 +30374,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/smithy-client/dist-es/exceptions.js
+  // node_modules/@smithy/smithy-client/dist-es/exceptions.js
   var ServiceException, decorateServiceException;
   var init_exceptions = __esm({
-    "../../node_modules/@smithy/smithy-client/dist-es/exceptions.js"() {
+    "node_modules/@smithy/smithy-client/dist-es/exceptions.js"() {
       init_polyfills();
       ServiceException = class _ServiceException extends Error {
         constructor(options) {
@@ -30427,17 +30427,17 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/smithy-client/dist-es/default-error-handler.js
+  // node_modules/@smithy/smithy-client/dist-es/default-error-handler.js
   var init_default_error_handler = __esm({
-    "../../node_modules/@smithy/smithy-client/dist-es/default-error-handler.js"() {
+    "node_modules/@smithy/smithy-client/dist-es/default-error-handler.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/smithy-client/dist-es/defaults-mode.js
+  // node_modules/@smithy/smithy-client/dist-es/defaults-mode.js
   var loadConfigsForDefaultMode;
   var init_defaults_mode = __esm({
-    "../../node_modules/@smithy/smithy-client/dist-es/defaults-mode.js"() {
+    "node_modules/@smithy/smithy-client/dist-es/defaults-mode.js"() {
       init_polyfills();
       loadConfigsForDefaultMode = (mode) => {
         switch (mode) {
@@ -30468,24 +30468,24 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/smithy-client/dist-es/emitWarningIfUnsupportedVersion.js
+  // node_modules/@smithy/smithy-client/dist-es/emitWarningIfUnsupportedVersion.js
   var init_emitWarningIfUnsupportedVersion2 = __esm({
-    "../../node_modules/@smithy/smithy-client/dist-es/emitWarningIfUnsupportedVersion.js"() {
+    "node_modules/@smithy/smithy-client/dist-es/emitWarningIfUnsupportedVersion.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/smithy-client/dist-es/extended-encode-uri-component.js
+  // node_modules/@smithy/smithy-client/dist-es/extended-encode-uri-component.js
   var init_extended_encode_uri_component2 = __esm({
-    "../../node_modules/@smithy/smithy-client/dist-es/extended-encode-uri-component.js"() {
+    "node_modules/@smithy/smithy-client/dist-es/extended-encode-uri-component.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/smithy-client/dist-es/extensions/checksum.js
+  // node_modules/@smithy/smithy-client/dist-es/extensions/checksum.js
   var knownAlgorithms, getChecksumConfiguration, resolveChecksumRuntimeConfig;
   var init_checksum3 = __esm({
-    "../../node_modules/@smithy/smithy-client/dist-es/extensions/checksum.js"() {
+    "node_modules/@smithy/smithy-client/dist-es/extensions/checksum.js"() {
       init_polyfills();
       init_dist_es();
       knownAlgorithms = Object.values(AlgorithmId);
@@ -30537,10 +30537,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/smithy-client/dist-es/extensions/retry.js
+  // node_modules/@smithy/smithy-client/dist-es/extensions/retry.js
   var getRetryConfiguration, resolveRetryRuntimeConfig;
   var init_retry2 = __esm({
-    "../../node_modules/@smithy/smithy-client/dist-es/extensions/retry.js"() {
+    "node_modules/@smithy/smithy-client/dist-es/extensions/retry.js"() {
       init_polyfills();
       getRetryConfiguration = (runtimeConfig) => {
         return {
@@ -30560,10 +30560,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/smithy-client/dist-es/extensions/defaultExtensionConfiguration.js
+  // node_modules/@smithy/smithy-client/dist-es/extensions/defaultExtensionConfiguration.js
   var getDefaultExtensionConfiguration, resolveDefaultRuntimeConfig;
   var init_defaultExtensionConfiguration2 = __esm({
-    "../../node_modules/@smithy/smithy-client/dist-es/extensions/defaultExtensionConfiguration.js"() {
+    "node_modules/@smithy/smithy-client/dist-es/extensions/defaultExtensionConfiguration.js"() {
       init_polyfills();
       init_checksum3();
       init_retry2();
@@ -30576,25 +30576,25 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/smithy-client/dist-es/extensions/index.js
+  // node_modules/@smithy/smithy-client/dist-es/extensions/index.js
   var init_extensions3 = __esm({
-    "../../node_modules/@smithy/smithy-client/dist-es/extensions/index.js"() {
+    "node_modules/@smithy/smithy-client/dist-es/extensions/index.js"() {
       init_polyfills();
       init_defaultExtensionConfiguration2();
     }
   });
 
-  // ../../node_modules/@smithy/smithy-client/dist-es/get-array-if-single-item.js
+  // node_modules/@smithy/smithy-client/dist-es/get-array-if-single-item.js
   var init_get_array_if_single_item = __esm({
-    "../../node_modules/@smithy/smithy-client/dist-es/get-array-if-single-item.js"() {
+    "node_modules/@smithy/smithy-client/dist-es/get-array-if-single-item.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/smithy-client/dist-es/get-value-from-text-node.js
+  // node_modules/@smithy/smithy-client/dist-es/get-value-from-text-node.js
   var getValueFromTextNode;
   var init_get_value_from_text_node = __esm({
-    "../../node_modules/@smithy/smithy-client/dist-es/get-value-from-text-node.js"() {
+    "node_modules/@smithy/smithy-client/dist-es/get-value-from-text-node.js"() {
       init_polyfills();
       getValueFromTextNode = (obj) => {
         const textNodeName = "#text";
@@ -30610,17 +30610,17 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/smithy-client/dist-es/is-serializable-header-value.js
+  // node_modules/@smithy/smithy-client/dist-es/is-serializable-header-value.js
   var init_is_serializable_header_value = __esm({
-    "../../node_modules/@smithy/smithy-client/dist-es/is-serializable-header-value.js"() {
+    "node_modules/@smithy/smithy-client/dist-es/is-serializable-header-value.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/smithy-client/dist-es/NoOpLogger.js
+  // node_modules/@smithy/smithy-client/dist-es/NoOpLogger.js
   var NoOpLogger;
   var init_NoOpLogger = __esm({
-    "../../node_modules/@smithy/smithy-client/dist-es/NoOpLogger.js"() {
+    "node_modules/@smithy/smithy-client/dist-es/NoOpLogger.js"() {
       init_polyfills();
       NoOpLogger = class {
         trace() {
@@ -30637,37 +30637,37 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/smithy-client/dist-es/object-mapping.js
+  // node_modules/@smithy/smithy-client/dist-es/object-mapping.js
   var init_object_mapping = __esm({
-    "../../node_modules/@smithy/smithy-client/dist-es/object-mapping.js"() {
+    "node_modules/@smithy/smithy-client/dist-es/object-mapping.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/smithy-client/dist-es/resolve-path.js
+  // node_modules/@smithy/smithy-client/dist-es/resolve-path.js
   var init_resolve_path2 = __esm({
-    "../../node_modules/@smithy/smithy-client/dist-es/resolve-path.js"() {
+    "node_modules/@smithy/smithy-client/dist-es/resolve-path.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/smithy-client/dist-es/ser-utils.js
+  // node_modules/@smithy/smithy-client/dist-es/ser-utils.js
   var init_ser_utils = __esm({
-    "../../node_modules/@smithy/smithy-client/dist-es/ser-utils.js"() {
+    "node_modules/@smithy/smithy-client/dist-es/ser-utils.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/smithy-client/dist-es/serde-json.js
+  // node_modules/@smithy/smithy-client/dist-es/serde-json.js
   var init_serde_json = __esm({
-    "../../node_modules/@smithy/smithy-client/dist-es/serde-json.js"() {
+    "node_modules/@smithy/smithy-client/dist-es/serde-json.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/smithy-client/dist-es/index.js
+  // node_modules/@smithy/smithy-client/dist-es/index.js
   var init_dist_es25 = __esm({
-    "../../node_modules/@smithy/smithy-client/dist-es/index.js"() {
+    "node_modules/@smithy/smithy-client/dist-es/index.js"() {
       init_polyfills();
       init_client3();
       init_collect_stream_body2();
@@ -30692,7 +30692,7 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/check-content-length-header.js
+  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/check-content-length-header.js
   function checkContentLengthHeader() {
     return (next, context) => async (args) => {
       const { request } = args;
@@ -30711,7 +30711,7 @@ ${value}\r
   }
   var CONTENT_LENGTH_HEADER, DECODED_CONTENT_LENGTH_HEADER, checkContentLengthHeaderMiddlewareOptions, getCheckContentLengthHeaderPlugin;
   var init_check_content_length_header = __esm({
-    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/check-content-length-header.js"() {
+    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/check-content-length-header.js"() {
       init_polyfills();
       init_dist_es2();
       init_dist_es25();
@@ -30731,10 +30731,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-endpoint-middleware.js
+  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-endpoint-middleware.js
   var regionRedirectEndpointMiddleware, regionRedirectEndpointMiddlewareOptions;
   var init_region_redirect_endpoint_middleware = __esm({
-    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-endpoint-middleware.js"() {
+    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-endpoint-middleware.js"() {
       init_polyfills();
       regionRedirectEndpointMiddleware = (config) => {
         return (next, context) => async (args) => {
@@ -30780,7 +30780,7 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-middleware.js
+  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-middleware.js
   function regionRedirectMiddleware(clientConfig) {
     return (next, context) => async (args) => {
       try {
@@ -30809,7 +30809,7 @@ ${value}\r
   }
   var regionRedirectMiddlewareOptions, getRegionRedirectMiddlewarePlugin;
   var init_region_redirect_middleware = __esm({
-    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-middleware.js"() {
+    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-middleware.js"() {
       init_polyfills();
       init_region_redirect_endpoint_middleware();
       regionRedirectMiddlewareOptions = {
@@ -30827,10 +30827,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-expires-middleware.js
+  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-expires-middleware.js
   var s3ExpiresMiddleware, s3ExpiresMiddlewareOptions, getS3ExpiresMiddlewarePlugin;
   var init_s3_expires_middleware = __esm({
-    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-expires-middleware.js"() {
+    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-expires-middleware.js"() {
       init_polyfills();
       init_dist_es2();
       init_dist_es25();
@@ -30867,10 +30867,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCache.js
+  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCache.js
   var _S3ExpressIdentityCache, S3ExpressIdentityCache;
   var init_S3ExpressIdentityCache = __esm({
-    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCache.js"() {
+    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCache.js"() {
       init_polyfills();
       _S3ExpressIdentityCache = class _S3ExpressIdentityCache {
         constructor(data = {}) {
@@ -30915,10 +30915,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCacheEntry.js
+  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCacheEntry.js
   var S3ExpressIdentityCacheEntry;
   var init_S3ExpressIdentityCacheEntry = __esm({
-    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCacheEntry.js"() {
+    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCacheEntry.js"() {
       init_polyfills();
       S3ExpressIdentityCacheEntry = class {
         constructor(_identity, isRefreshing = false, accessed = Date.now()) {
@@ -30937,10 +30937,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityProviderImpl.js
+  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityProviderImpl.js
   var _S3ExpressIdentityProviderImpl, S3ExpressIdentityProviderImpl;
   var init_S3ExpressIdentityProviderImpl = __esm({
-    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityProviderImpl.js"() {
+    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityProviderImpl.js"() {
       init_polyfills();
       init_S3ExpressIdentityCache();
       init_S3ExpressIdentityCacheEntry();
@@ -30995,10 +30995,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/signature-v4/dist-es/constants.js
+  // node_modules/@smithy/signature-v4/dist-es/constants.js
   var ALGORITHM_QUERY_PARAM, CREDENTIAL_QUERY_PARAM, AMZ_DATE_QUERY_PARAM, SIGNED_HEADERS_QUERY_PARAM, EXPIRES_QUERY_PARAM, SIGNATURE_QUERY_PARAM, TOKEN_QUERY_PARAM, AUTH_HEADER, AMZ_DATE_HEADER, DATE_HEADER, GENERATED_HEADERS, SIGNATURE_HEADER, SHA256_HEADER, TOKEN_HEADER, ALWAYS_UNSIGNABLE_HEADERS, PROXY_HEADER_PATTERN, SEC_HEADER_PATTERN, ALGORITHM_IDENTIFIER, EVENT_ALGORITHM_IDENTIFIER, UNSIGNED_PAYLOAD, MAX_CACHE_SIZE, KEY_TYPE_IDENTIFIER, MAX_PRESIGNED_TTL;
   var init_constants5 = __esm({
-    "../../node_modules/@smithy/signature-v4/dist-es/constants.js"() {
+    "node_modules/@smithy/signature-v4/dist-es/constants.js"() {
       init_polyfills();
       ALGORITHM_QUERY_PARAM = "X-Amz-Algorithm";
       CREDENTIAL_QUERY_PARAM = "X-Amz-Credential";
@@ -31042,10 +31042,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/signature-v4/dist-es/credentialDerivation.js
+  // node_modules/@smithy/signature-v4/dist-es/credentialDerivation.js
   var signingKeyCache, cacheQueue, createScope, getSigningKey, hmac;
   var init_credentialDerivation = __esm({
-    "../../node_modules/@smithy/signature-v4/dist-es/credentialDerivation.js"() {
+    "node_modules/@smithy/signature-v4/dist-es/credentialDerivation.js"() {
       init_polyfills();
       init_dist_es11();
       init_dist_es6();
@@ -31077,10 +31077,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/signature-v4/dist-es/getCanonicalHeaders.js
+  // node_modules/@smithy/signature-v4/dist-es/getCanonicalHeaders.js
   var getCanonicalHeaders;
   var init_getCanonicalHeaders = __esm({
-    "../../node_modules/@smithy/signature-v4/dist-es/getCanonicalHeaders.js"() {
+    "node_modules/@smithy/signature-v4/dist-es/getCanonicalHeaders.js"() {
       init_polyfills();
       init_constants5();
       getCanonicalHeaders = ({ headers }, unsignableHeaders, signableHeaders) => {
@@ -31102,10 +31102,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/signature-v4/dist-es/getPayloadHash.js
+  // node_modules/@smithy/signature-v4/dist-es/getPayloadHash.js
   var getPayloadHash;
   var init_getPayloadHash = __esm({
-    "../../node_modules/@smithy/signature-v4/dist-es/getPayloadHash.js"() {
+    "node_modules/@smithy/signature-v4/dist-es/getPayloadHash.js"() {
       init_polyfills();
       init_dist_es13();
       init_dist_es11();
@@ -31129,7 +31129,7 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/signature-v4/dist-es/HeaderFormatter.js
+  // node_modules/@smithy/signature-v4/dist-es/HeaderFormatter.js
   function negate(bytes) {
     for (let i2 = 0; i2 < 8; i2++) {
       bytes[i2] ^= 255;
@@ -31142,7 +31142,7 @@ ${value}\r
   }
   var HeaderFormatter, HEADER_VALUE_TYPE, UUID_PATTERN, Int64;
   var init_HeaderFormatter = __esm({
-    "../../node_modules/@smithy/signature-v4/dist-es/HeaderFormatter.js"() {
+    "node_modules/@smithy/signature-v4/dist-es/HeaderFormatter.js"() {
       init_polyfills();
       init_dist_es11();
       init_dist_es6();
@@ -31262,10 +31262,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/signature-v4/dist-es/headerUtil.js
+  // node_modules/@smithy/signature-v4/dist-es/headerUtil.js
   var hasHeader2;
   var init_headerUtil = __esm({
-    "../../node_modules/@smithy/signature-v4/dist-es/headerUtil.js"() {
+    "node_modules/@smithy/signature-v4/dist-es/headerUtil.js"() {
       init_polyfills();
       hasHeader2 = (soughtHeader, headers) => {
         soughtHeader = soughtHeader.toLowerCase();
@@ -31279,10 +31279,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/signature-v4/dist-es/moveHeadersToQuery.js
+  // node_modules/@smithy/signature-v4/dist-es/moveHeadersToQuery.js
   var moveHeadersToQuery;
   var init_moveHeadersToQuery = __esm({
-    "../../node_modules/@smithy/signature-v4/dist-es/moveHeadersToQuery.js"() {
+    "node_modules/@smithy/signature-v4/dist-es/moveHeadersToQuery.js"() {
       init_polyfills();
       init_dist_es2();
       moveHeadersToQuery = (request, options = {}) => {
@@ -31303,10 +31303,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/signature-v4/dist-es/prepareRequest.js
+  // node_modules/@smithy/signature-v4/dist-es/prepareRequest.js
   var prepareRequest;
   var init_prepareRequest = __esm({
-    "../../node_modules/@smithy/signature-v4/dist-es/prepareRequest.js"() {
+    "node_modules/@smithy/signature-v4/dist-es/prepareRequest.js"() {
       init_polyfills();
       init_dist_es2();
       init_constants5();
@@ -31322,10 +31322,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/signature-v4/dist-es/getCanonicalQuery.js
+  // node_modules/@smithy/signature-v4/dist-es/getCanonicalQuery.js
   var getCanonicalQuery;
   var init_getCanonicalQuery = __esm({
-    "../../node_modules/@smithy/signature-v4/dist-es/getCanonicalQuery.js"() {
+    "node_modules/@smithy/signature-v4/dist-es/getCanonicalQuery.js"() {
       init_polyfills();
       init_dist_es8();
       init_constants5();
@@ -31350,10 +31350,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/signature-v4/dist-es/utilDate.js
+  // node_modules/@smithy/signature-v4/dist-es/utilDate.js
   var iso8601, toDate;
   var init_utilDate = __esm({
-    "../../node_modules/@smithy/signature-v4/dist-es/utilDate.js"() {
+    "node_modules/@smithy/signature-v4/dist-es/utilDate.js"() {
       init_polyfills();
       iso8601 = (time2) => toDate(time2).toISOString().replace(/\.\d{3}Z$/, "Z");
       toDate = (time2) => {
@@ -31371,10 +31371,10 @@ ${value}\r
     }
   });
 
-  // ../../node_modules/@smithy/signature-v4/dist-es/SignatureV4Base.js
+  // node_modules/@smithy/signature-v4/dist-es/SignatureV4Base.js
   var SignatureV4Base;
   var init_SignatureV4Base = __esm({
-    "../../node_modules/@smithy/signature-v4/dist-es/SignatureV4Base.js"() {
+    "node_modules/@smithy/signature-v4/dist-es/SignatureV4Base.js"() {
       init_polyfills();
       init_dist_es11();
       init_dist_es16();
@@ -31455,10 +31455,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/signature-v4/dist-es/SignatureV4.js
+  // node_modules/@smithy/signature-v4/dist-es/SignatureV4.js
   var SignatureV4;
   var init_SignatureV4 = __esm({
-    "../../node_modules/@smithy/signature-v4/dist-es/SignatureV4.js"() {
+    "node_modules/@smithy/signature-v4/dist-es/SignatureV4.js"() {
       init_polyfills();
       init_dist_es11();
       init_dist_es6();
@@ -31597,10 +31597,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/signature-v4/dist-es/signature-v4a-container.js
+  // node_modules/@smithy/signature-v4/dist-es/signature-v4a-container.js
   var signatureV4aContainer;
   var init_signature_v4a_container = __esm({
-    "../../node_modules/@smithy/signature-v4/dist-es/signature-v4a-container.js"() {
+    "node_modules/@smithy/signature-v4/dist-es/signature-v4a-container.js"() {
       init_polyfills();
       signatureV4aContainer = {
         SignatureV4a: null
@@ -31608,9 +31608,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/signature-v4/dist-es/index.js
+  // node_modules/@smithy/signature-v4/dist-es/index.js
   var init_dist_es26 = __esm({
-    "../../node_modules/@smithy/signature-v4/dist-es/index.js"() {
+    "node_modules/@smithy/signature-v4/dist-es/index.js"() {
       init_polyfills();
       init_SignatureV4();
       init_constants5();
@@ -31619,10 +31619,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/constants.js
+  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/constants.js
   var S3_EXPRESS_BUCKET_TYPE, S3_EXPRESS_BACKEND, S3_EXPRESS_AUTH_SCHEME, SESSION_TOKEN_QUERY_PARAM, SESSION_TOKEN_HEADER;
   var init_constants6 = __esm({
-    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/constants.js"() {
+    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/constants.js"() {
       init_polyfills();
       S3_EXPRESS_BUCKET_TYPE = "Directory";
       S3_EXPRESS_BACKEND = "S3Express";
@@ -31632,7 +31632,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/SignatureV4S3Express.js
+  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/SignatureV4S3Express.js
   function getCredentialsWithoutSessionToken(credentials) {
     const credentialsWithoutSessionToken = {
       accessKeyId: credentials.accessKeyId,
@@ -31655,7 +31655,7 @@ ${toHex(hashedRequest)}`;
   }
   var SignatureV4S3Express;
   var init_SignatureV4S3Express = __esm({
-    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/SignatureV4S3Express.js"() {
+    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/SignatureV4S3Express.js"() {
       init_polyfills();
       init_dist_es26();
       init_constants6();
@@ -31681,10 +31681,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressMiddleware.js
+  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressMiddleware.js
   var s3ExpressMiddleware, s3ExpressMiddlewareOptions, getS3ExpressPlugin;
   var init_s3ExpressMiddleware = __esm({
-    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressMiddleware.js"() {
+    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressMiddleware.js"() {
       init_polyfills();
       init_client2();
       init_dist_es2();
@@ -31729,17 +31729,17 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/getSmithyContext.js
+  // node_modules/@smithy/core/dist-es/getSmithyContext.js
   var init_getSmithyContext2 = __esm({
-    "../../node_modules/@smithy/core/dist-es/getSmithyContext.js"() {
+    "node_modules/@smithy/core/dist-es/getSmithyContext.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/resolveAuthOptions.js
+  // node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/resolveAuthOptions.js
   var resolveAuthOptions;
   var init_resolveAuthOptions = __esm({
-    "../../node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/resolveAuthOptions.js"() {
+    "node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/resolveAuthOptions.js"() {
       init_polyfills();
       resolveAuthOptions = (candidateAuthOptions, authSchemePreference) => {
         if (!authSchemePreference || authSchemePreference.length === 0) {
@@ -31764,7 +31764,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/httpAuthSchemeMiddleware.js
+  // node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/httpAuthSchemeMiddleware.js
   function convertHttpAuthSchemesToMap(httpAuthSchemes) {
     const map = /* @__PURE__ */ new Map();
     for (const scheme of httpAuthSchemes) {
@@ -31774,7 +31774,7 @@ ${toHex(hashedRequest)}`;
   }
   var httpAuthSchemeMiddleware;
   var init_httpAuthSchemeMiddleware = __esm({
-    "../../node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/httpAuthSchemeMiddleware.js"() {
+    "node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/httpAuthSchemeMiddleware.js"() {
       init_polyfills();
       init_dist_es16();
       init_resolveAuthOptions();
@@ -31814,10 +31814,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemeEndpointRuleSetPlugin.js
+  // node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemeEndpointRuleSetPlugin.js
   var httpAuthSchemeEndpointRuleSetMiddlewareOptions, getHttpAuthSchemeEndpointRuleSetPlugin;
   var init_getHttpAuthSchemeEndpointRuleSetPlugin = __esm({
-    "../../node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemeEndpointRuleSetPlugin.js"() {
+    "node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemeEndpointRuleSetPlugin.js"() {
       init_polyfills();
       init_httpAuthSchemeMiddleware();
       httpAuthSchemeEndpointRuleSetMiddlewareOptions = {
@@ -31839,16 +31839,16 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemePlugin.js
+  // node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemePlugin.js
   var init_getHttpAuthSchemePlugin = __esm({
-    "../../node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemePlugin.js"() {
+    "node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemePlugin.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/index.js
+  // node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/index.js
   var init_middleware_http_auth_scheme = __esm({
-    "../../node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/index.js"() {
+    "node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/index.js"() {
       init_polyfills();
       init_httpAuthSchemeMiddleware();
       init_getHttpAuthSchemeEndpointRuleSetPlugin();
@@ -31856,10 +31856,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/middleware-http-signing/httpSigningMiddleware.js
+  // node_modules/@smithy/core/dist-es/middleware-http-signing/httpSigningMiddleware.js
   var defaultErrorHandler, defaultSuccessHandler, httpSigningMiddleware;
   var init_httpSigningMiddleware = __esm({
-    "../../node_modules/@smithy/core/dist-es/middleware-http-signing/httpSigningMiddleware.js"() {
+    "node_modules/@smithy/core/dist-es/middleware-http-signing/httpSigningMiddleware.js"() {
       init_polyfills();
       init_dist_es2();
       init_dist_es16();
@@ -31888,10 +31888,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/middleware-http-signing/getHttpSigningMiddleware.js
+  // node_modules/@smithy/core/dist-es/middleware-http-signing/getHttpSigningMiddleware.js
   var httpSigningMiddlewareOptions, getHttpSigningPlugin;
   var init_getHttpSigningMiddleware = __esm({
-    "../../node_modules/@smithy/core/dist-es/middleware-http-signing/getHttpSigningMiddleware.js"() {
+    "node_modules/@smithy/core/dist-es/middleware-http-signing/getHttpSigningMiddleware.js"() {
       init_polyfills();
       init_httpSigningMiddleware();
       httpSigningMiddlewareOptions = {
@@ -31911,19 +31911,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/middleware-http-signing/index.js
+  // node_modules/@smithy/core/dist-es/middleware-http-signing/index.js
   var init_middleware_http_signing = __esm({
-    "../../node_modules/@smithy/core/dist-es/middleware-http-signing/index.js"() {
+    "node_modules/@smithy/core/dist-es/middleware-http-signing/index.js"() {
       init_polyfills();
       init_httpSigningMiddleware();
       init_getHttpSigningMiddleware();
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/normalizeProvider.js
+  // node_modules/@smithy/core/dist-es/normalizeProvider.js
   var normalizeProvider2;
   var init_normalizeProvider2 = __esm({
-    "../../node_modules/@smithy/core/dist-es/normalizeProvider.js"() {
+    "node_modules/@smithy/core/dist-es/normalizeProvider.js"() {
       init_polyfills();
       normalizeProvider2 = (input) => {
         if (typeof input === "function")
@@ -31934,7 +31934,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/pagination/createPaginator.js
+  // node_modules/@smithy/core/dist-es/pagination/createPaginator.js
   function createPaginator(ClientCtor, CommandCtor, inputTokenName, outputTokenName, pageSizeTokenName) {
     return async function* paginateOperation(config, input, ...additionalArguments) {
       const _input = input;
@@ -31961,7 +31961,7 @@ ${toHex(hashedRequest)}`;
   }
   var makePagedClientRequest, get;
   var init_createPaginator = __esm({
-    "../../node_modules/@smithy/core/dist-es/pagination/createPaginator.js"() {
+    "node_modules/@smithy/core/dist-es/pagination/createPaginator.js"() {
       init_polyfills();
       makePagedClientRequest = async (CommandCtor, client, input, withCommand = (_) => _, ...args) => {
         let command = new CommandCtor(input);
@@ -31982,14 +31982,14 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/request-builder/requestBuilder.js
+  // node_modules/@smithy/core/dist-es/request-builder/requestBuilder.js
   var init_requestBuilder2 = __esm({
-    "../../node_modules/@smithy/core/dist-es/request-builder/requestBuilder.js"() {
+    "node_modules/@smithy/core/dist-es/request-builder/requestBuilder.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/setFeature.js
+  // node_modules/@smithy/core/dist-es/setFeature.js
   function setFeature2(context, feature, value) {
     if (!context.__smithy_context) {
       context.__smithy_context = {
@@ -32001,15 +32001,15 @@ ${toHex(hashedRequest)}`;
     context.__smithy_context.features[feature] = value;
   }
   var init_setFeature2 = __esm({
-    "../../node_modules/@smithy/core/dist-es/setFeature.js"() {
+    "node_modules/@smithy/core/dist-es/setFeature.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/util-identity-and-auth/DefaultIdentityProviderConfig.js
+  // node_modules/@smithy/core/dist-es/util-identity-and-auth/DefaultIdentityProviderConfig.js
   var DefaultIdentityProviderConfig;
   var init_DefaultIdentityProviderConfig = __esm({
-    "../../node_modules/@smithy/core/dist-es/util-identity-and-auth/DefaultIdentityProviderConfig.js"() {
+    "node_modules/@smithy/core/dist-es/util-identity-and-auth/DefaultIdentityProviderConfig.js"() {
       init_polyfills();
       DefaultIdentityProviderConfig = class {
         constructor(config) {
@@ -32028,30 +32028,30 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpApiKeyAuth.js
+  // node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpApiKeyAuth.js
   var init_httpApiKeyAuth = __esm({
-    "../../node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpApiKeyAuth.js"() {
+    "node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpApiKeyAuth.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpBearerAuth.js
+  // node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpBearerAuth.js
   var init_httpBearerAuth = __esm({
-    "../../node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpBearerAuth.js"() {
+    "node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpBearerAuth.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/noAuth.js
+  // node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/noAuth.js
   var init_noAuth = __esm({
-    "../../node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/noAuth.js"() {
+    "node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/noAuth.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/index.js
+  // node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/index.js
   var init_httpAuthSchemes = __esm({
-    "../../node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/index.js"() {
+    "node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/index.js"() {
       init_polyfills();
       init_httpApiKeyAuth();
       init_httpBearerAuth();
@@ -32059,10 +32059,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/util-identity-and-auth/memoizeIdentityProvider.js
+  // node_modules/@smithy/core/dist-es/util-identity-and-auth/memoizeIdentityProvider.js
   var createIsIdentityExpiredFunction, EXPIRATION_MS, isIdentityExpired, doesIdentityRequireRefresh, memoizeIdentityProvider;
   var init_memoizeIdentityProvider = __esm({
-    "../../node_modules/@smithy/core/dist-es/util-identity-and-auth/memoizeIdentityProvider.js"() {
+    "node_modules/@smithy/core/dist-es/util-identity-and-auth/memoizeIdentityProvider.js"() {
       init_polyfills();
       createIsIdentityExpiredFunction = (expirationMs) => function isIdentityExpired2(identity) {
         return doesIdentityRequireRefresh(identity) && identity.expiration.getTime() - Date.now() < expirationMs;
@@ -32121,9 +32121,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/util-identity-and-auth/index.js
+  // node_modules/@smithy/core/dist-es/util-identity-and-auth/index.js
   var init_util_identity_and_auth = __esm({
-    "../../node_modules/@smithy/core/dist-es/util-identity-and-auth/index.js"() {
+    "node_modules/@smithy/core/dist-es/util-identity-and-auth/index.js"() {
       init_polyfills();
       init_DefaultIdentityProviderConfig();
       init_httpAuthSchemes();
@@ -32131,9 +32131,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/core/dist-es/index.js
+  // node_modules/@smithy/core/dist-es/index.js
   var init_dist_es27 = __esm({
-    "../../node_modules/@smithy/core/dist-es/index.js"() {
+    "node_modules/@smithy/core/dist-es/index.js"() {
       init_polyfills();
       init_getSmithyContext2();
       init_middleware_http_auth_scheme();
@@ -32146,10 +32146,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/signS3Express.js
+  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/signS3Express.js
   var signS3Express;
   var init_signS3Express = __esm({
-    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/signS3Express.js"() {
+    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/signS3Express.js"() {
       init_polyfills();
       signS3Express = async (s3ExpressIdentity, signingOptions, request, sigV4MultiRegionSigner) => {
         const signedRequest = await sigV4MultiRegionSigner.signWithCredentials(request, s3ExpressIdentity, {});
@@ -32161,10 +32161,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressHttpSigningMiddleware.js
+  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressHttpSigningMiddleware.js
   var defaultErrorHandler2, defaultSuccessHandler2, s3ExpressHttpSigningMiddleware, getS3ExpressHttpSigningPlugin;
   var init_s3ExpressHttpSigningMiddleware = __esm({
-    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressHttpSigningMiddleware.js"() {
+    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressHttpSigningMiddleware.js"() {
       init_polyfills();
       init_dist_es27();
       init_dist_es2();
@@ -32206,9 +32206,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/index.js
+  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/index.js
   var init_s3_express = __esm({
-    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/index.js"() {
+    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/index.js"() {
       init_polyfills();
       init_S3ExpressIdentityProviderImpl();
       init_SignatureV4S3Express();
@@ -32217,10 +32217,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3Configuration.js
+  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3Configuration.js
   var resolveS3Config;
   var init_s3Configuration = __esm({
-    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3Configuration.js"() {
+    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3Configuration.js"() {
       init_polyfills();
       init_s3_express();
       resolveS3Config = (input, { session }) => {
@@ -32241,7 +32241,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/toStream.browser.js
+  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/toStream.browser.js
   function toStream(bytes) {
     return new ReadableStream({
       start(controller) {
@@ -32251,15 +32251,15 @@ ${toHex(hashedRequest)}`;
     });
   }
   var init_toStream_browser = __esm({
-    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/toStream.browser.js"() {
+    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/toStream.browser.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/throw-200-exceptions.js
+  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/throw-200-exceptions.js
   var THROW_IF_EMPTY_BODY, throw200ExceptionsMiddleware, collectBody2, throw200ExceptionsMiddlewareOptions, getThrow200ExceptionsPlugin;
   var init_throw_200_exceptions = __esm({
-    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/throw-200-exceptions.js"() {
+    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/throw-200-exceptions.js"() {
       init_polyfills();
       init_dist_es2();
       init_toStream_browser();
@@ -32315,16 +32315,16 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/util-arn-parser/dist-es/index.js
+  // node_modules/@aws-sdk/util-arn-parser/dist-es/index.js
   var validate;
   var init_dist_es28 = __esm({
-    "../../node_modules/@aws-sdk/util-arn-parser/dist-es/index.js"() {
+    "node_modules/@aws-sdk/util-arn-parser/dist-es/index.js"() {
       init_polyfills();
       validate = (str) => typeof str === "string" && str.indexOf("arn:") === 0 && str.split(":").length >= 6;
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/bucket-endpoint-middleware.js
+  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/bucket-endpoint-middleware.js
   function bucketEndpointMiddleware(options) {
     return (next, context) => async (args) => {
       if (options.bucketEndpoint) {
@@ -32355,7 +32355,7 @@ ${toHex(hashedRequest)}`;
   }
   var bucketEndpointMiddlewareOptions;
   var init_bucket_endpoint_middleware = __esm({
-    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/bucket-endpoint-middleware.js"() {
+    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/bucket-endpoint-middleware.js"() {
       init_polyfills();
       bucketEndpointMiddlewareOptions = {
         name: "bucketEndpointMiddleware",
@@ -32366,7 +32366,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/validate-bucket-name.js
+  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/validate-bucket-name.js
   function validateBucketNameMiddleware({ bucketEndpoint }) {
     return (next) => async (args) => {
       const { input: { Bucket } } = args;
@@ -32380,7 +32380,7 @@ ${toHex(hashedRequest)}`;
   }
   var validateBucketNameMiddlewareOptions, getValidateBucketNamePlugin;
   var init_validate_bucket_name = __esm({
-    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/validate-bucket-name.js"() {
+    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/validate-bucket-name.js"() {
       init_polyfills();
       init_dist_es28();
       init_bucket_endpoint_middleware();
@@ -32399,10 +32399,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/util-body-length-browser/dist-es/calculateBodyLength.js
+  // node_modules/@smithy/util-body-length-browser/dist-es/calculateBodyLength.js
   var TEXT_ENCODER, calculateBodyLength;
   var init_calculateBodyLength = __esm({
-    "../../node_modules/@smithy/util-body-length-browser/dist-es/calculateBodyLength.js"() {
+    "node_modules/@smithy/util-body-length-browser/dist-es/calculateBodyLength.js"() {
       init_polyfills();
       TEXT_ENCODER = typeof TextEncoder == "function" ? new TextEncoder() : null;
       calculateBodyLength = (body) => {
@@ -32431,18 +32431,18 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/util-body-length-browser/dist-es/index.js
+  // node_modules/@smithy/util-body-length-browser/dist-es/index.js
   var init_dist_es29 = __esm({
-    "../../node_modules/@smithy/util-body-length-browser/dist-es/index.js"() {
+    "node_modules/@smithy/util-body-length-browser/dist-es/index.js"() {
       init_polyfills();
       init_calculateBodyLength();
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/ProtocolLib.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/ProtocolLib.js
   var ProtocolLib;
   var init_ProtocolLib = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/ProtocolLib.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/ProtocolLib.js"() {
       init_polyfills();
       init_schema2();
       init_dist_es25();
@@ -32581,24 +32581,24 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/cbor/AwsSmithyRpcV2CborProtocol.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/cbor/AwsSmithyRpcV2CborProtocol.js
   var init_AwsSmithyRpcV2CborProtocol = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/cbor/AwsSmithyRpcV2CborProtocol.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/cbor/AwsSmithyRpcV2CborProtocol.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/coercing-serializers.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/coercing-serializers.js
   var init_coercing_serializers = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/coercing-serializers.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/coercing-serializers.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/ConfigurableSerdeContext.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/ConfigurableSerdeContext.js
   var SerdeContextConfig;
   var init_ConfigurableSerdeContext = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/ConfigurableSerdeContext.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/ConfigurableSerdeContext.js"() {
       init_polyfills();
       SerdeContextConfig = class {
         constructor() {
@@ -32611,10 +32611,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/UnionSerde.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/UnionSerde.js
   var UnionSerde;
   var init_UnionSerde = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/UnionSerde.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/UnionSerde.js"() {
       init_polyfills();
       UnionSerde = class {
         constructor(from, to) {
@@ -32645,76 +32645,76 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/parseJsonBody.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/parseJsonBody.js
   var init_parseJsonBody = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/parseJsonBody.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/parseJsonBody.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeDeserializer.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeDeserializer.js
   var init_JsonShapeDeserializer = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeDeserializer.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeDeserializer.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeSerializer.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeSerializer.js
   var init_JsonShapeSerializer = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeSerializer.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeSerializer.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonCodec.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonCodec.js
   var init_JsonCodec = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonCodec.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonCodec.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJsonRpcProtocol.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJsonRpcProtocol.js
   var init_AwsJsonRpcProtocol = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJsonRpcProtocol.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJsonRpcProtocol.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_0Protocol.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_0Protocol.js
   var init_AwsJson1_0Protocol = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_0Protocol.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_0Protocol.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_1Protocol.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_1Protocol.js
   var init_AwsJson1_1Protocol = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_1Protocol.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_1Protocol.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsRestJsonProtocol.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsRestJsonProtocol.js
   var init_AwsRestJsonProtocol = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsRestJsonProtocol.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsRestJsonProtocol.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/awsExpectUnion.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/awsExpectUnion.js
   var init_awsExpectUnion = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/awsExpectUnion.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/awsExpectUnion.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/xml-builder/dist-es/escape-attribute.js
+  // node_modules/@aws-sdk/xml-builder/dist-es/escape-attribute.js
   function escapeAttribute(value) {
     return value.replace(ATTR_ESCAPE_RE, (ch) => ATTR_ESCAPE_MAP[ch]);
   }
   var ATTR_ESCAPE_RE, ATTR_ESCAPE_MAP;
   var init_escape_attribute = __esm({
-    "../../node_modules/@aws-sdk/xml-builder/dist-es/escape-attribute.js"() {
+    "node_modules/@aws-sdk/xml-builder/dist-es/escape-attribute.js"() {
       init_polyfills();
       ATTR_ESCAPE_RE = /[&<>"]/g;
       ATTR_ESCAPE_MAP = {
@@ -32726,13 +32726,13 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/xml-builder/dist-es/escape-element.js
+  // node_modules/@aws-sdk/xml-builder/dist-es/escape-element.js
   function escapeElement(value) {
     return value.replace(ELEMENT_ESCAPE_RE, (ch) => ELEMENT_ESCAPE_MAP[ch]);
   }
   var ELEMENT_ESCAPE_RE, ELEMENT_ESCAPE_MAP;
   var init_escape_element = __esm({
-    "../../node_modules/@aws-sdk/xml-builder/dist-es/escape-element.js"() {
+    "node_modules/@aws-sdk/xml-builder/dist-es/escape-element.js"() {
       init_polyfills();
       ELEMENT_ESCAPE_RE = /[&"'<>\r\n\u0085\u2028]/g;
       ELEMENT_ESCAPE_MAP = {
@@ -32749,10 +32749,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/xml-builder/dist-es/XmlText.js
+  // node_modules/@aws-sdk/xml-builder/dist-es/XmlText.js
   var XmlText;
   var init_XmlText = __esm({
-    "../../node_modules/@aws-sdk/xml-builder/dist-es/XmlText.js"() {
+    "node_modules/@aws-sdk/xml-builder/dist-es/XmlText.js"() {
       init_polyfills();
       init_escape_element();
       XmlText = class {
@@ -32767,10 +32767,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/xml-builder/dist-es/XmlNode.js
+  // node_modules/@aws-sdk/xml-builder/dist-es/XmlNode.js
   var XmlNode;
   var init_XmlNode = __esm({
-    "../../node_modules/@aws-sdk/xml-builder/dist-es/XmlNode.js"() {
+    "node_modules/@aws-sdk/xml-builder/dist-es/XmlNode.js"() {
       init_polyfills();
       init_escape_attribute();
       init_XmlText();
@@ -32863,7 +32863,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/xml-builder/dist-es/xml-parser.browser.js
+  // node_modules/@aws-sdk/xml-builder/dist-es/xml-parser.browser.js
   function parseXML(xmlString) {
     if (!parser) {
       parser = new DOMParser();
@@ -32919,14 +32919,14 @@ ${toHex(hashedRequest)}`;
   }
   var parser;
   var init_xml_parser_browser = __esm({
-    "../../node_modules/@aws-sdk/xml-builder/dist-es/xml-parser.browser.js"() {
+    "node_modules/@aws-sdk/xml-builder/dist-es/xml-parser.browser.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/xml-builder/dist-es/index.js
+  // node_modules/@aws-sdk/xml-builder/dist-es/index.js
   var init_dist_es30 = __esm({
-    "../../node_modules/@aws-sdk/xml-builder/dist-es/index.js"() {
+    "node_modules/@aws-sdk/xml-builder/dist-es/index.js"() {
       init_polyfills();
       init_XmlNode();
       init_XmlText();
@@ -32934,10 +32934,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeDeserializer.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeDeserializer.js
   var XmlShapeDeserializer;
   var init_XmlShapeDeserializer = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeDeserializer.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeDeserializer.js"() {
       init_polyfills();
       init_dist_es30();
       init_protocols();
@@ -33088,38 +33088,38 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QueryShapeSerializer.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QueryShapeSerializer.js
   var init_QueryShapeSerializer = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QueryShapeSerializer.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QueryShapeSerializer.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsQueryProtocol.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsQueryProtocol.js
   var init_AwsQueryProtocol = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsQueryProtocol.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsQueryProtocol.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsEc2QueryProtocol.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsEc2QueryProtocol.js
   var init_AwsEc2QueryProtocol = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsEc2QueryProtocol.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsEc2QueryProtocol.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QuerySerializerSettings.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QuerySerializerSettings.js
   var init_QuerySerializerSettings = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QuerySerializerSettings.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QuerySerializerSettings.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/parseXmlBody.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/parseXmlBody.js
   var loadRestXmlErrorCode;
   var init_parseXmlBody = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/parseXmlBody.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/parseXmlBody.js"() {
       init_polyfills();
       loadRestXmlErrorCode = (output, data) => {
         if (data?.Error?.Code !== void 0) {
@@ -33135,10 +33135,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeSerializer.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeSerializer.js
   var XmlShapeSerializer;
   var init_XmlShapeSerializer = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeSerializer.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeSerializer.js"() {
       init_polyfills();
       init_dist_es30();
       init_protocols();
@@ -33415,10 +33415,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlCodec.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlCodec.js
   var XmlCodec;
   var init_XmlCodec = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlCodec.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlCodec.js"() {
       init_polyfills();
       init_ConfigurableSerdeContext();
       init_XmlShapeDeserializer();
@@ -33443,10 +33443,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/AwsRestXmlProtocol.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/AwsRestXmlProtocol.js
   var AwsRestXmlProtocol;
   var init_AwsRestXmlProtocol = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/AwsRestXmlProtocol.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/AwsRestXmlProtocol.js"() {
       init_polyfills();
       init_protocols();
       init_schema2();
@@ -33543,9 +33543,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/index.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/index.js
   var init_protocols2 = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/index.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/index.js"() {
       init_polyfills();
       init_AwsSmithyRpcV2CborProtocol();
       init_coercing_serializers();
@@ -33570,10 +33570,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/protocol/S3RestXmlProtocol.js
+  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/protocol/S3RestXmlProtocol.js
   var S3RestXmlProtocol;
   var init_S3RestXmlProtocol = __esm({
-    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/protocol/S3RestXmlProtocol.js"() {
+    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/protocol/S3RestXmlProtocol.js"() {
       init_polyfills();
       init_protocols2();
       init_schema2();
@@ -33603,9 +33603,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/index.js
+  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/index.js
   var init_dist_es31 = __esm({
-    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/index.js"() {
+    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/index.js"() {
       init_polyfills();
       init_check_content_length_header();
       init_region_redirect_endpoint_middleware();
@@ -33619,7 +33619,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-user-agent/dist-es/configurations.js
+  // node_modules/@aws-sdk/middleware-user-agent/dist-es/configurations.js
   function isValidUserAgentAppId(appId) {
     if (appId === void 0) {
       return true;
@@ -33647,17 +33647,17 @@ ${toHex(hashedRequest)}`;
   }
   var DEFAULT_UA_APP_ID;
   var init_configurations = __esm({
-    "../../node_modules/@aws-sdk/middleware-user-agent/dist-es/configurations.js"() {
+    "node_modules/@aws-sdk/middleware-user-agent/dist-es/configurations.js"() {
       init_polyfills();
       init_dist_es27();
       DEFAULT_UA_APP_ID = void 0;
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/bdd/BinaryDecisionDiagram.js
+  // node_modules/@smithy/util-endpoints/dist-es/bdd/BinaryDecisionDiagram.js
   var BinaryDecisionDiagram;
   var init_BinaryDecisionDiagram = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/bdd/BinaryDecisionDiagram.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/bdd/BinaryDecisionDiagram.js"() {
       init_polyfills();
       BinaryDecisionDiagram = class _BinaryDecisionDiagram {
         constructor(bdd2, root2, conditions, results) {
@@ -33677,10 +33677,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/cache/EndpointCache.js
+  // node_modules/@smithy/util-endpoints/dist-es/cache/EndpointCache.js
   var EndpointCache;
   var init_EndpointCache = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/cache/EndpointCache.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/cache/EndpointCache.js"() {
       init_polyfills();
       EndpointCache = class {
         constructor({ size, params }) {
@@ -33735,10 +33735,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/types/EndpointError.js
+  // node_modules/@smithy/util-endpoints/dist-es/types/EndpointError.js
   var EndpointError;
   var init_EndpointError = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/types/EndpointError.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/types/EndpointError.js"() {
       init_polyfills();
       EndpointError = class extends Error {
         constructor(message) {
@@ -33749,51 +33749,51 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/types/EndpointFunctions.js
+  // node_modules/@smithy/util-endpoints/dist-es/types/EndpointFunctions.js
   var init_EndpointFunctions = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/types/EndpointFunctions.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/types/EndpointFunctions.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/types/EndpointRuleObject.js
+  // node_modules/@smithy/util-endpoints/dist-es/types/EndpointRuleObject.js
   var init_EndpointRuleObject2 = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/types/EndpointRuleObject.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/types/EndpointRuleObject.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/types/ErrorRuleObject.js
+  // node_modules/@smithy/util-endpoints/dist-es/types/ErrorRuleObject.js
   var init_ErrorRuleObject2 = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/types/ErrorRuleObject.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/types/ErrorRuleObject.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/types/RuleSetObject.js
+  // node_modules/@smithy/util-endpoints/dist-es/types/RuleSetObject.js
   var init_RuleSetObject2 = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/types/RuleSetObject.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/types/RuleSetObject.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/types/TreeRuleObject.js
+  // node_modules/@smithy/util-endpoints/dist-es/types/TreeRuleObject.js
   var init_TreeRuleObject2 = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/types/TreeRuleObject.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/types/TreeRuleObject.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/types/shared.js
+  // node_modules/@smithy/util-endpoints/dist-es/types/shared.js
   var init_shared2 = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/types/shared.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/types/shared.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/types/index.js
+  // node_modules/@smithy/util-endpoints/dist-es/types/index.js
   var init_types4 = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/types/index.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/types/index.js"() {
       init_polyfills();
       init_EndpointError();
       init_EndpointFunctions();
@@ -33805,16 +33805,16 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/debug/debugId.js
+  // node_modules/@smithy/util-endpoints/dist-es/debug/debugId.js
   var debugId;
   var init_debugId = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/debug/debugId.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/debug/debugId.js"() {
       init_polyfills();
       debugId = "endpoints";
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/debug/toDebugString.js
+  // node_modules/@smithy/util-endpoints/dist-es/debug/toDebugString.js
   function toDebugString(input) {
     if (typeof input !== "object" || input == null) {
       return input;
@@ -33828,39 +33828,39 @@ ${toHex(hashedRequest)}`;
     return JSON.stringify(input, null, 2);
   }
   var init_toDebugString = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/debug/toDebugString.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/debug/toDebugString.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/debug/index.js
+  // node_modules/@smithy/util-endpoints/dist-es/debug/index.js
   var init_debug = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/debug/index.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/debug/index.js"() {
       init_polyfills();
       init_debugId();
       init_toDebugString();
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/utils/customEndpointFunctions.js
+  // node_modules/@smithy/util-endpoints/dist-es/utils/customEndpointFunctions.js
   var customEndpointFunctions;
   var init_customEndpointFunctions = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/utils/customEndpointFunctions.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/utils/customEndpointFunctions.js"() {
       init_polyfills();
       customEndpointFunctions = {};
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/lib/booleanEquals.js
+  // node_modules/@smithy/util-endpoints/dist-es/lib/booleanEquals.js
   var booleanEquals;
   var init_booleanEquals = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/lib/booleanEquals.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/lib/booleanEquals.js"() {
       init_polyfills();
       booleanEquals = (value1, value2) => value1 === value2;
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/lib/coalesce.js
+  // node_modules/@smithy/util-endpoints/dist-es/lib/coalesce.js
   function coalesce(...args) {
     for (const arg of args) {
       if (arg != null) {
@@ -33870,15 +33870,15 @@ ${toHex(hashedRequest)}`;
     return void 0;
   }
   var init_coalesce = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/lib/coalesce.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/lib/coalesce.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/lib/getAttrPathList.js
+  // node_modules/@smithy/util-endpoints/dist-es/lib/getAttrPathList.js
   var getAttrPathList;
   var init_getAttrPathList = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/lib/getAttrPathList.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/lib/getAttrPathList.js"() {
       init_polyfills();
       init_types4();
       getAttrPathList = (path2) => {
@@ -33907,10 +33907,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/lib/getAttr.js
+  // node_modules/@smithy/util-endpoints/dist-es/lib/getAttr.js
   var getAttr;
   var init_getAttr = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/lib/getAttr.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/lib/getAttr.js"() {
       init_polyfills();
       init_types4();
       init_getAttrPathList();
@@ -33926,19 +33926,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/lib/isSet.js
+  // node_modules/@smithy/util-endpoints/dist-es/lib/isSet.js
   var isSet;
   var init_isSet = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/lib/isSet.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/lib/isSet.js"() {
       init_polyfills();
       isSet = (value) => value != null;
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/lib/isValidHostLabel.js
+  // node_modules/@smithy/util-endpoints/dist-es/lib/isValidHostLabel.js
   var VALID_HOST_LABEL_REGEX, isValidHostLabel;
   var init_isValidHostLabel = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/lib/isValidHostLabel.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/lib/isValidHostLabel.js"() {
       init_polyfills();
       VALID_HOST_LABEL_REGEX = new RegExp(`^(?!.*-$)(?!-)[a-zA-Z0-9-]{1,63}$`);
       isValidHostLabel = (value, allowSubDomains = false) => {
@@ -33956,39 +33956,39 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/lib/ite.js
+  // node_modules/@smithy/util-endpoints/dist-es/lib/ite.js
   function ite(condition, trueValue, falseValue) {
     return condition ? trueValue : falseValue;
   }
   var init_ite = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/lib/ite.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/lib/ite.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/lib/not.js
+  // node_modules/@smithy/util-endpoints/dist-es/lib/not.js
   var not;
   var init_not = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/lib/not.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/lib/not.js"() {
       init_polyfills();
       not = (value) => !value;
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/lib/isIpAddress.js
+  // node_modules/@smithy/util-endpoints/dist-es/lib/isIpAddress.js
   var IP_V4_REGEX, isIpAddress;
   var init_isIpAddress = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/lib/isIpAddress.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/lib/isIpAddress.js"() {
       init_polyfills();
       IP_V4_REGEX = new RegExp(`^(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)(?:\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)){3}$`);
       isIpAddress = (value) => IP_V4_REGEX.test(value) || value.startsWith("[") && value.endsWith("]");
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/lib/parseURL.js
+  // node_modules/@smithy/util-endpoints/dist-es/lib/parseURL.js
   var DEFAULT_PORTS, parseURL;
   var init_parseURL = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/lib/parseURL.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/lib/parseURL.js"() {
       init_polyfills();
       init_dist_es();
       init_isIpAddress();
@@ -34040,7 +34040,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/lib/split.js
+  // node_modules/@smithy/util-endpoints/dist-es/lib/split.js
   function split(value, delimiter, limit) {
     if (limit === 1) {
       return [value];
@@ -34055,24 +34055,24 @@ ${toHex(hashedRequest)}`;
     return parts.slice(0, limit - 1).concat(parts.slice(1).join(delimiter));
   }
   var init_split = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/lib/split.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/lib/split.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/lib/stringEquals.js
+  // node_modules/@smithy/util-endpoints/dist-es/lib/stringEquals.js
   var stringEquals;
   var init_stringEquals = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/lib/stringEquals.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/lib/stringEquals.js"() {
       init_polyfills();
       stringEquals = (value1, value2) => value1 === value2;
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/lib/substring.js
+  // node_modules/@smithy/util-endpoints/dist-es/lib/substring.js
   var substring;
   var init_substring = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/lib/substring.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/lib/substring.js"() {
       init_polyfills();
       substring = (input, start, stop, reverse) => {
         if (input == null || start >= stop || input.length < stop || /[^\u0000-\u007f]/.test(input)) {
@@ -34086,18 +34086,18 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/lib/uriEncode.js
+  // node_modules/@smithy/util-endpoints/dist-es/lib/uriEncode.js
   var uriEncode;
   var init_uriEncode = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/lib/uriEncode.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/lib/uriEncode.js"() {
       init_polyfills();
       uriEncode = (value) => encodeURIComponent(value).replace(/[!*'()]/g, (c2) => `%${c2.charCodeAt(0).toString(16).toUpperCase()}`);
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/lib/index.js
+  // node_modules/@smithy/util-endpoints/dist-es/lib/index.js
   var init_lib = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/lib/index.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/lib/index.js"() {
       init_polyfills();
       init_booleanEquals();
       init_coalesce();
@@ -34114,10 +34114,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/utils/endpointFunctions.js
+  // node_modules/@smithy/util-endpoints/dist-es/utils/endpointFunctions.js
   var endpointFunctions;
   var init_endpointFunctions = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/utils/endpointFunctions.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/utils/endpointFunctions.js"() {
       init_polyfills();
       init_lib();
       endpointFunctions = {
@@ -34137,10 +34137,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/utils/evaluateTemplate.js
+  // node_modules/@smithy/util-endpoints/dist-es/utils/evaluateTemplate.js
   var evaluateTemplate;
   var init_evaluateTemplate = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/utils/evaluateTemplate.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/utils/evaluateTemplate.js"() {
       init_polyfills();
       init_lib();
       evaluateTemplate = (template, options) => {
@@ -34177,10 +34177,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/utils/getReferenceValue.js
+  // node_modules/@smithy/util-endpoints/dist-es/utils/getReferenceValue.js
   var getReferenceValue;
   var init_getReferenceValue = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/utils/getReferenceValue.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/utils/getReferenceValue.js"() {
       init_polyfills();
       getReferenceValue = ({ ref }, options) => {
         return options.referenceRecord[ref] ?? options.endpointParams[ref];
@@ -34188,10 +34188,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/utils/evaluateExpression.js
+  // node_modules/@smithy/util-endpoints/dist-es/utils/evaluateExpression.js
   var evaluateExpression, callFunction, group;
   var init_evaluateExpression = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/utils/evaluateExpression.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/utils/evaluateExpression.js"() {
       init_polyfills();
       init_types4();
       init_customEndpointFunctions();
@@ -34239,18 +34239,18 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/utils/callFunction.js
+  // node_modules/@smithy/util-endpoints/dist-es/utils/callFunction.js
   var init_callFunction = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/utils/callFunction.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/utils/callFunction.js"() {
       init_polyfills();
       init_evaluateExpression();
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/utils/evaluateCondition.js
+  // node_modules/@smithy/util-endpoints/dist-es/utils/evaluateCondition.js
   var evaluateCondition;
   var init_evaluateCondition = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/utils/evaluateCondition.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/utils/evaluateCondition.js"() {
       init_polyfills();
       init_debug();
       init_types4();
@@ -34271,10 +34271,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointHeaders.js
+  // node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointHeaders.js
   var getEndpointHeaders;
   var init_getEndpointHeaders = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointHeaders.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointHeaders.js"() {
       init_polyfills();
       init_types4();
       init_evaluateExpression();
@@ -34291,10 +34291,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointProperties.js
+  // node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointProperties.js
   var getEndpointProperties, getEndpointProperty, group2;
   var init_getEndpointProperties = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointProperties.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointProperties.js"() {
       init_polyfills();
       init_types4();
       init_evaluateTemplate();
@@ -34327,10 +34327,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointUrl.js
+  // node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointUrl.js
   var getEndpointUrl;
   var init_getEndpointUrl = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointUrl.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointUrl.js"() {
       init_polyfills();
       init_types4();
       init_evaluateExpression();
@@ -34349,10 +34349,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/decideEndpoint.js
+  // node_modules/@smithy/util-endpoints/dist-es/decideEndpoint.js
   var RESULT, decideEndpoint;
   var init_decideEndpoint = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/decideEndpoint.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/decideEndpoint.js"() {
       init_polyfills();
       init_types4();
       init_evaluateCondition();
@@ -34399,16 +34399,16 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/resolveEndpoint.js
+  // node_modules/@smithy/util-endpoints/dist-es/resolveEndpoint.js
   var init_resolveEndpoint = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/resolveEndpoint.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/resolveEndpoint.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/util-endpoints/dist-es/index.js
+  // node_modules/@smithy/util-endpoints/dist-es/index.js
   var init_dist_es32 = __esm({
-    "../../node_modules/@smithy/util-endpoints/dist-es/index.js"() {
+    "node_modules/@smithy/util-endpoints/dist-es/index.js"() {
       init_polyfills();
       init_BinaryDecisionDiagram();
       init_EndpointCache();
@@ -34421,18 +34421,18 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/util-endpoints/dist-es/lib/isIpAddress.js
+  // node_modules/@aws-sdk/util-endpoints/dist-es/lib/isIpAddress.js
   var init_isIpAddress2 = __esm({
-    "../../node_modules/@aws-sdk/util-endpoints/dist-es/lib/isIpAddress.js"() {
+    "node_modules/@aws-sdk/util-endpoints/dist-es/lib/isIpAddress.js"() {
       init_polyfills();
       init_dist_es32();
     }
   });
 
-  // ../../node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/isVirtualHostableS3Bucket.js
+  // node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/isVirtualHostableS3Bucket.js
   var isVirtualHostableS3Bucket;
   var init_isVirtualHostableS3Bucket = __esm({
-    "../../node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/isVirtualHostableS3Bucket.js"() {
+    "node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/isVirtualHostableS3Bucket.js"() {
       init_polyfills();
       init_dist_es32();
       init_isIpAddress2();
@@ -34462,10 +34462,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/parseArn.js
+  // node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/parseArn.js
   var ARN_DELIMITER, RESOURCE_DELIMITER, parseArn;
   var init_parseArn = __esm({
-    "../../node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/parseArn.js"() {
+    "node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/parseArn.js"() {
       init_polyfills();
       ARN_DELIMITER = ":";
       RESOURCE_DELIMITER = "/";
@@ -34488,10 +34488,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partitions.json
+  // node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partitions.json
   var partitions_default;
   var init_partitions = __esm({
-    "../../node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partitions.json"() {
+    "node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partitions.json"() {
       partitions_default = {
         partitions: [{
           id: "aws",
@@ -34762,10 +34762,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partition.js
+  // node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partition.js
   var selectedPartitionsInfo, selectedUserAgentPrefix, partition, getUserAgentPrefix;
   var init_partition = __esm({
-    "../../node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partition.js"() {
+    "node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partition.js"() {
       init_polyfills();
       init_partitions();
       selectedPartitionsInfo = partitions_default;
@@ -34803,10 +34803,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/util-endpoints/dist-es/aws.js
+  // node_modules/@aws-sdk/util-endpoints/dist-es/aws.js
   var awsEndpointFunctions;
   var init_aws = __esm({
-    "../../node_modules/@aws-sdk/util-endpoints/dist-es/aws.js"() {
+    "node_modules/@aws-sdk/util-endpoints/dist-es/aws.js"() {
       init_polyfills();
       init_dist_es32();
       init_isVirtualHostableS3Bucket();
@@ -34821,65 +34821,65 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/util-endpoints/dist-es/resolveDefaultAwsRegionalEndpointsConfig.js
+  // node_modules/@aws-sdk/util-endpoints/dist-es/resolveDefaultAwsRegionalEndpointsConfig.js
   var init_resolveDefaultAwsRegionalEndpointsConfig = __esm({
-    "../../node_modules/@aws-sdk/util-endpoints/dist-es/resolveDefaultAwsRegionalEndpointsConfig.js"() {
+    "node_modules/@aws-sdk/util-endpoints/dist-es/resolveDefaultAwsRegionalEndpointsConfig.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/util-endpoints/dist-es/resolveEndpoint.js
+  // node_modules/@aws-sdk/util-endpoints/dist-es/resolveEndpoint.js
   var init_resolveEndpoint2 = __esm({
-    "../../node_modules/@aws-sdk/util-endpoints/dist-es/resolveEndpoint.js"() {
+    "node_modules/@aws-sdk/util-endpoints/dist-es/resolveEndpoint.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointError.js
+  // node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointError.js
   var init_EndpointError2 = __esm({
-    "../../node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointError.js"() {
+    "node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointError.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointRuleObject.js
+  // node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointRuleObject.js
   var init_EndpointRuleObject3 = __esm({
-    "../../node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointRuleObject.js"() {
+    "node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointRuleObject.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/util-endpoints/dist-es/types/ErrorRuleObject.js
+  // node_modules/@aws-sdk/util-endpoints/dist-es/types/ErrorRuleObject.js
   var init_ErrorRuleObject3 = __esm({
-    "../../node_modules/@aws-sdk/util-endpoints/dist-es/types/ErrorRuleObject.js"() {
+    "node_modules/@aws-sdk/util-endpoints/dist-es/types/ErrorRuleObject.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/util-endpoints/dist-es/types/RuleSetObject.js
+  // node_modules/@aws-sdk/util-endpoints/dist-es/types/RuleSetObject.js
   var init_RuleSetObject3 = __esm({
-    "../../node_modules/@aws-sdk/util-endpoints/dist-es/types/RuleSetObject.js"() {
+    "node_modules/@aws-sdk/util-endpoints/dist-es/types/RuleSetObject.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/util-endpoints/dist-es/types/TreeRuleObject.js
+  // node_modules/@aws-sdk/util-endpoints/dist-es/types/TreeRuleObject.js
   var init_TreeRuleObject3 = __esm({
-    "../../node_modules/@aws-sdk/util-endpoints/dist-es/types/TreeRuleObject.js"() {
+    "node_modules/@aws-sdk/util-endpoints/dist-es/types/TreeRuleObject.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/util-endpoints/dist-es/types/shared.js
+  // node_modules/@aws-sdk/util-endpoints/dist-es/types/shared.js
   var init_shared3 = __esm({
-    "../../node_modules/@aws-sdk/util-endpoints/dist-es/types/shared.js"() {
+    "node_modules/@aws-sdk/util-endpoints/dist-es/types/shared.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/util-endpoints/dist-es/types/index.js
+  // node_modules/@aws-sdk/util-endpoints/dist-es/types/index.js
   var init_types5 = __esm({
-    "../../node_modules/@aws-sdk/util-endpoints/dist-es/types/index.js"() {
+    "node_modules/@aws-sdk/util-endpoints/dist-es/types/index.js"() {
       init_polyfills();
       init_EndpointError2();
       init_EndpointRuleObject3();
@@ -34890,9 +34890,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/util-endpoints/dist-es/index.js
+  // node_modules/@aws-sdk/util-endpoints/dist-es/index.js
   var init_dist_es33 = __esm({
-    "../../node_modules/@aws-sdk/util-endpoints/dist-es/index.js"() {
+    "node_modules/@aws-sdk/util-endpoints/dist-es/index.js"() {
       init_polyfills();
       init_aws();
       init_partition();
@@ -34903,7 +34903,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-user-agent/dist-es/check-features.js
+  // node_modules/@aws-sdk/middleware-user-agent/dist-es/check-features.js
   async function checkFeatures(context, config, args) {
     const request = args.request;
     if (request?.headers?.["smithy-protocol"] === "rpc-v2-cbor") {
@@ -34952,7 +34952,7 @@ ${toHex(hashedRequest)}`;
   }
   var ACCOUNT_ID_ENDPOINT_REGEX;
   var init_check_features = __esm({
-    "../../node_modules/@aws-sdk/middleware-user-agent/dist-es/check-features.js"() {
+    "node_modules/@aws-sdk/middleware-user-agent/dist-es/check-features.js"() {
       init_polyfills();
       init_client2();
       init_dist_es5();
@@ -34960,10 +34960,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-user-agent/dist-es/constants.js
+  // node_modules/@aws-sdk/middleware-user-agent/dist-es/constants.js
   var USER_AGENT, X_AMZ_USER_AGENT, SPACE, UA_NAME_SEPARATOR, UA_NAME_ESCAPE_REGEX, UA_VALUE_ESCAPE_REGEX, UA_ESCAPE_CHAR;
   var init_constants7 = __esm({
-    "../../node_modules/@aws-sdk/middleware-user-agent/dist-es/constants.js"() {
+    "node_modules/@aws-sdk/middleware-user-agent/dist-es/constants.js"() {
       init_polyfills();
       USER_AGENT = "user-agent";
       X_AMZ_USER_AGENT = "x-amz-user-agent";
@@ -34975,7 +34975,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-user-agent/dist-es/encode-features.js
+  // node_modules/@aws-sdk/middleware-user-agent/dist-es/encode-features.js
   function encodeFeatures(features) {
     let buffer = "";
     for (const key in features) {
@@ -34994,16 +34994,16 @@ ${toHex(hashedRequest)}`;
   }
   var BYTE_LIMIT;
   var init_encode_features = __esm({
-    "../../node_modules/@aws-sdk/middleware-user-agent/dist-es/encode-features.js"() {
+    "node_modules/@aws-sdk/middleware-user-agent/dist-es/encode-features.js"() {
       init_polyfills();
       BYTE_LIMIT = 1024;
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-user-agent/dist-es/user-agent-middleware.js
+  // node_modules/@aws-sdk/middleware-user-agent/dist-es/user-agent-middleware.js
   var userAgentMiddleware, escapeUserAgent, getUserAgentMiddlewareOptions, getUserAgentPlugin;
   var init_user_agent_middleware = __esm({
-    "../../node_modules/@aws-sdk/middleware-user-agent/dist-es/user-agent-middleware.js"() {
+    "node_modules/@aws-sdk/middleware-user-agent/dist-es/user-agent-middleware.js"() {
       init_polyfills();
       init_dist_es33();
       init_dist_es2();
@@ -35080,50 +35080,50 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-user-agent/dist-es/index.js
+  // node_modules/@aws-sdk/middleware-user-agent/dist-es/index.js
   var init_dist_es34 = __esm({
-    "../../node_modules/@aws-sdk/middleware-user-agent/dist-es/index.js"() {
+    "node_modules/@aws-sdk/middleware-user-agent/dist-es/index.js"() {
       init_polyfills();
       init_configurations();
       init_user_agent_middleware();
     }
   });
 
-  // ../../node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseDualstackEndpointConfigOptions.js
+  // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseDualstackEndpointConfigOptions.js
   var DEFAULT_USE_DUALSTACK_ENDPOINT;
   var init_NodeUseDualstackEndpointConfigOptions = __esm({
-    "../../node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseDualstackEndpointConfigOptions.js"() {
+    "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseDualstackEndpointConfigOptions.js"() {
       init_polyfills();
       DEFAULT_USE_DUALSTACK_ENDPOINT = false;
     }
   });
 
-  // ../../node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseFipsEndpointConfigOptions.js
+  // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseFipsEndpointConfigOptions.js
   var DEFAULT_USE_FIPS_ENDPOINT;
   var init_NodeUseFipsEndpointConfigOptions = __esm({
-    "../../node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseFipsEndpointConfigOptions.js"() {
+    "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseFipsEndpointConfigOptions.js"() {
       init_polyfills();
       DEFAULT_USE_FIPS_ENDPOINT = false;
     }
   });
 
-  // ../../node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveCustomEndpointsConfig.js
+  // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveCustomEndpointsConfig.js
   var init_resolveCustomEndpointsConfig = __esm({
-    "../../node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveCustomEndpointsConfig.js"() {
+    "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveCustomEndpointsConfig.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveEndpointsConfig.js
+  // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveEndpointsConfig.js
   var init_resolveEndpointsConfig = __esm({
-    "../../node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveEndpointsConfig.js"() {
+    "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveEndpointsConfig.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/config-resolver/dist-es/endpointsConfig/index.js
+  // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/index.js
   var init_endpointsConfig = __esm({
-    "../../node_modules/@smithy/config-resolver/dist-es/endpointsConfig/index.js"() {
+    "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/index.js"() {
       init_polyfills();
       init_NodeUseDualstackEndpointConfigOptions();
       init_NodeUseFipsEndpointConfigOptions();
@@ -35132,17 +35132,17 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/config-resolver/dist-es/regionConfig/config.js
+  // node_modules/@smithy/config-resolver/dist-es/regionConfig/config.js
   var init_config3 = __esm({
-    "../../node_modules/@smithy/config-resolver/dist-es/regionConfig/config.js"() {
+    "node_modules/@smithy/config-resolver/dist-es/regionConfig/config.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/config-resolver/dist-es/regionConfig/checkRegion.js
+  // node_modules/@smithy/config-resolver/dist-es/regionConfig/checkRegion.js
   var validRegions, checkRegion;
   var init_checkRegion = __esm({
-    "../../node_modules/@smithy/config-resolver/dist-es/regionConfig/checkRegion.js"() {
+    "node_modules/@smithy/config-resolver/dist-es/regionConfig/checkRegion.js"() {
       init_polyfills();
       init_dist_es32();
       validRegions = /* @__PURE__ */ new Set();
@@ -35160,29 +35160,29 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/config-resolver/dist-es/regionConfig/isFipsRegion.js
+  // node_modules/@smithy/config-resolver/dist-es/regionConfig/isFipsRegion.js
   var isFipsRegion;
   var init_isFipsRegion = __esm({
-    "../../node_modules/@smithy/config-resolver/dist-es/regionConfig/isFipsRegion.js"() {
+    "node_modules/@smithy/config-resolver/dist-es/regionConfig/isFipsRegion.js"() {
       init_polyfills();
       isFipsRegion = (region) => typeof region === "string" && (region.startsWith("fips-") || region.endsWith("-fips"));
     }
   });
 
-  // ../../node_modules/@smithy/config-resolver/dist-es/regionConfig/getRealRegion.js
+  // node_modules/@smithy/config-resolver/dist-es/regionConfig/getRealRegion.js
   var getRealRegion;
   var init_getRealRegion = __esm({
-    "../../node_modules/@smithy/config-resolver/dist-es/regionConfig/getRealRegion.js"() {
+    "node_modules/@smithy/config-resolver/dist-es/regionConfig/getRealRegion.js"() {
       init_polyfills();
       init_isFipsRegion();
       getRealRegion = (region) => isFipsRegion(region) ? ["fips-aws-global", "aws-fips"].includes(region) ? "us-east-1" : region.replace(/fips-(dkr-|prod-)?|-fips/, "") : region;
     }
   });
 
-  // ../../node_modules/@smithy/config-resolver/dist-es/regionConfig/resolveRegionConfig.js
+  // node_modules/@smithy/config-resolver/dist-es/regionConfig/resolveRegionConfig.js
   var resolveRegionConfig;
   var init_resolveRegionConfig = __esm({
-    "../../node_modules/@smithy/config-resolver/dist-es/regionConfig/resolveRegionConfig.js"() {
+    "node_modules/@smithy/config-resolver/dist-es/regionConfig/resolveRegionConfig.js"() {
       init_polyfills();
       init_checkRegion();
       init_getRealRegion();
@@ -35211,39 +35211,39 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/config-resolver/dist-es/regionConfig/index.js
+  // node_modules/@smithy/config-resolver/dist-es/regionConfig/index.js
   var init_regionConfig = __esm({
-    "../../node_modules/@smithy/config-resolver/dist-es/regionConfig/index.js"() {
+    "node_modules/@smithy/config-resolver/dist-es/regionConfig/index.js"() {
       init_polyfills();
       init_config3();
       init_resolveRegionConfig();
     }
   });
 
-  // ../../node_modules/@smithy/config-resolver/dist-es/regionInfo/PartitionHash.js
+  // node_modules/@smithy/config-resolver/dist-es/regionInfo/PartitionHash.js
   var init_PartitionHash = __esm({
-    "../../node_modules/@smithy/config-resolver/dist-es/regionInfo/PartitionHash.js"() {
+    "node_modules/@smithy/config-resolver/dist-es/regionInfo/PartitionHash.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/config-resolver/dist-es/regionInfo/RegionHash.js
+  // node_modules/@smithy/config-resolver/dist-es/regionInfo/RegionHash.js
   var init_RegionHash = __esm({
-    "../../node_modules/@smithy/config-resolver/dist-es/regionInfo/RegionHash.js"() {
+    "node_modules/@smithy/config-resolver/dist-es/regionInfo/RegionHash.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/config-resolver/dist-es/regionInfo/getRegionInfo.js
+  // node_modules/@smithy/config-resolver/dist-es/regionInfo/getRegionInfo.js
   var init_getRegionInfo = __esm({
-    "../../node_modules/@smithy/config-resolver/dist-es/regionInfo/getRegionInfo.js"() {
+    "node_modules/@smithy/config-resolver/dist-es/regionInfo/getRegionInfo.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/config-resolver/dist-es/regionInfo/index.js
+  // node_modules/@smithy/config-resolver/dist-es/regionInfo/index.js
   var init_regionInfo = __esm({
-    "../../node_modules/@smithy/config-resolver/dist-es/regionInfo/index.js"() {
+    "node_modules/@smithy/config-resolver/dist-es/regionInfo/index.js"() {
       init_polyfills();
       init_PartitionHash();
       init_RegionHash();
@@ -35251,9 +35251,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/config-resolver/dist-es/index.js
+  // node_modules/@smithy/config-resolver/dist-es/index.js
   var init_dist_es35 = __esm({
-    "../../node_modules/@smithy/config-resolver/dist-es/index.js"() {
+    "node_modules/@smithy/config-resolver/dist-es/index.js"() {
       init_polyfills();
       init_endpointsConfig();
       init_regionConfig();
@@ -35261,10 +35261,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/eventstream-serde-config-resolver/dist-es/EventStreamSerdeConfig.js
+  // node_modules/@smithy/eventstream-serde-config-resolver/dist-es/EventStreamSerdeConfig.js
   var resolveEventStreamSerdeConfig;
   var init_EventStreamSerdeConfig = __esm({
-    "../../node_modules/@smithy/eventstream-serde-config-resolver/dist-es/EventStreamSerdeConfig.js"() {
+    "node_modules/@smithy/eventstream-serde-config-resolver/dist-es/EventStreamSerdeConfig.js"() {
       init_polyfills();
       resolveEventStreamSerdeConfig = (input) => Object.assign(input, {
         eventStreamMarshaller: input.eventStreamSerdeProvider(input)
@@ -35272,15 +35272,15 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/eventstream-serde-config-resolver/dist-es/index.js
+  // node_modules/@smithy/eventstream-serde-config-resolver/dist-es/index.js
   var init_dist_es36 = __esm({
-    "../../node_modules/@smithy/eventstream-serde-config-resolver/dist-es/index.js"() {
+    "node_modules/@smithy/eventstream-serde-config-resolver/dist-es/index.js"() {
       init_polyfills();
       init_EventStreamSerdeConfig();
     }
   });
 
-  // ../../node_modules/@smithy/middleware-content-length/dist-es/index.js
+  // node_modules/@smithy/middleware-content-length/dist-es/index.js
   function contentLengthMiddleware(bodyLengthChecker) {
     return (next) => async (args) => {
       const request = args.request;
@@ -35305,7 +35305,7 @@ ${toHex(hashedRequest)}`;
   }
   var CONTENT_LENGTH_HEADER2, contentLengthMiddlewareOptions, getContentLengthPlugin;
   var init_dist_es37 = __esm({
-    "../../node_modules/@smithy/middleware-content-length/dist-es/index.js"() {
+    "node_modules/@smithy/middleware-content-length/dist-es/index.js"() {
       init_polyfills();
       init_dist_es2();
       CONTENT_LENGTH_HEADER2 = "content-length";
@@ -35323,10 +35323,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/s3.js
+  // node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/s3.js
   var resolveParamsForS3, DOMAIN_PATTERN, IP_ADDRESS_PATTERN, DOTS_PATTERN, isDnsCompatibleBucketName, isArnBucketName;
   var init_s3 = __esm({
-    "../../node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/s3.js"() {
+    "node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/s3.js"() {
       init_polyfills();
       resolveParamsForS3 = async (endpointParams) => {
         const bucket = endpointParams?.Bucket || "";
@@ -35362,18 +35362,18 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/index.js
+  // node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/index.js
   var init_service_customizations = __esm({
-    "../../node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/index.js"() {
+    "node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/index.js"() {
       init_polyfills();
       init_s3();
     }
   });
 
-  // ../../node_modules/@smithy/middleware-endpoint/dist-es/adaptors/createConfigValueProvider.js
+  // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/createConfigValueProvider.js
   var createConfigValueProvider;
   var init_createConfigValueProvider = __esm({
-    "../../node_modules/@smithy/middleware-endpoint/dist-es/adaptors/createConfigValueProvider.js"() {
+    "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/createConfigValueProvider.js"() {
       init_polyfills();
       createConfigValueProvider = (configKey, canonicalEndpointParamKey, config, isClientContextParam = false) => {
         const configProvider = async () => {
@@ -35427,19 +35427,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromConfig.browser.js
+  // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromConfig.browser.js
   var getEndpointFromConfig;
   var init_getEndpointFromConfig_browser = __esm({
-    "../../node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromConfig.browser.js"() {
+    "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromConfig.browser.js"() {
       init_polyfills();
       getEndpointFromConfig = async (serviceId) => void 0;
     }
   });
 
-  // ../../node_modules/@smithy/middleware-endpoint/dist-es/adaptors/toEndpointV1.js
+  // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/toEndpointV1.js
   var toEndpointV12;
   var init_toEndpointV12 = __esm({
-    "../../node_modules/@smithy/middleware-endpoint/dist-es/adaptors/toEndpointV1.js"() {
+    "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/toEndpointV1.js"() {
       init_polyfills();
       init_dist_es23();
       toEndpointV12 = (endpoint) => {
@@ -35461,10 +35461,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromInstructions.js
+  // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromInstructions.js
   var getEndpointFromInstructions, resolveParams;
   var init_getEndpointFromInstructions = __esm({
-    "../../node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromInstructions.js"() {
+    "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromInstructions.js"() {
       init_polyfills();
       init_service_customizations();
       init_createConfigValueProvider();
@@ -35532,19 +35532,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/middleware-endpoint/dist-es/adaptors/index.js
+  // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/index.js
   var init_adaptors = __esm({
-    "../../node_modules/@smithy/middleware-endpoint/dist-es/adaptors/index.js"() {
+    "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/index.js"() {
       init_polyfills();
       init_getEndpointFromInstructions();
       init_toEndpointV12();
     }
   });
 
-  // ../../node_modules/@smithy/middleware-endpoint/dist-es/endpointMiddleware.js
+  // node_modules/@smithy/middleware-endpoint/dist-es/endpointMiddleware.js
   var endpointMiddleware;
   var init_endpointMiddleware = __esm({
-    "../../node_modules/@smithy/middleware-endpoint/dist-es/endpointMiddleware.js"() {
+    "node_modules/@smithy/middleware-endpoint/dist-es/endpointMiddleware.js"() {
       init_polyfills();
       init_dist_es27();
       init_dist_es16();
@@ -35585,24 +35585,24 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/middleware-serde/dist-es/deserializerMiddleware.js
+  // node_modules/@smithy/middleware-serde/dist-es/deserializerMiddleware.js
   var init_deserializerMiddleware = __esm({
-    "../../node_modules/@smithy/middleware-serde/dist-es/deserializerMiddleware.js"() {
+    "node_modules/@smithy/middleware-serde/dist-es/deserializerMiddleware.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/middleware-serde/dist-es/serializerMiddleware.js
+  // node_modules/@smithy/middleware-serde/dist-es/serializerMiddleware.js
   var init_serializerMiddleware = __esm({
-    "../../node_modules/@smithy/middleware-serde/dist-es/serializerMiddleware.js"() {
+    "node_modules/@smithy/middleware-serde/dist-es/serializerMiddleware.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/middleware-serde/dist-es/serdePlugin.js
+  // node_modules/@smithy/middleware-serde/dist-es/serdePlugin.js
   var serializerMiddlewareOption2;
   var init_serdePlugin = __esm({
-    "../../node_modules/@smithy/middleware-serde/dist-es/serdePlugin.js"() {
+    "node_modules/@smithy/middleware-serde/dist-es/serdePlugin.js"() {
       init_polyfills();
       serializerMiddlewareOption2 = {
         name: "serializerMiddleware",
@@ -35613,9 +35613,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/middleware-serde/dist-es/index.js
+  // node_modules/@smithy/middleware-serde/dist-es/index.js
   var init_dist_es38 = __esm({
-    "../../node_modules/@smithy/middleware-serde/dist-es/index.js"() {
+    "node_modules/@smithy/middleware-serde/dist-es/index.js"() {
       init_polyfills();
       init_deserializerMiddleware();
       init_serdePlugin();
@@ -35623,10 +35623,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/middleware-endpoint/dist-es/getEndpointPlugin.js
+  // node_modules/@smithy/middleware-endpoint/dist-es/getEndpointPlugin.js
   var endpointMiddlewareOptions, getEndpointPlugin;
   var init_getEndpointPlugin = __esm({
-    "../../node_modules/@smithy/middleware-endpoint/dist-es/getEndpointPlugin.js"() {
+    "node_modules/@smithy/middleware-endpoint/dist-es/getEndpointPlugin.js"() {
       init_polyfills();
       init_dist_es38();
       init_endpointMiddleware();
@@ -35649,10 +35649,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointConfig.js
+  // node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointConfig.js
   var resolveEndpointConfig;
   var init_resolveEndpointConfig = __esm({
-    "../../node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointConfig.js"() {
+    "node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointConfig.js"() {
       init_polyfills();
       init_dist_es16();
       init_getEndpointFromConfig_browser();
@@ -35681,23 +35681,23 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointRequiredConfig.js
+  // node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointRequiredConfig.js
   var init_resolveEndpointRequiredConfig = __esm({
-    "../../node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointRequiredConfig.js"() {
+    "node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointRequiredConfig.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/middleware-endpoint/dist-es/types.js
+  // node_modules/@smithy/middleware-endpoint/dist-es/types.js
   var init_types6 = __esm({
-    "../../node_modules/@smithy/middleware-endpoint/dist-es/types.js"() {
+    "node_modules/@smithy/middleware-endpoint/dist-es/types.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/middleware-endpoint/dist-es/index.js
+  // node_modules/@smithy/middleware-endpoint/dist-es/index.js
   var init_dist_es39 = __esm({
-    "../../node_modules/@smithy/middleware-endpoint/dist-es/index.js"() {
+    "node_modules/@smithy/middleware-endpoint/dist-es/index.js"() {
       init_polyfills();
       init_adaptors();
       init_endpointMiddleware();
@@ -35708,10 +35708,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/middleware-retry/dist-es/util.js
+  // node_modules/@smithy/middleware-retry/dist-es/util.js
   var asSdkError;
   var init_util2 = __esm({
-    "../../node_modules/@smithy/middleware-retry/dist-es/util.js"() {
+    "node_modules/@smithy/middleware-retry/dist-es/util.js"() {
       init_polyfills();
       asSdkError = (error) => {
         if (error instanceof Error)
@@ -35725,38 +35725,38 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/delayDecider.js
+  // node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/delayDecider.js
   var init_delayDecider = __esm({
-    "../../node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/delayDecider.js"() {
+    "node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/delayDecider.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/retryDecider.js
+  // node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/retryDecider.js
   var init_retryDecider = __esm({
-    "../../node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/retryDecider.js"() {
+    "node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/retryDecider.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/StandardRetryStrategy.js
+  // node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/StandardRetryStrategy.js
   var init_StandardRetryStrategy2 = __esm({
-    "../../node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/StandardRetryStrategy.js"() {
+    "node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/StandardRetryStrategy.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/AdaptiveRetryStrategy.js
+  // node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/AdaptiveRetryStrategy.js
   var init_AdaptiveRetryStrategy2 = __esm({
-    "../../node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/AdaptiveRetryStrategy.js"() {
+    "node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/AdaptiveRetryStrategy.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/middleware-retry/dist-es/configurations.js
+  // node_modules/@smithy/middleware-retry/dist-es/configurations.js
   var resolveRetryConfig;
   var init_configurations2 = __esm({
-    "../../node_modules/@smithy/middleware-retry/dist-es/configurations.js"() {
+    "node_modules/@smithy/middleware-retry/dist-es/configurations.js"() {
       init_polyfills();
       init_dist_es16();
       init_dist_es5();
@@ -35773,23 +35773,23 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/middleware-retry/dist-es/omitRetryHeadersMiddleware.js
+  // node_modules/@smithy/middleware-retry/dist-es/omitRetryHeadersMiddleware.js
   var init_omitRetryHeadersMiddleware = __esm({
-    "../../node_modules/@smithy/middleware-retry/dist-es/omitRetryHeadersMiddleware.js"() {
+    "node_modules/@smithy/middleware-retry/dist-es/omitRetryHeadersMiddleware.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/middleware-retry/dist-es/isStreamingPayload/isStreamingPayload.browser.js
+  // node_modules/@smithy/middleware-retry/dist-es/isStreamingPayload/isStreamingPayload.browser.js
   var isStreamingPayload;
   var init_isStreamingPayload_browser = __esm({
-    "../../node_modules/@smithy/middleware-retry/dist-es/isStreamingPayload/isStreamingPayload.browser.js"() {
+    "node_modules/@smithy/middleware-retry/dist-es/isStreamingPayload/isStreamingPayload.browser.js"() {
       init_polyfills();
       isStreamingPayload = (request) => request?.body instanceof ReadableStream;
     }
   });
 
-  // ../../node_modules/@smithy/middleware-retry/dist-es/parseRetryAfterHeader.js
+  // node_modules/@smithy/middleware-retry/dist-es/parseRetryAfterHeader.js
   function parseRetryAfterHeader(response, logger2) {
     if (!HttpResponse.isInstance(response)) {
       return;
@@ -35830,17 +35830,17 @@ ${toHex(hashedRequest)}`;
     }
   }
   var init_parseRetryAfterHeader = __esm({
-    "../../node_modules/@smithy/middleware-retry/dist-es/parseRetryAfterHeader.js"() {
+    "node_modules/@smithy/middleware-retry/dist-es/parseRetryAfterHeader.js"() {
       init_polyfills();
       init_serde2();
       init_dist_es2();
     }
   });
 
-  // ../../node_modules/@smithy/middleware-retry/dist-es/retryMiddleware.js
+  // node_modules/@smithy/middleware-retry/dist-es/retryMiddleware.js
   var retryMiddleware, cooldown, isRetryStrategyV2, getRetryErrorInfo, getRetryErrorType, retryMiddlewareOptions, getRetryPlugin;
   var init_retryMiddleware = __esm({
-    "../../node_modules/@smithy/middleware-retry/dist-es/retryMiddleware.js"() {
+    "node_modules/@smithy/middleware-retry/dist-es/retryMiddleware.js"() {
       init_polyfills();
       init_dist_es2();
       init_dist_es4();
@@ -35945,9 +35945,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/middleware-retry/dist-es/index.js
+  // node_modules/@smithy/middleware-retry/dist-es/index.js
   var init_dist_es40 = __esm({
-    "../../node_modules/@smithy/middleware-retry/dist-es/index.js"() {
+    "node_modules/@smithy/middleware-retry/dist-es/index.js"() {
       init_polyfills();
       init_AdaptiveRetryStrategy2();
       init_StandardRetryStrategy2();
@@ -35959,39 +35959,39 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getDateHeader.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getDateHeader.js
   var getDateHeader;
   var init_getDateHeader = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getDateHeader.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getDateHeader.js"() {
       init_polyfills();
       init_dist_es2();
       getDateHeader = (response) => HttpResponse.isInstance(response) ? response.headers?.date ?? response.headers?.Date : void 0;
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getSkewCorrectedDate.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getSkewCorrectedDate.js
   var getSkewCorrectedDate;
   var init_getSkewCorrectedDate = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getSkewCorrectedDate.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getSkewCorrectedDate.js"() {
       init_polyfills();
       getSkewCorrectedDate = (systemClockOffset) => new Date(Date.now() + systemClockOffset);
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/isClockSkewed.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/isClockSkewed.js
   var isClockSkewed;
   var init_isClockSkewed = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/isClockSkewed.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/isClockSkewed.js"() {
       init_polyfills();
       init_getSkewCorrectedDate();
       isClockSkewed = (clockTime, systemClockOffset) => Math.abs(getSkewCorrectedDate(systemClockOffset).getTime() - clockTime) >= 3e5;
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getUpdatedSystemClockOffset.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getUpdatedSystemClockOffset.js
   var getUpdatedSystemClockOffset;
   var init_getUpdatedSystemClockOffset = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getUpdatedSystemClockOffset.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getUpdatedSystemClockOffset.js"() {
       init_polyfills();
       init_isClockSkewed();
       getUpdatedSystemClockOffset = (clockTime, currentSystemClockOffset) => {
@@ -36004,9 +36004,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/index.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/index.js
   var init_utils = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/index.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/index.js"() {
       init_polyfills();
       init_getDateHeader();
       init_getSkewCorrectedDate();
@@ -36014,10 +36014,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4Signer.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4Signer.js
   var throwSigningPropertyError, validateSigningProperties, AwsSdkSigV4Signer;
   var init_AwsSdkSigV4Signer = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4Signer.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4Signer.js"() {
       init_polyfills();
       init_dist_es2();
       init_utils();
@@ -36093,10 +36093,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4ASigner.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4ASigner.js
   var AwsSdkSigV4ASigner;
   var init_AwsSdkSigV4ASigner = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4ASigner.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4ASigner.js"() {
       init_polyfills();
       init_dist_es2();
       init_utils();
@@ -36120,59 +36120,59 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getBearerTokenEnvKey.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getBearerTokenEnvKey.js
   var init_getBearerTokenEnvKey = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getBearerTokenEnvKey.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getBearerTokenEnvKey.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/NODE_AUTH_SCHEME_PREFERENCE_OPTIONS.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/NODE_AUTH_SCHEME_PREFERENCE_OPTIONS.js
   var init_NODE_AUTH_SCHEME_PREFERENCE_OPTIONS = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/NODE_AUTH_SCHEME_PREFERENCE_OPTIONS.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/NODE_AUTH_SCHEME_PREFERENCE_OPTIONS.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/property-provider/dist-es/ProviderError.js
+  // node_modules/@smithy/property-provider/dist-es/ProviderError.js
   var init_ProviderError = __esm({
-    "../../node_modules/@smithy/property-provider/dist-es/ProviderError.js"() {
+    "node_modules/@smithy/property-provider/dist-es/ProviderError.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/property-provider/dist-es/CredentialsProviderError.js
+  // node_modules/@smithy/property-provider/dist-es/CredentialsProviderError.js
   var init_CredentialsProviderError = __esm({
-    "../../node_modules/@smithy/property-provider/dist-es/CredentialsProviderError.js"() {
+    "node_modules/@smithy/property-provider/dist-es/CredentialsProviderError.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/property-provider/dist-es/TokenProviderError.js
+  // node_modules/@smithy/property-provider/dist-es/TokenProviderError.js
   var init_TokenProviderError = __esm({
-    "../../node_modules/@smithy/property-provider/dist-es/TokenProviderError.js"() {
+    "node_modules/@smithy/property-provider/dist-es/TokenProviderError.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/property-provider/dist-es/chain.js
+  // node_modules/@smithy/property-provider/dist-es/chain.js
   var init_chain = __esm({
-    "../../node_modules/@smithy/property-provider/dist-es/chain.js"() {
+    "node_modules/@smithy/property-provider/dist-es/chain.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/property-provider/dist-es/fromStatic.js
+  // node_modules/@smithy/property-provider/dist-es/fromStatic.js
   var init_fromStatic = __esm({
-    "../../node_modules/@smithy/property-provider/dist-es/fromStatic.js"() {
+    "node_modules/@smithy/property-provider/dist-es/fromStatic.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/property-provider/dist-es/memoize.js
+  // node_modules/@smithy/property-provider/dist-es/memoize.js
   var memoize;
   var init_memoize = __esm({
-    "../../node_modules/@smithy/property-provider/dist-es/memoize.js"() {
+    "node_modules/@smithy/property-provider/dist-es/memoize.js"() {
       init_polyfills();
       memoize = (provider, isExpired, requiresRefresh) => {
         let resolved;
@@ -36221,9 +36221,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/property-provider/dist-es/index.js
+  // node_modules/@smithy/property-provider/dist-es/index.js
   var init_dist_es41 = __esm({
-    "../../node_modules/@smithy/property-provider/dist-es/index.js"() {
+    "node_modules/@smithy/property-provider/dist-es/index.js"() {
       init_polyfills();
       init_CredentialsProviderError();
       init_ProviderError();
@@ -36234,10 +36234,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4AConfig.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4AConfig.js
   var resolveAwsSdkSigV4AConfig;
   var init_resolveAwsSdkSigV4AConfig = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4AConfig.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4AConfig.js"() {
       init_polyfills();
       init_dist_es27();
       resolveAwsSdkSigV4AConfig = (config) => {
@@ -36247,7 +36247,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4Config.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4Config.js
   function normalizeCredentialProvider(config, { credentials, credentialDefaultProvider }) {
     let credentialsProvider;
     if (credentials) {
@@ -36281,7 +36281,7 @@ ${toHex(hashedRequest)}`;
   }
   var resolveAwsSdkSigV4Config;
   var init_resolveAwsSdkSigV4Config = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4Config.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4Config.js"() {
       init_polyfills();
       init_client2();
       init_dist_es27();
@@ -36385,9 +36385,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/index.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/index.js
   var init_aws_sdk = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/index.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/index.js"() {
       init_polyfills();
       init_AwsSdkSigV4Signer();
       init_AwsSdkSigV4ASigner();
@@ -36397,19 +36397,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/index.js
+  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/index.js
   var init_httpAuthSchemes2 = __esm({
-    "../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/index.js"() {
+    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/index.js"() {
       init_polyfills();
       init_aws_sdk();
       init_getBearerTokenEnvKey();
     }
   });
 
-  // ../../node_modules/@aws-sdk/signature-v4-multi-region/dist-es/signature-v4-crt-container.js
+  // node_modules/@aws-sdk/signature-v4-multi-region/dist-es/signature-v4-crt-container.js
   var signatureV4CrtContainer;
   var init_signature_v4_crt_container = __esm({
-    "../../node_modules/@aws-sdk/signature-v4-multi-region/dist-es/signature-v4-crt-container.js"() {
+    "node_modules/@aws-sdk/signature-v4-multi-region/dist-es/signature-v4-crt-container.js"() {
       init_polyfills();
       signatureV4CrtContainer = {
         CrtSignerV4: null
@@ -36417,10 +36417,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/signature-v4-multi-region/dist-es/SignatureV4MultiRegion.js
+  // node_modules/@aws-sdk/signature-v4-multi-region/dist-es/SignatureV4MultiRegion.js
   var SignatureV4MultiRegion;
   var init_SignatureV4MultiRegion = __esm({
-    "../../node_modules/@aws-sdk/signature-v4-multi-region/dist-es/SignatureV4MultiRegion.js"() {
+    "node_modules/@aws-sdk/signature-v4-multi-region/dist-es/SignatureV4MultiRegion.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es26();
@@ -36512,19 +36512,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/signature-v4-multi-region/dist-es/index.js
+  // node_modules/@aws-sdk/signature-v4-multi-region/dist-es/index.js
   var init_dist_es42 = __esm({
-    "../../node_modules/@aws-sdk/signature-v4-multi-region/dist-es/index.js"() {
+    "node_modules/@aws-sdk/signature-v4-multi-region/dist-es/index.js"() {
       init_polyfills();
       init_SignatureV4MultiRegion();
       init_signature_v4_crt_container();
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/endpoint/bdd.js
+  // node_modules/@aws-sdk/client-s3/dist-es/endpoint/bdd.js
   var av, aw, ax, ay, az, aA, aB, aC, a, b, c, d, e, f, g2, h, i, j, k, l, m, n, o, p, q, s, t, u, v, w, x, y, z, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, aa, ab, ac, ad, ae, af, ag, ah, ai, aj, ak, al, am, an, ao, ap, aq, as, at, au, _data, root, r, nodes, bdd;
   var init_bdd = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/endpoint/bdd.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/endpoint/bdd.js"() {
       init_polyfills();
       init_dist_es32();
       av = "ref";
@@ -38462,10 +38462,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/endpoint/endpointResolver.js
+  // node_modules/@aws-sdk/client-s3/dist-es/endpoint/endpointResolver.js
   var cache, defaultEndpointResolver;
   var init_endpointResolver = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/endpoint/endpointResolver.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/endpoint/endpointResolver.js"() {
       init_polyfills();
       init_dist_es33();
       init_dist_es32();
@@ -38499,7 +38499,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthSchemeProvider.js
+  // node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthSchemeProvider.js
   function createAwsAuthSigv4HttpAuthOption(authParameters) {
     return {
       schemeId: "aws.auth#sigv4",
@@ -38532,7 +38532,7 @@ ${toHex(hashedRequest)}`;
   }
   var createEndpointRuleSetHttpAuthSchemeParametersProvider, _defaultS3HttpAuthSchemeParametersProvider, defaultS3HttpAuthSchemeParametersProvider, createEndpointRuleSetHttpAuthSchemeProvider, _defaultS3HttpAuthSchemeProvider, defaultS3HttpAuthSchemeProvider, resolveHttpAuthSchemeConfig;
   var init_httpAuthSchemeProvider = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthSchemeProvider.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthSchemeProvider.js"() {
       init_polyfills();
       init_httpAuthSchemes2();
       init_dist_es42();
@@ -38626,10 +38626,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/endpoint/EndpointParameters.js
+  // node_modules/@aws-sdk/client-s3/dist-es/endpoint/EndpointParameters.js
   var resolveClientEndpointParameters, commonParams;
   var init_EndpointParameters = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/endpoint/EndpointParameters.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/endpoint/EndpointParameters.js"() {
       init_polyfills();
       resolveClientEndpointParameters = (options) => {
         return Object.assign(options, {
@@ -38658,10 +38658,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/models/S3ServiceException.js
+  // node_modules/@aws-sdk/client-s3/dist-es/models/S3ServiceException.js
   var S3ServiceException;
   var init_S3ServiceException = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/models/S3ServiceException.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/models/S3ServiceException.js"() {
       init_polyfills();
       init_dist_es25();
       S3ServiceException = class _S3ServiceException extends ServiceException {
@@ -38673,10 +38673,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/models/errors.js
+  // node_modules/@aws-sdk/client-s3/dist-es/models/errors.js
   var NoSuchUpload, AccessDenied, ObjectNotInActiveTierError, BucketAlreadyExists, BucketAlreadyOwnedByYou, NoSuchBucket, InvalidObjectState, NoSuchKey, NotFound, EncryptionTypeMismatch, InvalidRequest, InvalidWriteOffset, TooManyParts, IdempotencyParameterMismatch, ObjectAlreadyInActiveTierError;
   var init_errors = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/models/errors.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/models/errors.js"() {
       init_polyfills();
       init_S3ServiceException();
       NoSuchUpload = class _NoSuchUpload extends S3ServiceException {
@@ -38866,10 +38866,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/schemas/schemas_0.js
+  // node_modules/@aws-sdk/client-s3/dist-es/schemas/schemas_0.js
   var _A, _AAO, _AC, _ACL, _ACL_, _ACLn, _ACP, _ACT, _ACn, _AD, _ADb, _AED, _AF, _AH, _AHl, _AI, _AIMU, _AKI, _AM, _AMU, _AMUO, _AMUR, _AMl, _AO, _AOl, _APA, _APAc, _AQRD, _AR, _ARI, _AS, _ASBD, _ASSEBD, _ASr, _AT, _An, _B, _BA, _BAE, _BAI, _BAOBY, _BET, _BGR, _BI, _BKE, _BLC, _BLN, _BLS, _BLT, _BN, _BNu, _BP, _BPA, _BPP, _BR, _BRy, _BS, _Bo, _Bu, _C, _CA, _CACL, _CB, _CBC, _CBMC, _CBMCR, _CBMTC, _CBMTCR, _CBO, _CBR, _CC, _CCRC, _CCRCC, _CCRCNVME, _CC_, _CD, _CD_, _CDo, _CE, _CE_, _CEo, _CF, _CFC, _CL, _CL_, _CL__, _CLo, _CM, _CMD, _CMDo, _CMU, _CMUO, _CMUOr, _CMUR, _CMURo, _CMURr, _CMUo, _CMUr, _CMh, _CO, _COO, _COR, _CORSC, _CORSR, _CORSRu, _CORo, _CP, _CPL, _CPLo, _CPR, _CPo, _CPom, _CR, _CRSBA, _CR_, _CS, _CSHA, _CSHAh, _CSHAhe, _CSIM, _CSIMS, _CSINM, _CSIUS, _CSO, _CSR, _CSRo, _CSRr, _CSSSECA, _CSSSECK, _CSSSECKMD, _CSV, _CSVI, _CSVIn, _CSVO, _CSo, _CSr, _CT, _CT_, _CTl, _CTo, _CTom, _CTon, _CXXHASH, _CXXHASHh, _CXXHASHhe, _Co, _Cod, _Com, _Con, _Cont, _Cr, _D, _DAI, _DB, _DBAC, _DBACR, _DBC, _DBCR, _DBE, _DBER, _DBIC, _DBICR, _DBITC, _DBITCR, _DBL, _DBLR, _DBMC, _DBMCR, _DBMCRe, _DBMCe, _DBMTC, _DBMTCR, _DBOC, _DBOCR, _DBP, _DBPR, _DBR, _DBRR, _DBRe, _DBT, _DBTR, _DBW, _DBWR, _DE, _DIM, _DIMS, _DINM, _DIUS, _DM, _DME, _DMR, _DMVI, _DMe, _DN, _DO, _DOO, _DOOe, _DOR, _DORe, _DOT, _DOTO, _DOTR, _DOe, _DOel, _DOele, _DPAB, _DPABR, _DR, _DRe, _DRel, _DRes, _Da, _De, _Del, _Deli, _Des, _Desc, _Det, _E, _EA, _EBC, _EBO, _EC, _ECr, _ED, _EDr, _EE, _EH, _EHx, _EM, _EODM, _EOR, _ES, _ESBO, _ET, _ETL, _ETM, _ETa, _ETn, _ETv, _ETx, _En, _Ena, _End, _Er, _Err, _Ev, _Eve, _Ex, _Exp, _F, _FD, _FHI, _FO, _FR, _FRL, _FRi, _Fi, _Fo, _Fr, _G, _GBA, _GBAC, _GBACO, _GBACOe, _GBACR, _GBACRe, _GBACe, _GBAO, _GBAOe, _GBAR, _GBARe, _GBAe, _GBC, _GBCO, _GBCR, _GBE, _GBEO, _GBER, _GBIC, _GBICO, _GBICR, _GBITC, _GBITCO, _GBITCR, _GBL, _GBLC, _GBLCO, _GBLCR, _GBLO, _GBLOe, _GBLR, _GBLRe, _GBLe, _GBMC, _GBMCO, _GBMCOe, _GBMCR, _GBMCRe, _GBMCRet, _GBMCe, _GBMTC, _GBMTCO, _GBMTCR, _GBMTCRe, _GBNC, _GBNCR, _GBOC, _GBOCO, _GBOCR, _GBP, _GBPO, _GBPR, _GBPS, _GBPSO, _GBPSR, _GBR, _GBRO, _GBRP, _GBRPO, _GBRPR, _GBRR, _GBT, _GBTO, _GBTR, _GBV, _GBVO, _GBVR, _GBW, _GBWO, _GBWR, _GFC, _GJP, _GO, _GOA, _GOAO, _GOAOe, _GOAP, _GOAR, _GOARe, _GOARet, _GOAe, _GOLC, _GOLCO, _GOLCR, _GOLH, _GOLHO, _GOLHR, _GOO, _GOR, _GORO, _GORR, _GORe, _GOT, _GOTO, _GOTOe, _GOTR, _GOTRe, _GOTe, _GPAB, _GPABO, _GPABR, _GR, _GRACP, _GW, _GWACP, _Gr, _Gra, _HB, _HBO, _HBR, _HECRE, _HN, _HO, _HOO, _HOR, _HRC, _I, _IC, _ICL, _ID, _IDn, _IDnv, _IE, _IEn, _IF, _IL, _IM, _IMIT, _IMLMT, _IMS, _IMS_, _IMSf, _IMUR, _IM_, _INM, _INM_, _IOF, _IOS, _IOV, _IP, _IPA, _IPM, _IR, _IRIP, _IS, _ISBD, _ISn, _IT, _ITAO, _ITC, _ITCL, _ITCR, _ITCU, _ITCn, _ITF, _IUS, _IUS_, _IWO, _In, _Ini, _JSON, _JSONI, _JSONO, _JTC, _JTCR, _JTCU, _K, _KC, _KI, _KKA, _KM, _KMSC, _KMSKA, _KMSKI, _KMSMKID, _KPE, _L, _LAMBR, _LAMDBR, _LB, _LBAC, _LBACO, _LBACR, _LBACRi, _LBIC, _LBICO, _LBICR, _LBITC, _LBITCO, _LBITCR, _LBMC, _LBMCO, _LBMCR, _LBO, _LBR, _LBRi, _LC, _LCi, _LDB, _LDBO, _LDBR, _LE, _LEi, _LFA, _LFC, _LFCL, _LFCa, _LH, _LI, _LICR, _LM, _LMCR, _LMT, _LMU, _LMUO, _LMUR, _LMURi, _LM_, _LO, _LOO, _LOR, _LOV, _LOVO, _LOVOi, _LOVR, _LOVRi, _LOVi, _LP, _LPO, _LPR, _LPRi, _LR, _LRAO, _LRF, _LRi, _LVR, _M, _MAO, _MAS, _MB, _MC, _MCL, _MCR, _MCe, _MD, _MDB, _MDf, _ME, _MF, _MFA, _MFAD, _MK, _MM, _MOS, _MP, _MTC, _MTCR, _MTEC, _MU, _MUL, _MUa, _Ma, _Me, _Mes, _Mi, _Mo, _N, _NC, _NCF, _NCT, _ND, _NEKKAS, _NF, _NKM, _NM, _NNV, _NPNM, _NSB, _NSK, _NSU, _NUIM, _NVE, _NVIM, _NVT, _NVTL, _NVTo, _O, _OA, _OAIATE, _OC, _OCR, _OCRw, _OE, _OF, _OI, _OIL, _OL, _OLC, _OLE, _OLEFB, _OLLH, _OLLHS, _OLM, _OLR, _OLRUD, _OLRb, _OLb, _ONIATE, _OO, _OOA, _OP, _OPb, _OS, _OSGT, _OSLT, _OSV, _OSu, _OV, _OVL, _Ob, _Obj, _P, _PABC, _PBA, _PBAC, _PBACR, _PBACRu, _PBACu, _PBAR, _PBARu, _PBAu, _PBC, _PBCR, _PBE, _PBER, _PBIC, _PBICR, _PBITC, _PBITCR, _PBL, _PBLC, _PBLCO, _PBLCR, _PBLR, _PBMC, _PBMCR, _PBNC, _PBNCR, _PBOC, _PBOCR, _PBP, _PBPR, _PBR, _PBRP, _PBRPR, _PBRR, _PBT, _PBTR, _PBV, _PBVR, _PBW, _PBWR, _PC, _PDS, _PE, _PI, _PL, _PN, _PNM, _PO, _POA, _POAO, _POAR, _POLC, _POLCO, _POLCR, _POLH, _POLHO, _POLHR, _POO, _POR, _PORO, _PORR, _PORu, _POT, _POTO, _POTR, _PP, _PPAB, _PPABR, _PS, _Pa, _Par, _Parq, _Pay, _Payl, _Pe, _Po, _Pr, _Pri, _Pro, _Q, _QA, _QC, _QCL, _QCu, _QCue, _QEC, _QF, _Qu, _R, _RART, _RC, _RCC, _RCD, _RCE, _RCL, _RCT, _RCe, _RD, _RE, _RED, _REe, _REec, _RKKID, _RKPW, _RKW, _RM, _RO, _ROO, _ROOe, _ROP, _ROR, _RORe, _ROe, _RP, _RPB, _RPC, _RPe, _RR, _RRAO, _RRF, _RRe, _RRep, _RReq, _RRes, _RRo, _RS, _RSe, _RSen, _RT, _RTV, _RTe, _RUD, _Ra, _Re, _Rec, _Red, _Ret, _Ro, _Ru, _S, _SA, _SAK, _SAs, _SB, _SBD, _SC, _SCA, _SCADE, _SCV, _SCe, _SCt, _SDV, _SE, _SIM, _SIMS, _SINM, _SIUS, _SK, _SKEO, _SKF, _SKe, _SL, _SM, _SOC, _SOCES, _SOCO, _SOCR, _SP, _SPi, _SR, _SS, _SSC, _SSE, _SSEA, _SSEBD, _SSEC, _SSECA, _SSECK, _SSECKMD, _SSEKMS, _SSEKMSE, _SSEKMSEC, _SSEKMSKI, _SSER, _SSERe, _SSES, _ST, _STD, _STDR, _S_, _Sc, _Si, _St, _Sta, _Su, _T, _TA, _TAo, _TB, _TBA, _TBT, _TC, _TCL, _TCo, _TCop, _TD, _TDMOS, _TG, _TGa, _TL, _TLr, _TMP, _TN, _TNa, _TOKF, _TP, _TPC, _TS, _TSa, _Ta, _Tag, _Ti, _Tie, _Tier, _Tim, _To, _Top, _Tr, _Tra, _Ty, _U, _UBMITC, _UBMITCR, _UBMJTC, _UBMJTCR, _UI, _UIM, _UM, _UOE, _UOER, _UOERp, _UP, _UPC, _UPCO, _UPCR, _UPO, _UPR, _URI, _Up, _V, _VC, _VI, _VIM, _Ve, _Ver, _WC, _WGOR, _WGORR, _WOB, _WRL, _Y, _ar, _br, _c, _ct, _d, _e, _eP, _en, _et, _fo, _h, _hC, _hE, _hH, _hL, _hP, _hPH, _hQ, _hi, _i, _iT, _km, _m, _mb, _mdb, _mk, _mp, _mu, _p, _pN, _pnm, _rcc, _rcd, _rce, _rcl, _rct, _re, _s, _sa, _st, _uI, _uim, _vI, _vim, _x, _xA, _xF, _xN, _xNm, _xaa, _xaad, _xaapa, _xaari, _xaas, _xaba, _xabgr, _xabln, _xablt, _xabn, _xabole, _xabolt, _xabr, _xaca, _xacc, _xacc_, _xacc__, _xacm, _xacm_, _xacrsba, _xacs, _xacs_, _xacs__, _xacs___, _xacsim, _xacsims, _xacsinm, _xacsius, _xacsm, _xacsr, _xacssseca, _xacssseck, _xacssseckM, _xacsvi, _xact, _xact_, _xacx, _xacx_, _xacx__, _xadm, _xae, _xaebo, _xafec, _xafem, _xafhCC, _xafhCD, _xafhCE, _xafhCL, _xafhCR, _xafhCT, _xafhE, _xafhE_, _xafhLM, _xafhar, _xafhxacc, _xafhxacc_, _xafhxacc__, _xafhxacm, _xafhxacs, _xafhxacs_, _xafhxacs__, _xafhxacx, _xafhxacx_, _xafhxacx__, _xafhxadm, _xafhxae, _xafhxamm, _xafhxampc, _xafhxaollh, _xafhxaolm, _xafhxaolrud, _xafhxar, _xafhxarc, _xafhxars, _xafhxasc, _xafhxasse, _xafhxasseakki, _xafhxassebke, _xafhxasseca, _xafhxasseckM, _xafhxatc, _xafhxavi, _xafs, _xagfc, _xagr, _xagra, _xagw, _xagwa, _xaimit, _xaimlmt, _xaims, _xam, _xam_, _xamd, _xamm, _xamos, _xamp, _xampc, _xaoa, _xaollh, _xaolm, _xaolrud, _xaoo, _xaooa, _xaos, _xapnm, _xar, _xarc, _xarop, _xarp, _xarr, _xars, _xars_, _xarsim, _xarsims, _xarsinm, _xarsius, _xart, _xasc, _xasca, _xasdv, _xasebo, _xasse, _xasseakki, _xassebke, _xassec, _xasseca, _xasseck, _xasseckM, _xat, _xatc, _xatd, _xatdmos, _xavi, _xawob, _xawrl, _xs, n0, _s_registry, S3ServiceException$, n0_registry, AccessDenied$, BucketAlreadyExists$, BucketAlreadyOwnedByYou$, EncryptionTypeMismatch$, IdempotencyParameterMismatch$, InvalidObjectState$, InvalidRequest$, InvalidWriteOffset$, NoSuchBucket$, NoSuchKey$, NoSuchUpload$, NotFound$, ObjectAlreadyInActiveTierError$, ObjectNotInActiveTierError$, TooManyParts$, errorTypeRegistries, CopySourceSSECustomerKey, NonEmptyKmsKeyArnString, SessionCredentialValue, SSECustomerKey, SSEKMSEncryptionContext, SSEKMSKeyId, StreamingBlob, AbacStatus$, AbortIncompleteMultipartUpload$, AbortMultipartUploadOutput$, AbortMultipartUploadRequest$, AccelerateConfiguration$, AccessControlPolicy$, AccessControlTranslation$, AnalyticsAndOperator$, AnalyticsConfiguration$, AnalyticsExportDestination$, AnalyticsS3BucketDestination$, BlockedEncryptionTypes$, Bucket$, BucketInfo$, BucketLifecycleConfiguration$, BucketLoggingStatus$, Checksum$, CommonPrefix$, CompletedMultipartUpload$, CompletedPart$, CompleteMultipartUploadOutput$, CompleteMultipartUploadRequest$, Condition$, ContinuationEvent$, CopyObjectOutput$, CopyObjectRequest$, CopyObjectResult$, CopyPartResult$, CORSConfiguration$, CORSRule$, CreateBucketConfiguration$, CreateBucketMetadataConfigurationRequest$, CreateBucketMetadataTableConfigurationRequest$, CreateBucketOutput$, CreateBucketRequest$, CreateMultipartUploadOutput$, CreateMultipartUploadRequest$, CreateSessionOutput$, CreateSessionRequest$, CSVInput$, CSVOutput$, DefaultRetention$, Delete$, DeleteBucketAnalyticsConfigurationRequest$, DeleteBucketCorsRequest$, DeleteBucketEncryptionRequest$, DeleteBucketIntelligentTieringConfigurationRequest$, DeleteBucketInventoryConfigurationRequest$, DeleteBucketLifecycleRequest$, DeleteBucketMetadataConfigurationRequest$, DeleteBucketMetadataTableConfigurationRequest$, DeleteBucketMetricsConfigurationRequest$, DeleteBucketOwnershipControlsRequest$, DeleteBucketPolicyRequest$, DeleteBucketReplicationRequest$, DeleteBucketRequest$, DeleteBucketTaggingRequest$, DeleteBucketWebsiteRequest$, DeletedObject$, DeleteMarkerEntry$, DeleteMarkerReplication$, DeleteObjectOutput$, DeleteObjectRequest$, DeleteObjectsOutput$, DeleteObjectsRequest$, DeleteObjectTaggingOutput$, DeleteObjectTaggingRequest$, DeletePublicAccessBlockRequest$, Destination$, DestinationResult$, Encryption$, EncryptionConfiguration$, EndEvent$, _Error$, ErrorDetails$, ErrorDocument$, EventBridgeConfiguration$, ExistingObjectReplication$, FilterRule$, GetBucketAbacOutput$, GetBucketAbacRequest$, GetBucketAccelerateConfigurationOutput$, GetBucketAccelerateConfigurationRequest$, GetBucketAclOutput$, GetBucketAclRequest$, GetBucketAnalyticsConfigurationOutput$, GetBucketAnalyticsConfigurationRequest$, GetBucketCorsOutput$, GetBucketCorsRequest$, GetBucketEncryptionOutput$, GetBucketEncryptionRequest$, GetBucketIntelligentTieringConfigurationOutput$, GetBucketIntelligentTieringConfigurationRequest$, GetBucketInventoryConfigurationOutput$, GetBucketInventoryConfigurationRequest$, GetBucketLifecycleConfigurationOutput$, GetBucketLifecycleConfigurationRequest$, GetBucketLocationOutput$, GetBucketLocationRequest$, GetBucketLoggingOutput$, GetBucketLoggingRequest$, GetBucketMetadataConfigurationOutput$, GetBucketMetadataConfigurationRequest$, GetBucketMetadataConfigurationResult$, GetBucketMetadataTableConfigurationOutput$, GetBucketMetadataTableConfigurationRequest$, GetBucketMetadataTableConfigurationResult$, GetBucketMetricsConfigurationOutput$, GetBucketMetricsConfigurationRequest$, GetBucketNotificationConfigurationRequest$, GetBucketOwnershipControlsOutput$, GetBucketOwnershipControlsRequest$, GetBucketPolicyOutput$, GetBucketPolicyRequest$, GetBucketPolicyStatusOutput$, GetBucketPolicyStatusRequest$, GetBucketReplicationOutput$, GetBucketReplicationRequest$, GetBucketRequestPaymentOutput$, GetBucketRequestPaymentRequest$, GetBucketTaggingOutput$, GetBucketTaggingRequest$, GetBucketVersioningOutput$, GetBucketVersioningRequest$, GetBucketWebsiteOutput$, GetBucketWebsiteRequest$, GetObjectAclOutput$, GetObjectAclRequest$, GetObjectAttributesOutput$, GetObjectAttributesParts$, GetObjectAttributesRequest$, GetObjectLegalHoldOutput$, GetObjectLegalHoldRequest$, GetObjectLockConfigurationOutput$, GetObjectLockConfigurationRequest$, GetObjectOutput$, GetObjectRequest$, GetObjectRetentionOutput$, GetObjectRetentionRequest$, GetObjectTaggingOutput$, GetObjectTaggingRequest$, GetObjectTorrentOutput$, GetObjectTorrentRequest$, GetPublicAccessBlockOutput$, GetPublicAccessBlockRequest$, GlacierJobParameters$, Grant$, Grantee$, HeadBucketOutput$, HeadBucketRequest$, HeadObjectOutput$, HeadObjectRequest$, IndexDocument$, Initiator$, InputSerialization$, IntelligentTieringAndOperator$, IntelligentTieringConfiguration$, IntelligentTieringFilter$, InventoryConfiguration$, InventoryDestination$, InventoryEncryption$, InventoryFilter$, InventoryS3BucketDestination$, InventorySchedule$, InventoryTableConfiguration$, InventoryTableConfigurationResult$, InventoryTableConfigurationUpdates$, JournalTableConfiguration$, JournalTableConfigurationResult$, JournalTableConfigurationUpdates$, JSONInput$, JSONOutput$, LambdaFunctionConfiguration$, LifecycleExpiration$, LifecycleRule$, LifecycleRuleAndOperator$, LifecycleRuleFilter$, ListBucketAnalyticsConfigurationsOutput$, ListBucketAnalyticsConfigurationsRequest$, ListBucketIntelligentTieringConfigurationsOutput$, ListBucketIntelligentTieringConfigurationsRequest$, ListBucketInventoryConfigurationsOutput$, ListBucketInventoryConfigurationsRequest$, ListBucketMetricsConfigurationsOutput$, ListBucketMetricsConfigurationsRequest$, ListBucketsOutput$, ListBucketsRequest$, ListDirectoryBucketsOutput$, ListDirectoryBucketsRequest$, ListMultipartUploadsOutput$, ListMultipartUploadsRequest$, ListObjectsOutput$, ListObjectsRequest$, ListObjectsV2Output$, ListObjectsV2Request$, ListObjectVersionsOutput$, ListObjectVersionsRequest$, ListPartsOutput$, ListPartsRequest$, LocationInfo$, LoggingEnabled$, MetadataConfiguration$, MetadataConfigurationResult$, MetadataEntry$, MetadataTableConfiguration$, MetadataTableConfigurationResult$, MetadataTableEncryptionConfiguration$, Metrics$, MetricsAndOperator$, MetricsConfiguration$, MultipartUpload$, NoncurrentVersionExpiration$, NoncurrentVersionTransition$, NotificationConfiguration$, NotificationConfigurationFilter$, _Object$, ObjectIdentifier$, ObjectLockConfiguration$, ObjectLockLegalHold$, ObjectLockRetention$, ObjectLockRule$, ObjectPart$, ObjectVersion$, OutputLocation$, OutputSerialization$, Owner$, OwnershipControls$, OwnershipControlsRule$, ParquetInput$, Part$, PartitionedPrefix$, PolicyStatus$, Progress$, ProgressEvent$, PublicAccessBlockConfiguration$, PutBucketAbacRequest$, PutBucketAccelerateConfigurationRequest$, PutBucketAclRequest$, PutBucketAnalyticsConfigurationRequest$, PutBucketCorsRequest$, PutBucketEncryptionRequest$, PutBucketIntelligentTieringConfigurationRequest$, PutBucketInventoryConfigurationRequest$, PutBucketLifecycleConfigurationOutput$, PutBucketLifecycleConfigurationRequest$, PutBucketLoggingRequest$, PutBucketMetricsConfigurationRequest$, PutBucketNotificationConfigurationRequest$, PutBucketOwnershipControlsRequest$, PutBucketPolicyRequest$, PutBucketReplicationRequest$, PutBucketRequestPaymentRequest$, PutBucketTaggingRequest$, PutBucketVersioningRequest$, PutBucketWebsiteRequest$, PutObjectAclOutput$, PutObjectAclRequest$, PutObjectLegalHoldOutput$, PutObjectLegalHoldRequest$, PutObjectLockConfigurationOutput$, PutObjectLockConfigurationRequest$, PutObjectOutput$, PutObjectRequest$, PutObjectRetentionOutput$, PutObjectRetentionRequest$, PutObjectTaggingOutput$, PutObjectTaggingRequest$, PutPublicAccessBlockRequest$, QueueConfiguration$, RecordExpiration$, RecordsEvent$, Redirect$, RedirectAllRequestsTo$, RenameObjectOutput$, RenameObjectRequest$, ReplicaModifications$, ReplicationConfiguration$, ReplicationRule$, ReplicationRuleAndOperator$, ReplicationRuleFilter$, ReplicationTime$, ReplicationTimeValue$, RequestPaymentConfiguration$, RequestProgress$, RestoreObjectOutput$, RestoreObjectRequest$, RestoreRequest$, RestoreStatus$, RoutingRule$, S3KeyFilter$, S3Location$, S3TablesDestination$, S3TablesDestinationResult$, ScanRange$, SelectObjectContentOutput$, SelectObjectContentRequest$, SelectParameters$, ServerSideEncryptionByDefault$, ServerSideEncryptionConfiguration$, ServerSideEncryptionRule$, SessionCredentials$, SimplePrefix$, SourceSelectionCriteria$, SSEKMS$, SseKmsEncryptedObjects$, SSEKMSEncryption$, SSES3$, Stats$, StatsEvent$, StorageClassAnalysis$, StorageClassAnalysisDataExport$, Tag$, Tagging$, TargetGrant$, TargetObjectKeyFormat$, Tiering$, TopicConfiguration$, Transition$, UpdateBucketMetadataInventoryTableConfigurationRequest$, UpdateBucketMetadataJournalTableConfigurationRequest$, UpdateObjectEncryptionRequest$, UpdateObjectEncryptionResponse$, UploadPartCopyOutput$, UploadPartCopyRequest$, UploadPartOutput$, UploadPartRequest$, VersioningConfiguration$, WebsiteConfiguration$, WriteGetObjectResponseRequest$, __Unit, AllowedHeaders, AllowedMethods, AllowedOrigins, AnalyticsConfigurationList, Buckets, ChecksumAlgorithmList, CommonPrefixList, CompletedPartList, CORSRules, DeletedObjects, DeleteMarkers, EncryptionTypeList, Errors, EventList, ExposeHeaders, FilterRuleList, Grants, IntelligentTieringConfigurationList, InventoryConfigurationList, InventoryOptionalFields, LambdaFunctionConfigurationList, LifecycleRules, MetricsConfigurationList, MultipartUploadList, NoncurrentVersionTransitionList, ObjectAttributesList, ObjectIdentifierList, ObjectList, ObjectVersionList, OptionalObjectAttributesList, OwnershipControlsRules, Parts, PartsList, QueueConfigurationList, ReplicationRules, RoutingRules, ServerSideEncryptionRules, TagSet, TargetGrants, TieringList, TopicConfigurationList, TransitionList, UserMetadata, Metadata, AnalyticsFilter$, MetricsFilter$, ObjectEncryption$, SelectObjectContentEventStream$, AbortMultipartUpload$, CompleteMultipartUpload$, CopyObject$, CreateBucket$, CreateBucketMetadataConfiguration$, CreateBucketMetadataTableConfiguration$, CreateMultipartUpload$, CreateSession$, DeleteBucket$, DeleteBucketAnalyticsConfiguration$, DeleteBucketCors$, DeleteBucketEncryption$, DeleteBucketIntelligentTieringConfiguration$, DeleteBucketInventoryConfiguration$, DeleteBucketLifecycle$, DeleteBucketMetadataConfiguration$, DeleteBucketMetadataTableConfiguration$, DeleteBucketMetricsConfiguration$, DeleteBucketOwnershipControls$, DeleteBucketPolicy$, DeleteBucketReplication$, DeleteBucketTagging$, DeleteBucketWebsite$, DeleteObject$, DeleteObjects$, DeleteObjectTagging$, DeletePublicAccessBlock$, GetBucketAbac$, GetBucketAccelerateConfiguration$, GetBucketAcl$, GetBucketAnalyticsConfiguration$, GetBucketCors$, GetBucketEncryption$, GetBucketIntelligentTieringConfiguration$, GetBucketInventoryConfiguration$, GetBucketLifecycleConfiguration$, GetBucketLocation$, GetBucketLogging$, GetBucketMetadataConfiguration$, GetBucketMetadataTableConfiguration$, GetBucketMetricsConfiguration$, GetBucketNotificationConfiguration$, GetBucketOwnershipControls$, GetBucketPolicy$, GetBucketPolicyStatus$, GetBucketReplication$, GetBucketRequestPayment$, GetBucketTagging$, GetBucketVersioning$, GetBucketWebsite$, GetObject$, GetObjectAcl$, GetObjectAttributes$, GetObjectLegalHold$, GetObjectLockConfiguration$, GetObjectRetention$, GetObjectTagging$, GetObjectTorrent$, GetPublicAccessBlock$, HeadBucket$, HeadObject$, ListBucketAnalyticsConfigurations$, ListBucketIntelligentTieringConfigurations$, ListBucketInventoryConfigurations$, ListBucketMetricsConfigurations$, ListBuckets$, ListDirectoryBuckets$, ListMultipartUploads$, ListObjects$, ListObjectsV2$, ListObjectVersions$, ListParts$, PutBucketAbac$, PutBucketAccelerateConfiguration$, PutBucketAcl$, PutBucketAnalyticsConfiguration$, PutBucketCors$, PutBucketEncryption$, PutBucketIntelligentTieringConfiguration$, PutBucketInventoryConfiguration$, PutBucketLifecycleConfiguration$, PutBucketLogging$, PutBucketMetricsConfiguration$, PutBucketNotificationConfiguration$, PutBucketOwnershipControls$, PutBucketPolicy$, PutBucketReplication$, PutBucketRequestPayment$, PutBucketTagging$, PutBucketVersioning$, PutBucketWebsite$, PutObject$, PutObjectAcl$, PutObjectLegalHold$, PutObjectLockConfiguration$, PutObjectRetention$, PutObjectTagging$, PutPublicAccessBlock$, RenameObject$, RestoreObject$, SelectObjectContent$, UpdateBucketMetadataInventoryTableConfiguration$, UpdateBucketMetadataJournalTableConfiguration$, UpdateObjectEncryption$, UploadPart$, UploadPartCopy$, WriteGetObjectResponse$;
   var init_schemas_0 = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/schemas/schemas_0.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/schemas/schemas_0.js"() {
       init_polyfills();
       init_schema2();
       init_errors();
@@ -44070,10 +44070,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/CreateSessionCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/CreateSessionCommand.js
   var CreateSessionCommand;
   var init_CreateSessionCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/CreateSessionCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/CreateSessionCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -44094,10 +44094,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/package.json
+  // node_modules/@aws-sdk/client-s3/package.json
   var package_default;
   var init_package = __esm({
-    "../../node_modules/@aws-sdk/client-s3/package.json"() {
+    "node_modules/@aws-sdk/client-s3/package.json"() {
       package_default = {
         name: "@aws-sdk/client-s3",
         description: "AWS SDK for JavaScript S3 Client for Node.js, Browser and React Native",
@@ -44228,33 +44228,33 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js
+  // node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js
   var fromUtf84;
   var init_fromUtf8_browser3 = __esm({
-    "../../node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js"() {
+    "node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js"() {
       init_polyfills();
       fromUtf84 = (input) => new TextEncoder().encode(input);
     }
   });
 
-  // ../../node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js
+  // node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js
   var init_toUint8Array3 = __esm({
-    "../../node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js"() {
+    "node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js"() {
       init_polyfills();
       init_fromUtf8_browser3();
     }
   });
 
-  // ../../node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js
+  // node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js
   var init_toUtf8_browser3 = __esm({
-    "../../node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js"() {
+    "node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/index.js
+  // node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/index.js
   var init_dist_es43 = __esm({
-    "../../node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/index.js"() {
+    "node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/index.js"() {
       init_polyfills();
       init_fromUtf8_browser3();
       init_toUint8Array3();
@@ -44262,7 +44262,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-crypto/sha1-browser/build/module/isEmptyData.js
+  // node_modules/@aws-crypto/sha1-browser/build/module/isEmptyData.js
   function isEmptyData2(data) {
     if (typeof data === "string") {
       return data.length === 0;
@@ -44270,15 +44270,15 @@ ${toHex(hashedRequest)}`;
     return data.byteLength === 0;
   }
   var init_isEmptyData2 = __esm({
-    "../../node_modules/@aws-crypto/sha1-browser/build/module/isEmptyData.js"() {
+    "node_modules/@aws-crypto/sha1-browser/build/module/isEmptyData.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-crypto/sha1-browser/build/module/constants.js
+  // node_modules/@aws-crypto/sha1-browser/build/module/constants.js
   var SHA_1_HASH, SHA_1_HMAC_ALGO, EMPTY_DATA_SHA_1;
   var init_constants8 = __esm({
-    "../../node_modules/@aws-crypto/sha1-browser/build/module/constants.js"() {
+    "node_modules/@aws-crypto/sha1-browser/build/module/constants.js"() {
       init_polyfills();
       SHA_1_HASH = { name: "SHA-1" };
       SHA_1_HMAC_ALGO = {
@@ -44310,7 +44310,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/util-locate-window/dist-es/index.js
+  // node_modules/@aws-sdk/util-locate-window/dist-es/index.js
   function locateWindow() {
     if (typeof window !== "undefined") {
       return window;
@@ -44321,13 +44321,13 @@ ${toHex(hashedRequest)}`;
   }
   var fallbackWindow;
   var init_dist_es44 = __esm({
-    "../../node_modules/@aws-sdk/util-locate-window/dist-es/index.js"() {
+    "node_modules/@aws-sdk/util-locate-window/dist-es/index.js"() {
       init_polyfills();
       fallbackWindow = {};
     }
   });
 
-  // ../../node_modules/@aws-crypto/sha1-browser/build/module/webCryptoSha1.js
+  // node_modules/@aws-crypto/sha1-browser/build/module/webCryptoSha1.js
   function convertToBuffer2(data) {
     if (typeof data === "string") {
       return fromUtf84(data);
@@ -44339,7 +44339,7 @@ ${toHex(hashedRequest)}`;
   }
   var Sha1;
   var init_webCryptoSha1 = __esm({
-    "../../node_modules/@aws-crypto/sha1-browser/build/module/webCryptoSha1.js"() {
+    "node_modules/@aws-crypto/sha1-browser/build/module/webCryptoSha1.js"() {
       init_polyfills();
       init_dist_es43();
       init_isEmptyData2();
@@ -44393,7 +44393,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-crypto/supports-web-crypto/build/module/supportsWebCrypto.js
+  // node_modules/@aws-crypto/supports-web-crypto/build/module/supportsWebCrypto.js
   function supportsWebCrypto(window2) {
     if (supportsSecureRandom(window2) && typeof window2.crypto.subtle === "object") {
       var subtle = window2.crypto.subtle;
@@ -44415,7 +44415,7 @@ ${toHex(hashedRequest)}`;
   }
   var subtleCryptoMethods;
   var init_supportsWebCrypto = __esm({
-    "../../node_modules/@aws-crypto/supports-web-crypto/build/module/supportsWebCrypto.js"() {
+    "node_modules/@aws-crypto/supports-web-crypto/build/module/supportsWebCrypto.js"() {
       init_polyfills();
       subtleCryptoMethods = [
         "decrypt",
@@ -44430,18 +44430,18 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-crypto/supports-web-crypto/build/module/index.js
+  // node_modules/@aws-crypto/supports-web-crypto/build/module/index.js
   var init_module4 = __esm({
-    "../../node_modules/@aws-crypto/supports-web-crypto/build/module/index.js"() {
+    "node_modules/@aws-crypto/supports-web-crypto/build/module/index.js"() {
       init_polyfills();
       init_supportsWebCrypto();
     }
   });
 
-  // ../../node_modules/@aws-crypto/sha1-browser/build/module/crossPlatformSha1.js
+  // node_modules/@aws-crypto/sha1-browser/build/module/crossPlatformSha1.js
   var Sha12;
   var init_crossPlatformSha1 = __esm({
-    "../../node_modules/@aws-crypto/sha1-browser/build/module/crossPlatformSha1.js"() {
+    "node_modules/@aws-crypto/sha1-browser/build/module/crossPlatformSha1.js"() {
       init_polyfills();
       init_webCryptoSha1();
       init_module4();
@@ -44470,19 +44470,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-crypto/sha1-browser/build/module/index.js
+  // node_modules/@aws-crypto/sha1-browser/build/module/index.js
   var init_module5 = __esm({
-    "../../node_modules/@aws-crypto/sha1-browser/build/module/index.js"() {
+    "node_modules/@aws-crypto/sha1-browser/build/module/index.js"() {
       init_polyfills();
       init_crossPlatformSha1();
       init_webCryptoSha1();
     }
   });
 
-  // ../../node_modules/@aws-crypto/sha256-browser/build/module/constants.js
+  // node_modules/@aws-crypto/sha256-browser/build/module/constants.js
   var SHA_256_HASH, SHA_256_HMAC_ALGO, EMPTY_DATA_SHA_256;
   var init_constants9 = __esm({
-    "../../node_modules/@aws-crypto/sha256-browser/build/module/constants.js"() {
+    "node_modules/@aws-crypto/sha256-browser/build/module/constants.js"() {
       init_polyfills();
       SHA_256_HASH = { name: "SHA-256" };
       SHA_256_HMAC_ALGO = {
@@ -44526,10 +44526,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-crypto/sha256-browser/build/module/webCryptoSha256.js
+  // node_modules/@aws-crypto/sha256-browser/build/module/webCryptoSha256.js
   var Sha256;
   var init_webCryptoSha256 = __esm({
-    "../../node_modules/@aws-crypto/sha256-browser/build/module/webCryptoSha256.js"() {
+    "node_modules/@aws-crypto/sha256-browser/build/module/webCryptoSha256.js"() {
       init_polyfills();
       init_module();
       init_constants9();
@@ -44585,10 +44585,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-crypto/sha256-js/build/module/constants.js
+  // node_modules/@aws-crypto/sha256-js/build/module/constants.js
   var BLOCK_SIZE, DIGEST_LENGTH, KEY, INIT, MAX_HASHABLE_LENGTH;
   var init_constants10 = __esm({
-    "../../node_modules/@aws-crypto/sha256-js/build/module/constants.js"() {
+    "node_modules/@aws-crypto/sha256-js/build/module/constants.js"() {
       init_polyfills();
       BLOCK_SIZE = 64;
       DIGEST_LENGTH = 32;
@@ -44672,10 +44672,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-crypto/sha256-js/build/module/RawSha256.js
+  // node_modules/@aws-crypto/sha256-js/build/module/RawSha256.js
   var RawSha256;
   var init_RawSha256 = __esm({
-    "../../node_modules/@aws-crypto/sha256-js/build/module/RawSha256.js"() {
+    "node_modules/@aws-crypto/sha256-js/build/module/RawSha256.js"() {
       init_polyfills();
       init_constants10();
       RawSha256 = /** @class */
@@ -44775,7 +44775,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-crypto/sha256-js/build/module/jsSha256.js
+  // node_modules/@aws-crypto/sha256-js/build/module/jsSha256.js
   function bufferFromSecret(secret) {
     var input = convertToBuffer(secret);
     if (input.byteLength > BLOCK_SIZE) {
@@ -44789,7 +44789,7 @@ ${toHex(hashedRequest)}`;
   }
   var Sha2562;
   var init_jsSha256 = __esm({
-    "../../node_modules/@aws-crypto/sha256-js/build/module/jsSha256.js"() {
+    "node_modules/@aws-crypto/sha256-js/build/module/jsSha256.js"() {
       init_polyfills();
       init_tslib_es6();
       init_constants10();
@@ -44854,18 +44854,18 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-crypto/sha256-js/build/module/index.js
+  // node_modules/@aws-crypto/sha256-js/build/module/index.js
   var init_module6 = __esm({
-    "../../node_modules/@aws-crypto/sha256-js/build/module/index.js"() {
+    "node_modules/@aws-crypto/sha256-js/build/module/index.js"() {
       init_polyfills();
       init_jsSha256();
     }
   });
 
-  // ../../node_modules/@aws-crypto/sha256-browser/build/module/crossPlatformSha256.js
+  // node_modules/@aws-crypto/sha256-browser/build/module/crossPlatformSha256.js
   var Sha2563;
   var init_crossPlatformSha256 = __esm({
-    "../../node_modules/@aws-crypto/sha256-browser/build/module/crossPlatformSha256.js"() {
+    "node_modules/@aws-crypto/sha256-browser/build/module/crossPlatformSha256.js"() {
       init_polyfills();
       init_webCryptoSha256();
       init_module6();
@@ -44895,19 +44895,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-crypto/sha256-browser/build/module/index.js
+  // node_modules/@aws-crypto/sha256-browser/build/module/index.js
   var init_module7 = __esm({
-    "../../node_modules/@aws-crypto/sha256-browser/build/module/index.js"() {
+    "node_modules/@aws-crypto/sha256-browser/build/module/index.js"() {
       init_polyfills();
       init_crossPlatformSha256();
       init_webCryptoSha256();
     }
   });
 
-  // ../../node_modules/@aws-sdk/util-user-agent-browser/dist-es/index.js
+  // node_modules/@aws-sdk/util-user-agent-browser/dist-es/index.js
   var createDefaultUserAgentProvider, fallback;
   var init_dist_es45 = __esm({
-    "../../node_modules/@aws-sdk/util-user-agent-browser/dist-es/index.js"() {
+    "node_modules/@aws-sdk/util-user-agent-browser/dist-es/index.js"() {
       init_polyfills();
       createDefaultUserAgentProvider = ({ serviceId, clientVersion }) => async (config) => {
         const navigator2 = typeof window !== "undefined" ? window.navigator : void 0;
@@ -44963,7 +44963,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/eventstream-codec/dist-es/Int64.js
+  // node_modules/@smithy/eventstream-codec/dist-es/Int64.js
   function negate2(bytes) {
     for (let i2 = 0; i2 < 8; i2++) {
       bytes[i2] ^= 255;
@@ -44976,7 +44976,7 @@ ${toHex(hashedRequest)}`;
   }
   var Int642;
   var init_Int64 = __esm({
-    "../../node_modules/@smithy/eventstream-codec/dist-es/Int64.js"() {
+    "node_modules/@smithy/eventstream-codec/dist-es/Int64.js"() {
       init_polyfills();
       init_dist_es11();
       Int642 = class _Int64 {
@@ -45015,10 +45015,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/eventstream-codec/dist-es/HeaderMarshaller.js
+  // node_modules/@smithy/eventstream-codec/dist-es/HeaderMarshaller.js
   var HeaderMarshaller, HEADER_VALUE_TYPE2, BOOLEAN_TAG, BYTE_TAG, SHORT_TAG, INT_TAG, LONG_TAG, BINARY_TAG, STRING_TAG, TIMESTAMP_TAG, UUID_TAG, UUID_PATTERN2;
   var init_HeaderMarshaller = __esm({
-    "../../node_modules/@smithy/eventstream-codec/dist-es/HeaderMarshaller.js"() {
+    "node_modules/@smithy/eventstream-codec/dist-es/HeaderMarshaller.js"() {
       init_polyfills();
       init_dist_es11();
       init_Int64();
@@ -45206,7 +45206,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/eventstream-codec/dist-es/splitMessage.js
+  // node_modules/@smithy/eventstream-codec/dist-es/splitMessage.js
   function splitMessage({ byteLength, byteOffset, buffer }) {
     if (byteLength < MINIMUM_MESSAGE_LENGTH) {
       throw new Error("Provided message too short to accommodate event stream message overhead");
@@ -45234,7 +45234,7 @@ ${toHex(hashedRequest)}`;
   }
   var PRELUDE_MEMBER_LENGTH, PRELUDE_LENGTH, CHECKSUM_LENGTH, MINIMUM_MESSAGE_LENGTH;
   var init_splitMessage = __esm({
-    "../../node_modules/@smithy/eventstream-codec/dist-es/splitMessage.js"() {
+    "node_modules/@smithy/eventstream-codec/dist-es/splitMessage.js"() {
       init_polyfills();
       init_module3();
       PRELUDE_MEMBER_LENGTH = 4;
@@ -45244,10 +45244,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/eventstream-codec/dist-es/EventStreamCodec.js
+  // node_modules/@smithy/eventstream-codec/dist-es/EventStreamCodec.js
   var EventStreamCodec;
   var init_EventStreamCodec = __esm({
-    "../../node_modules/@smithy/eventstream-codec/dist-es/EventStreamCodec.js"() {
+    "node_modules/@smithy/eventstream-codec/dist-es/EventStreamCodec.js"() {
       init_polyfills();
       init_module3();
       init_HeaderMarshaller();
@@ -45317,17 +45317,17 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/eventstream-codec/dist-es/Message.js
+  // node_modules/@smithy/eventstream-codec/dist-es/Message.js
   var init_Message = __esm({
-    "../../node_modules/@smithy/eventstream-codec/dist-es/Message.js"() {
+    "node_modules/@smithy/eventstream-codec/dist-es/Message.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/eventstream-codec/dist-es/MessageDecoderStream.js
+  // node_modules/@smithy/eventstream-codec/dist-es/MessageDecoderStream.js
   var MessageDecoderStream;
   var init_MessageDecoderStream = __esm({
-    "../../node_modules/@smithy/eventstream-codec/dist-es/MessageDecoderStream.js"() {
+    "node_modules/@smithy/eventstream-codec/dist-es/MessageDecoderStream.js"() {
       init_polyfills();
       MessageDecoderStream = class {
         constructor(options) {
@@ -45347,10 +45347,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/eventstream-codec/dist-es/MessageEncoderStream.js
+  // node_modules/@smithy/eventstream-codec/dist-es/MessageEncoderStream.js
   var MessageEncoderStream;
   var init_MessageEncoderStream = __esm({
-    "../../node_modules/@smithy/eventstream-codec/dist-es/MessageEncoderStream.js"() {
+    "node_modules/@smithy/eventstream-codec/dist-es/MessageEncoderStream.js"() {
       init_polyfills();
       MessageEncoderStream = class {
         constructor(options) {
@@ -45373,10 +45373,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageDecoderStream.js
+  // node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageDecoderStream.js
   var SmithyMessageDecoderStream;
   var init_SmithyMessageDecoderStream = __esm({
-    "../../node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageDecoderStream.js"() {
+    "node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageDecoderStream.js"() {
       init_polyfills();
       SmithyMessageDecoderStream = class {
         constructor(options) {
@@ -45398,10 +45398,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageEncoderStream.js
+  // node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageEncoderStream.js
   var SmithyMessageEncoderStream;
   var init_SmithyMessageEncoderStream = __esm({
-    "../../node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageEncoderStream.js"() {
+    "node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageEncoderStream.js"() {
       init_polyfills();
       SmithyMessageEncoderStream = class {
         constructor(options) {
@@ -45421,9 +45421,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/eventstream-codec/dist-es/index.js
+  // node_modules/@smithy/eventstream-codec/dist-es/index.js
   var init_dist_es46 = __esm({
-    "../../node_modules/@smithy/eventstream-codec/dist-es/index.js"() {
+    "node_modules/@smithy/eventstream-codec/dist-es/index.js"() {
       init_polyfills();
       init_EventStreamCodec();
       init_HeaderMarshaller();
@@ -45436,7 +45436,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/eventstream-serde-universal/dist-es/getChunkedStream.js
+  // node_modules/@smithy/eventstream-serde-universal/dist-es/getChunkedStream.js
   function getChunkedStream(source) {
     let currentMessageTotalLength = 0;
     let currentMessagePendingLength = 0;
@@ -45502,12 +45502,12 @@ ${toHex(hashedRequest)}`;
     };
   }
   var init_getChunkedStream = __esm({
-    "../../node_modules/@smithy/eventstream-serde-universal/dist-es/getChunkedStream.js"() {
+    "node_modules/@smithy/eventstream-serde-universal/dist-es/getChunkedStream.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/eventstream-serde-universal/dist-es/getUnmarshalledStream.js
+  // node_modules/@smithy/eventstream-serde-universal/dist-es/getUnmarshalledStream.js
   function getMessageUnmarshaller(deserializer, toUtf82) {
     return async function(message) {
       const { value: messageType } = message.headers[":message-type"];
@@ -45539,15 +45539,15 @@ ${toHex(hashedRequest)}`;
     };
   }
   var init_getUnmarshalledStream = __esm({
-    "../../node_modules/@smithy/eventstream-serde-universal/dist-es/getUnmarshalledStream.js"() {
+    "node_modules/@smithy/eventstream-serde-universal/dist-es/getUnmarshalledStream.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/eventstream-serde-universal/dist-es/EventStreamMarshaller.js
+  // node_modules/@smithy/eventstream-serde-universal/dist-es/EventStreamMarshaller.js
   var EventStreamMarshaller;
   var init_EventStreamMarshaller = __esm({
-    "../../node_modules/@smithy/eventstream-serde-universal/dist-es/EventStreamMarshaller.js"() {
+    "node_modules/@smithy/eventstream-serde-universal/dist-es/EventStreamMarshaller.js"() {
       init_polyfills();
       init_dist_es46();
       init_getChunkedStream();
@@ -45577,26 +45577,26 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/eventstream-serde-universal/dist-es/provider.js
+  // node_modules/@smithy/eventstream-serde-universal/dist-es/provider.js
   var init_provider = __esm({
-    "../../node_modules/@smithy/eventstream-serde-universal/dist-es/provider.js"() {
+    "node_modules/@smithy/eventstream-serde-universal/dist-es/provider.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/eventstream-serde-universal/dist-es/index.js
+  // node_modules/@smithy/eventstream-serde-universal/dist-es/index.js
   var init_dist_es47 = __esm({
-    "../../node_modules/@smithy/eventstream-serde-universal/dist-es/index.js"() {
+    "node_modules/@smithy/eventstream-serde-universal/dist-es/index.js"() {
       init_polyfills();
       init_EventStreamMarshaller();
       init_provider();
     }
   });
 
-  // ../../node_modules/@smithy/eventstream-serde-browser/dist-es/utils.js
+  // node_modules/@smithy/eventstream-serde-browser/dist-es/utils.js
   var readableStreamtoIterable, iterableToReadableStream;
   var init_utils2 = __esm({
-    "../../node_modules/@smithy/eventstream-serde-browser/dist-es/utils.js"() {
+    "node_modules/@smithy/eventstream-serde-browser/dist-es/utils.js"() {
       init_polyfills();
       readableStreamtoIterable = (readableStream) => ({
         [Symbol.asyncIterator]: async function* () {
@@ -45628,10 +45628,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/eventstream-serde-browser/dist-es/EventStreamMarshaller.js
+  // node_modules/@smithy/eventstream-serde-browser/dist-es/EventStreamMarshaller.js
   var EventStreamMarshaller2, isReadableStream2;
   var init_EventStreamMarshaller2 = __esm({
-    "../../node_modules/@smithy/eventstream-serde-browser/dist-es/EventStreamMarshaller.js"() {
+    "node_modules/@smithy/eventstream-serde-browser/dist-es/EventStreamMarshaller.js"() {
       init_polyfills();
       init_dist_es47();
       init_utils2();
@@ -45656,19 +45656,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/eventstream-serde-browser/dist-es/provider.js
+  // node_modules/@smithy/eventstream-serde-browser/dist-es/provider.js
   var eventStreamSerdeProvider;
   var init_provider2 = __esm({
-    "../../node_modules/@smithy/eventstream-serde-browser/dist-es/provider.js"() {
+    "node_modules/@smithy/eventstream-serde-browser/dist-es/provider.js"() {
       init_polyfills();
       init_EventStreamMarshaller2();
       eventStreamSerdeProvider = (options) => new EventStreamMarshaller2(options);
     }
   });
 
-  // ../../node_modules/@smithy/eventstream-serde-browser/dist-es/index.js
+  // node_modules/@smithy/eventstream-serde-browser/dist-es/index.js
   var init_dist_es48 = __esm({
-    "../../node_modules/@smithy/eventstream-serde-browser/dist-es/index.js"() {
+    "node_modules/@smithy/eventstream-serde-browser/dist-es/index.js"() {
       init_polyfills();
       init_EventStreamMarshaller2();
       init_provider2();
@@ -45676,7 +45676,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/chunked-blob-reader/dist-es/index.js
+  // node_modules/@smithy/chunked-blob-reader/dist-es/index.js
   async function blobReader(blob, onChunk, chunkSize = 1024 * 1024) {
     const size = blob.size;
     let totalBytesRead = 0;
@@ -45687,15 +45687,15 @@ ${toHex(hashedRequest)}`;
     }
   }
   var init_dist_es49 = __esm({
-    "../../node_modules/@smithy/chunked-blob-reader/dist-es/index.js"() {
+    "node_modules/@smithy/chunked-blob-reader/dist-es/index.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/hash-blob-browser/dist-es/index.js
+  // node_modules/@smithy/hash-blob-browser/dist-es/index.js
   var blobHasher;
   var init_dist_es50 = __esm({
-    "../../node_modules/@smithy/hash-blob-browser/dist-es/index.js"() {
+    "node_modules/@smithy/hash-blob-browser/dist-es/index.js"() {
       init_polyfills();
       init_dist_es49();
       blobHasher = async function blobHasher2(hashCtor, blob) {
@@ -45708,35 +45708,35 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/invalid-dependency/dist-es/invalidFunction.js
+  // node_modules/@smithy/invalid-dependency/dist-es/invalidFunction.js
   var init_invalidFunction = __esm({
-    "../../node_modules/@smithy/invalid-dependency/dist-es/invalidFunction.js"() {
+    "node_modules/@smithy/invalid-dependency/dist-es/invalidFunction.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@smithy/invalid-dependency/dist-es/invalidProvider.js
+  // node_modules/@smithy/invalid-dependency/dist-es/invalidProvider.js
   var invalidProvider;
   var init_invalidProvider = __esm({
-    "../../node_modules/@smithy/invalid-dependency/dist-es/invalidProvider.js"() {
+    "node_modules/@smithy/invalid-dependency/dist-es/invalidProvider.js"() {
       init_polyfills();
       invalidProvider = (message) => () => Promise.reject(message);
     }
   });
 
-  // ../../node_modules/@smithy/invalid-dependency/dist-es/index.js
+  // node_modules/@smithy/invalid-dependency/dist-es/index.js
   var init_dist_es51 = __esm({
-    "../../node_modules/@smithy/invalid-dependency/dist-es/index.js"() {
+    "node_modules/@smithy/invalid-dependency/dist-es/index.js"() {
       init_polyfills();
       init_invalidFunction();
       init_invalidProvider();
     }
   });
 
-  // ../../node_modules/@smithy/md5-js/dist-es/constants.js
+  // node_modules/@smithy/md5-js/dist-es/constants.js
   var BLOCK_SIZE2, DIGEST_LENGTH2, INIT2;
   var init_constants11 = __esm({
-    "../../node_modules/@smithy/md5-js/dist-es/constants.js"() {
+    "node_modules/@smithy/md5-js/dist-es/constants.js"() {
       init_polyfills();
       BLOCK_SIZE2 = 64;
       DIGEST_LENGTH2 = 16;
@@ -45744,7 +45744,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/md5-js/dist-es/index.js
+  // node_modules/@smithy/md5-js/dist-es/index.js
   function cmn(q2, a2, b2, x2, s2, t8) {
     a2 = (a2 + q2 & 4294967295) + (x2 + t8 & 4294967295) & 4294967295;
     return (a2 << s2 | a2 >>> 32 - s2) + b2 & 4294967295;
@@ -45778,7 +45778,7 @@ ${toHex(hashedRequest)}`;
   }
   var Md5;
   var init_dist_es52 = __esm({
-    "../../node_modules/@smithy/md5-js/dist-es/index.js"() {
+    "node_modules/@smithy/md5-js/dist-es/index.js"() {
       init_polyfills();
       init_dist_es6();
       init_constants11();
@@ -45919,19 +45919,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/util-defaults-mode-browser/dist-es/constants.js
+  // node_modules/@smithy/util-defaults-mode-browser/dist-es/constants.js
   var DEFAULTS_MODE_OPTIONS;
   var init_constants12 = __esm({
-    "../../node_modules/@smithy/util-defaults-mode-browser/dist-es/constants.js"() {
+    "node_modules/@smithy/util-defaults-mode-browser/dist-es/constants.js"() {
       init_polyfills();
       DEFAULTS_MODE_OPTIONS = ["in-region", "cross-region", "mobile", "standard", "legacy"];
     }
   });
 
-  // ../../node_modules/@smithy/util-defaults-mode-browser/dist-es/resolveDefaultsModeConfig.js
+  // node_modules/@smithy/util-defaults-mode-browser/dist-es/resolveDefaultsModeConfig.js
   var resolveDefaultsModeConfig, useMobileConfiguration;
   var init_resolveDefaultsModeConfig = __esm({
-    "../../node_modules/@smithy/util-defaults-mode-browser/dist-es/resolveDefaultsModeConfig.js"() {
+    "node_modules/@smithy/util-defaults-mode-browser/dist-es/resolveDefaultsModeConfig.js"() {
       init_polyfills();
       init_dist_es41();
       init_constants12();
@@ -45966,18 +45966,18 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/util-defaults-mode-browser/dist-es/index.js
+  // node_modules/@smithy/util-defaults-mode-browser/dist-es/index.js
   var init_dist_es53 = __esm({
-    "../../node_modules/@smithy/util-defaults-mode-browser/dist-es/index.js"() {
+    "node_modules/@smithy/util-defaults-mode-browser/dist-es/index.js"() {
       init_polyfills();
       init_resolveDefaultsModeConfig();
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.shared.js
+  // node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.shared.js
   var getRuntimeConfig;
   var init_runtimeConfig_shared = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.shared.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.shared.js"() {
       init_polyfills();
       init_httpAuthSchemes2();
       init_dist_es31();
@@ -46034,10 +46034,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.browser.js
+  // node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.browser.js
   var getRuntimeConfig2;
   var init_runtimeConfig_browser = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.browser.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.browser.js"() {
       init_polyfills();
       init_package();
       init_module5();
@@ -46083,10 +46083,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/region-config-resolver/dist-es/extensions/index.js
+  // node_modules/@aws-sdk/region-config-resolver/dist-es/extensions/index.js
   var getAwsRegionExtensionConfiguration, resolveAwsRegionExtensionConfiguration;
   var init_extensions4 = __esm({
-    "../../node_modules/@aws-sdk/region-config-resolver/dist-es/extensions/index.js"() {
+    "node_modules/@aws-sdk/region-config-resolver/dist-es/extensions/index.js"() {
       init_polyfills();
       getAwsRegionExtensionConfiguration = (runtimeConfig) => {
         return {
@@ -46106,23 +46106,23 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/awsRegionConfig.js
+  // node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/awsRegionConfig.js
   var init_awsRegionConfig = __esm({
-    "../../node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/awsRegionConfig.js"() {
+    "node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/awsRegionConfig.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/stsRegionDefaultResolver.browser.js
+  // node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/stsRegionDefaultResolver.browser.js
   var init_stsRegionDefaultResolver_browser = __esm({
-    "../../node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/stsRegionDefaultResolver.browser.js"() {
+    "node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/stsRegionDefaultResolver.browser.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/region-config-resolver/dist-es/index.js
+  // node_modules/@aws-sdk/region-config-resolver/dist-es/index.js
   var init_dist_es54 = __esm({
-    "../../node_modules/@aws-sdk/region-config-resolver/dist-es/index.js"() {
+    "node_modules/@aws-sdk/region-config-resolver/dist-es/index.js"() {
       init_polyfills();
       init_extensions4();
       init_awsRegionConfig();
@@ -46130,10 +46130,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthExtensionConfiguration.js
+  // node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthExtensionConfiguration.js
   var getHttpAuthExtensionConfiguration, resolveHttpAuthRuntimeConfig;
   var init_httpAuthExtensionConfiguration = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthExtensionConfiguration.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthExtensionConfiguration.js"() {
       init_polyfills();
       getHttpAuthExtensionConfiguration = (runtimeConfig) => {
         const _httpAuthSchemes = runtimeConfig.httpAuthSchemes;
@@ -46175,10 +46175,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/runtimeExtensions.js
+  // node_modules/@aws-sdk/client-s3/dist-es/runtimeExtensions.js
   var resolveRuntimeExtensions;
   var init_runtimeExtensions = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/runtimeExtensions.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/runtimeExtensions.js"() {
       init_polyfills();
       init_dist_es54();
       init_dist_es2();
@@ -46192,10 +46192,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/S3Client.js
+  // node_modules/@aws-sdk/client-s3/dist-es/S3Client.js
   var S3Client;
   var init_S3Client = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/S3Client.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/S3Client.js"() {
       init_polyfills();
       init_dist_es3();
       init_dist_es17();
@@ -46263,10 +46263,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/AbortMultipartUploadCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/AbortMultipartUploadCommand.js
   var AbortMultipartUploadCommand;
   var init_AbortMultipartUploadCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/AbortMultipartUploadCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/AbortMultipartUploadCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -46287,7 +46287,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-ssec/dist-es/index.js
+  // node_modules/@aws-sdk/middleware-ssec/dist-es/index.js
   function ssecMiddleware(options) {
     return (next) => async (args) => {
       const input = { ...args.input };
@@ -46340,7 +46340,7 @@ ${toHex(hashedRequest)}`;
   }
   var ssecMiddlewareOptions, getSsecPlugin;
   var init_dist_es55 = __esm({
-    "../../node_modules/@aws-sdk/middleware-ssec/dist-es/index.js"() {
+    "node_modules/@aws-sdk/middleware-ssec/dist-es/index.js"() {
       init_polyfills();
       ssecMiddlewareOptions = {
         name: "ssecMiddleware",
@@ -46356,10 +46356,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/CompleteMultipartUploadCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/CompleteMultipartUploadCommand.js
   var CompleteMultipartUploadCommand;
   var init_CompleteMultipartUploadCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/CompleteMultipartUploadCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/CompleteMultipartUploadCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es55();
@@ -46382,10 +46382,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/CopyObjectCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/CopyObjectCommand.js
   var CopyObjectCommand;
   var init_CopyObjectCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/CopyObjectCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/CopyObjectCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es55();
@@ -46410,7 +46410,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/middleware-location-constraint/dist-es/index.js
+  // node_modules/@aws-sdk/middleware-location-constraint/dist-es/index.js
   function locationConstraintMiddleware(options) {
     return (next) => async (args) => {
       const { CreateBucketConfiguration } = args.input;
@@ -46426,7 +46426,7 @@ ${toHex(hashedRequest)}`;
   }
   var locationConstraintMiddlewareOptions, getLocationConstraintPlugin;
   var init_dist_es56 = __esm({
-    "../../node_modules/@aws-sdk/middleware-location-constraint/dist-es/index.js"() {
+    "node_modules/@aws-sdk/middleware-location-constraint/dist-es/index.js"() {
       init_polyfills();
       locationConstraintMiddlewareOptions = {
         step: "initialize",
@@ -46442,10 +46442,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketCommand.js
   var CreateBucketCommand;
   var init_CreateBucketCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketCommand.js"() {
       init_polyfills();
       init_dist_es56();
       init_dist_es31();
@@ -46469,10 +46469,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataConfigurationCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataConfigurationCommand.js
   var CreateBucketMetadataConfigurationCommand;
   var init_CreateBucketMetadataConfigurationCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataConfigurationCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataConfigurationCommand.js"() {
       init_polyfills();
       init_dist_es17();
       init_dist_es39();
@@ -46496,10 +46496,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataTableConfigurationCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataTableConfigurationCommand.js
   var CreateBucketMetadataTableConfigurationCommand;
   var init_CreateBucketMetadataTableConfigurationCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataTableConfigurationCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataTableConfigurationCommand.js"() {
       init_polyfills();
       init_dist_es17();
       init_dist_es39();
@@ -46523,10 +46523,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/CreateMultipartUploadCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/CreateMultipartUploadCommand.js
   var CreateMultipartUploadCommand;
   var init_CreateMultipartUploadCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/CreateMultipartUploadCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/CreateMultipartUploadCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es55();
@@ -46549,10 +46549,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketAnalyticsConfigurationCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketAnalyticsConfigurationCommand.js
   var DeleteBucketAnalyticsConfigurationCommand;
   var init_DeleteBucketAnalyticsConfigurationCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketAnalyticsConfigurationCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketAnalyticsConfigurationCommand.js"() {
       init_polyfills();
       init_dist_es39();
       init_dist_es25();
@@ -46569,10 +46569,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCommand.js
   var DeleteBucketCommand;
   var init_DeleteBucketCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCommand.js"() {
       init_polyfills();
       init_dist_es39();
       init_dist_es25();
@@ -46589,10 +46589,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCorsCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCorsCommand.js
   var DeleteBucketCorsCommand;
   var init_DeleteBucketCorsCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCorsCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCorsCommand.js"() {
       init_polyfills();
       init_dist_es39();
       init_dist_es25();
@@ -46609,10 +46609,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketEncryptionCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketEncryptionCommand.js
   var DeleteBucketEncryptionCommand;
   var init_DeleteBucketEncryptionCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketEncryptionCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketEncryptionCommand.js"() {
       init_polyfills();
       init_dist_es39();
       init_dist_es25();
@@ -46629,10 +46629,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketIntelligentTieringConfigurationCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketIntelligentTieringConfigurationCommand.js
   var DeleteBucketIntelligentTieringConfigurationCommand;
   var init_DeleteBucketIntelligentTieringConfigurationCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketIntelligentTieringConfigurationCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketIntelligentTieringConfigurationCommand.js"() {
       init_polyfills();
       init_dist_es39();
       init_dist_es25();
@@ -46649,10 +46649,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketInventoryConfigurationCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketInventoryConfigurationCommand.js
   var DeleteBucketInventoryConfigurationCommand;
   var init_DeleteBucketInventoryConfigurationCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketInventoryConfigurationCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketInventoryConfigurationCommand.js"() {
       init_polyfills();
       init_dist_es39();
       init_dist_es25();
@@ -46669,10 +46669,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketLifecycleCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketLifecycleCommand.js
   var DeleteBucketLifecycleCommand;
   var init_DeleteBucketLifecycleCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketLifecycleCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketLifecycleCommand.js"() {
       init_polyfills();
       init_dist_es39();
       init_dist_es25();
@@ -46689,10 +46689,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataConfigurationCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataConfigurationCommand.js
   var DeleteBucketMetadataConfigurationCommand;
   var init_DeleteBucketMetadataConfigurationCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataConfigurationCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataConfigurationCommand.js"() {
       init_polyfills();
       init_dist_es39();
       init_dist_es25();
@@ -46709,10 +46709,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataTableConfigurationCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataTableConfigurationCommand.js
   var DeleteBucketMetadataTableConfigurationCommand;
   var init_DeleteBucketMetadataTableConfigurationCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataTableConfigurationCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataTableConfigurationCommand.js"() {
       init_polyfills();
       init_dist_es39();
       init_dist_es25();
@@ -46729,10 +46729,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetricsConfigurationCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetricsConfigurationCommand.js
   var DeleteBucketMetricsConfigurationCommand;
   var init_DeleteBucketMetricsConfigurationCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetricsConfigurationCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetricsConfigurationCommand.js"() {
       init_polyfills();
       init_dist_es39();
       init_dist_es25();
@@ -46749,10 +46749,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketOwnershipControlsCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketOwnershipControlsCommand.js
   var DeleteBucketOwnershipControlsCommand;
   var init_DeleteBucketOwnershipControlsCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketOwnershipControlsCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketOwnershipControlsCommand.js"() {
       init_polyfills();
       init_dist_es39();
       init_dist_es25();
@@ -46769,10 +46769,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketPolicyCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketPolicyCommand.js
   var DeleteBucketPolicyCommand;
   var init_DeleteBucketPolicyCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketPolicyCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketPolicyCommand.js"() {
       init_polyfills();
       init_dist_es39();
       init_dist_es25();
@@ -46789,10 +46789,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketReplicationCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketReplicationCommand.js
   var DeleteBucketReplicationCommand;
   var init_DeleteBucketReplicationCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketReplicationCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketReplicationCommand.js"() {
       init_polyfills();
       init_dist_es39();
       init_dist_es25();
@@ -46809,10 +46809,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketTaggingCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketTaggingCommand.js
   var DeleteBucketTaggingCommand;
   var init_DeleteBucketTaggingCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketTaggingCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketTaggingCommand.js"() {
       init_polyfills();
       init_dist_es39();
       init_dist_es25();
@@ -46829,10 +46829,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketWebsiteCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketWebsiteCommand.js
   var DeleteBucketWebsiteCommand;
   var init_DeleteBucketWebsiteCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketWebsiteCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketWebsiteCommand.js"() {
       init_polyfills();
       init_dist_es39();
       init_dist_es25();
@@ -46849,10 +46849,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectCommand.js
   var DeleteObjectCommand;
   var init_DeleteObjectCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -46873,10 +46873,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectsCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectsCommand.js
   var DeleteObjectsCommand;
   var init_DeleteObjectsCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectsCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectsCommand.js"() {
       init_polyfills();
       init_dist_es17();
       init_dist_es31();
@@ -46901,10 +46901,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectTaggingCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectTaggingCommand.js
   var DeleteObjectTaggingCommand;
   var init_DeleteObjectTaggingCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectTaggingCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectTaggingCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -46924,10 +46924,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeletePublicAccessBlockCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeletePublicAccessBlockCommand.js
   var DeletePublicAccessBlockCommand;
   var init_DeletePublicAccessBlockCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeletePublicAccessBlockCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeletePublicAccessBlockCommand.js"() {
       init_polyfills();
       init_dist_es39();
       init_dist_es25();
@@ -46944,10 +46944,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAbacCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAbacCommand.js
   var GetBucketAbacCommand;
   var init_GetBucketAbacCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAbacCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAbacCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -46967,10 +46967,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAccelerateConfigurationCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAccelerateConfigurationCommand.js
   var GetBucketAccelerateConfigurationCommand;
   var init_GetBucketAccelerateConfigurationCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAccelerateConfigurationCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAccelerateConfigurationCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -46991,10 +46991,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAclCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAclCommand.js
   var GetBucketAclCommand;
   var init_GetBucketAclCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAclCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAclCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47015,10 +47015,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAnalyticsConfigurationCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAnalyticsConfigurationCommand.js
   var GetBucketAnalyticsConfigurationCommand;
   var init_GetBucketAnalyticsConfigurationCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAnalyticsConfigurationCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAnalyticsConfigurationCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47039,10 +47039,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketCorsCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketCorsCommand.js
   var GetBucketCorsCommand;
   var init_GetBucketCorsCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketCorsCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketCorsCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47063,10 +47063,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketEncryptionCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketEncryptionCommand.js
   var GetBucketEncryptionCommand;
   var init_GetBucketEncryptionCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketEncryptionCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketEncryptionCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47087,10 +47087,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketIntelligentTieringConfigurationCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketIntelligentTieringConfigurationCommand.js
   var GetBucketIntelligentTieringConfigurationCommand;
   var init_GetBucketIntelligentTieringConfigurationCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketIntelligentTieringConfigurationCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketIntelligentTieringConfigurationCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47111,10 +47111,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketInventoryConfigurationCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketInventoryConfigurationCommand.js
   var GetBucketInventoryConfigurationCommand;
   var init_GetBucketInventoryConfigurationCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketInventoryConfigurationCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketInventoryConfigurationCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47135,10 +47135,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLifecycleConfigurationCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLifecycleConfigurationCommand.js
   var GetBucketLifecycleConfigurationCommand;
   var init_GetBucketLifecycleConfigurationCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLifecycleConfigurationCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLifecycleConfigurationCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47159,10 +47159,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLocationCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLocationCommand.js
   var GetBucketLocationCommand;
   var init_GetBucketLocationCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLocationCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLocationCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47183,10 +47183,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLoggingCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLoggingCommand.js
   var GetBucketLoggingCommand;
   var init_GetBucketLoggingCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLoggingCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLoggingCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47207,10 +47207,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataConfigurationCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataConfigurationCommand.js
   var GetBucketMetadataConfigurationCommand;
   var init_GetBucketMetadataConfigurationCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataConfigurationCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataConfigurationCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47231,10 +47231,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataTableConfigurationCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataTableConfigurationCommand.js
   var GetBucketMetadataTableConfigurationCommand;
   var init_GetBucketMetadataTableConfigurationCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataTableConfigurationCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataTableConfigurationCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47255,10 +47255,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetricsConfigurationCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetricsConfigurationCommand.js
   var GetBucketMetricsConfigurationCommand;
   var init_GetBucketMetricsConfigurationCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetricsConfigurationCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetricsConfigurationCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47279,10 +47279,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketNotificationConfigurationCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketNotificationConfigurationCommand.js
   var GetBucketNotificationConfigurationCommand;
   var init_GetBucketNotificationConfigurationCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketNotificationConfigurationCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketNotificationConfigurationCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47303,10 +47303,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketOwnershipControlsCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketOwnershipControlsCommand.js
   var GetBucketOwnershipControlsCommand;
   var init_GetBucketOwnershipControlsCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketOwnershipControlsCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketOwnershipControlsCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47327,10 +47327,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyCommand.js
   var GetBucketPolicyCommand;
   var init_GetBucketPolicyCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyCommand.js"() {
       init_polyfills();
       init_dist_es39();
       init_dist_es25();
@@ -47347,10 +47347,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyStatusCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyStatusCommand.js
   var GetBucketPolicyStatusCommand;
   var init_GetBucketPolicyStatusCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyStatusCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyStatusCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47371,10 +47371,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketReplicationCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketReplicationCommand.js
   var GetBucketReplicationCommand;
   var init_GetBucketReplicationCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketReplicationCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketReplicationCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47395,10 +47395,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketRequestPaymentCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketRequestPaymentCommand.js
   var GetBucketRequestPaymentCommand;
   var init_GetBucketRequestPaymentCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketRequestPaymentCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketRequestPaymentCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47419,10 +47419,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketTaggingCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketTaggingCommand.js
   var GetBucketTaggingCommand;
   var init_GetBucketTaggingCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketTaggingCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketTaggingCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47443,10 +47443,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketVersioningCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketVersioningCommand.js
   var GetBucketVersioningCommand;
   var init_GetBucketVersioningCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketVersioningCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketVersioningCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47467,10 +47467,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketWebsiteCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketWebsiteCommand.js
   var GetBucketWebsiteCommand;
   var init_GetBucketWebsiteCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketWebsiteCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketWebsiteCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47491,10 +47491,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAclCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAclCommand.js
   var GetObjectAclCommand;
   var init_GetObjectAclCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAclCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAclCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47515,10 +47515,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAttributesCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAttributesCommand.js
   var GetObjectAttributesCommand;
   var init_GetObjectAttributesCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAttributesCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAttributesCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es55();
@@ -47540,10 +47540,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectCommand.js
   var GetObjectCommand;
   var init_GetObjectCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectCommand.js"() {
       init_polyfills();
       init_dist_es17();
       init_dist_es31();
@@ -47572,10 +47572,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLegalHoldCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLegalHoldCommand.js
   var GetObjectLegalHoldCommand;
   var init_GetObjectLegalHoldCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLegalHoldCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLegalHoldCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47595,10 +47595,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLockConfigurationCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLockConfigurationCommand.js
   var GetObjectLockConfigurationCommand;
   var init_GetObjectLockConfigurationCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLockConfigurationCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLockConfigurationCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47618,10 +47618,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectRetentionCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectRetentionCommand.js
   var GetObjectRetentionCommand;
   var init_GetObjectRetentionCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectRetentionCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectRetentionCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47641,10 +47641,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTaggingCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTaggingCommand.js
   var GetObjectTaggingCommand;
   var init_GetObjectTaggingCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTaggingCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTaggingCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47664,10 +47664,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTorrentCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTorrentCommand.js
   var GetObjectTorrentCommand;
   var init_GetObjectTorrentCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTorrentCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTorrentCommand.js"() {
       init_polyfills();
       init_dist_es39();
       init_dist_es25();
@@ -47683,10 +47683,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetPublicAccessBlockCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetPublicAccessBlockCommand.js
   var GetPublicAccessBlockCommand;
   var init_GetPublicAccessBlockCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetPublicAccessBlockCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetPublicAccessBlockCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47707,10 +47707,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/HeadBucketCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/HeadBucketCommand.js
   var HeadBucketCommand;
   var init_HeadBucketCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/HeadBucketCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/HeadBucketCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47730,10 +47730,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/HeadObjectCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/HeadObjectCommand.js
   var HeadObjectCommand;
   var init_HeadObjectCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/HeadObjectCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/HeadObjectCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es55();
@@ -47757,10 +47757,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketAnalyticsConfigurationsCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketAnalyticsConfigurationsCommand.js
   var ListBucketAnalyticsConfigurationsCommand;
   var init_ListBucketAnalyticsConfigurationsCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketAnalyticsConfigurationsCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketAnalyticsConfigurationsCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47781,10 +47781,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketIntelligentTieringConfigurationsCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketIntelligentTieringConfigurationsCommand.js
   var ListBucketIntelligentTieringConfigurationsCommand;
   var init_ListBucketIntelligentTieringConfigurationsCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketIntelligentTieringConfigurationsCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketIntelligentTieringConfigurationsCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47805,10 +47805,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketInventoryConfigurationsCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketInventoryConfigurationsCommand.js
   var ListBucketInventoryConfigurationsCommand;
   var init_ListBucketInventoryConfigurationsCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketInventoryConfigurationsCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketInventoryConfigurationsCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47829,10 +47829,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketMetricsConfigurationsCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketMetricsConfigurationsCommand.js
   var ListBucketMetricsConfigurationsCommand;
   var init_ListBucketMetricsConfigurationsCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketMetricsConfigurationsCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketMetricsConfigurationsCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47853,10 +47853,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketsCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketsCommand.js
   var ListBucketsCommand;
   var init_ListBucketsCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketsCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketsCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47873,10 +47873,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListDirectoryBucketsCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListDirectoryBucketsCommand.js
   var ListDirectoryBucketsCommand;
   var init_ListDirectoryBucketsCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListDirectoryBucketsCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListDirectoryBucketsCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47896,10 +47896,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListMultipartUploadsCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListMultipartUploadsCommand.js
   var ListMultipartUploadsCommand;
   var init_ListMultipartUploadsCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListMultipartUploadsCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListMultipartUploadsCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47920,10 +47920,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsCommand.js
   var ListObjectsCommand;
   var init_ListObjectsCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47944,10 +47944,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsV2Command.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsV2Command.js
   var ListObjectsV2Command;
   var init_ListObjectsV2Command = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsV2Command.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsV2Command.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47968,10 +47968,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectVersionsCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectVersionsCommand.js
   var ListObjectVersionsCommand;
   var init_ListObjectVersionsCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectVersionsCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectVersionsCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -47992,10 +47992,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListPartsCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListPartsCommand.js
   var ListPartsCommand;
   var init_ListPartsCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListPartsCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListPartsCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es55();
@@ -48018,10 +48018,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAbacCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAbacCommand.js
   var PutBucketAbacCommand;
   var init_PutBucketAbacCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAbacCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAbacCommand.js"() {
       init_polyfills();
       init_dist_es17();
       init_dist_es39();
@@ -48044,10 +48044,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAccelerateConfigurationCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAccelerateConfigurationCommand.js
   var PutBucketAccelerateConfigurationCommand;
   var init_PutBucketAccelerateConfigurationCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAccelerateConfigurationCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAccelerateConfigurationCommand.js"() {
       init_polyfills();
       init_dist_es17();
       init_dist_es39();
@@ -48071,10 +48071,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAclCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAclCommand.js
   var PutBucketAclCommand;
   var init_PutBucketAclCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAclCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAclCommand.js"() {
       init_polyfills();
       init_dist_es17();
       init_dist_es39();
@@ -48098,10 +48098,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAnalyticsConfigurationCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAnalyticsConfigurationCommand.js
   var PutBucketAnalyticsConfigurationCommand;
   var init_PutBucketAnalyticsConfigurationCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAnalyticsConfigurationCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAnalyticsConfigurationCommand.js"() {
       init_polyfills();
       init_dist_es39();
       init_dist_es25();
@@ -48118,10 +48118,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketCorsCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketCorsCommand.js
   var PutBucketCorsCommand;
   var init_PutBucketCorsCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketCorsCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketCorsCommand.js"() {
       init_polyfills();
       init_dist_es17();
       init_dist_es39();
@@ -48145,10 +48145,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketEncryptionCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketEncryptionCommand.js
   var PutBucketEncryptionCommand;
   var init_PutBucketEncryptionCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketEncryptionCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketEncryptionCommand.js"() {
       init_polyfills();
       init_dist_es17();
       init_dist_es39();
@@ -48172,10 +48172,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketIntelligentTieringConfigurationCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketIntelligentTieringConfigurationCommand.js
   var PutBucketIntelligentTieringConfigurationCommand;
   var init_PutBucketIntelligentTieringConfigurationCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketIntelligentTieringConfigurationCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketIntelligentTieringConfigurationCommand.js"() {
       init_polyfills();
       init_dist_es39();
       init_dist_es25();
@@ -48192,10 +48192,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketInventoryConfigurationCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketInventoryConfigurationCommand.js
   var PutBucketInventoryConfigurationCommand;
   var init_PutBucketInventoryConfigurationCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketInventoryConfigurationCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketInventoryConfigurationCommand.js"() {
       init_polyfills();
       init_dist_es39();
       init_dist_es25();
@@ -48212,10 +48212,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLifecycleConfigurationCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLifecycleConfigurationCommand.js
   var PutBucketLifecycleConfigurationCommand;
   var init_PutBucketLifecycleConfigurationCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLifecycleConfigurationCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLifecycleConfigurationCommand.js"() {
       init_polyfills();
       init_dist_es17();
       init_dist_es31();
@@ -48241,10 +48241,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLoggingCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLoggingCommand.js
   var PutBucketLoggingCommand;
   var init_PutBucketLoggingCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLoggingCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLoggingCommand.js"() {
       init_polyfills();
       init_dist_es17();
       init_dist_es39();
@@ -48268,10 +48268,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketMetricsConfigurationCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketMetricsConfigurationCommand.js
   var PutBucketMetricsConfigurationCommand;
   var init_PutBucketMetricsConfigurationCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketMetricsConfigurationCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketMetricsConfigurationCommand.js"() {
       init_polyfills();
       init_dist_es39();
       init_dist_es25();
@@ -48288,10 +48288,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketNotificationConfigurationCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketNotificationConfigurationCommand.js
   var PutBucketNotificationConfigurationCommand;
   var init_PutBucketNotificationConfigurationCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketNotificationConfigurationCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketNotificationConfigurationCommand.js"() {
       init_polyfills();
       init_dist_es39();
       init_dist_es25();
@@ -48308,10 +48308,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketOwnershipControlsCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketOwnershipControlsCommand.js
   var PutBucketOwnershipControlsCommand;
   var init_PutBucketOwnershipControlsCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketOwnershipControlsCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketOwnershipControlsCommand.js"() {
       init_polyfills();
       init_dist_es17();
       init_dist_es39();
@@ -48335,10 +48335,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketPolicyCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketPolicyCommand.js
   var PutBucketPolicyCommand;
   var init_PutBucketPolicyCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketPolicyCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketPolicyCommand.js"() {
       init_polyfills();
       init_dist_es17();
       init_dist_es39();
@@ -48362,10 +48362,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketReplicationCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketReplicationCommand.js
   var PutBucketReplicationCommand;
   var init_PutBucketReplicationCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketReplicationCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketReplicationCommand.js"() {
       init_polyfills();
       init_dist_es17();
       init_dist_es39();
@@ -48389,10 +48389,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketRequestPaymentCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketRequestPaymentCommand.js
   var PutBucketRequestPaymentCommand;
   var init_PutBucketRequestPaymentCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketRequestPaymentCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketRequestPaymentCommand.js"() {
       init_polyfills();
       init_dist_es17();
       init_dist_es39();
@@ -48416,10 +48416,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketTaggingCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketTaggingCommand.js
   var PutBucketTaggingCommand;
   var init_PutBucketTaggingCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketTaggingCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketTaggingCommand.js"() {
       init_polyfills();
       init_dist_es17();
       init_dist_es39();
@@ -48443,10 +48443,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketVersioningCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketVersioningCommand.js
   var PutBucketVersioningCommand;
   var init_PutBucketVersioningCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketVersioningCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketVersioningCommand.js"() {
       init_polyfills();
       init_dist_es17();
       init_dist_es39();
@@ -48470,10 +48470,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketWebsiteCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketWebsiteCommand.js
   var PutBucketWebsiteCommand;
   var init_PutBucketWebsiteCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketWebsiteCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketWebsiteCommand.js"() {
       init_polyfills();
       init_dist_es17();
       init_dist_es39();
@@ -48497,10 +48497,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectAclCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectAclCommand.js
   var PutObjectAclCommand;
   var init_PutObjectAclCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectAclCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectAclCommand.js"() {
       init_polyfills();
       init_dist_es17();
       init_dist_es31();
@@ -48526,10 +48526,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectCommand.js
   var PutObjectCommand;
   var init_PutObjectCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectCommand.js"() {
       init_polyfills();
       init_dist_es17();
       init_dist_es31();
@@ -48558,10 +48558,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLegalHoldCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLegalHoldCommand.js
   var PutObjectLegalHoldCommand;
   var init_PutObjectLegalHoldCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLegalHoldCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLegalHoldCommand.js"() {
       init_polyfills();
       init_dist_es17();
       init_dist_es31();
@@ -48586,10 +48586,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLockConfigurationCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLockConfigurationCommand.js
   var PutObjectLockConfigurationCommand;
   var init_PutObjectLockConfigurationCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLockConfigurationCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLockConfigurationCommand.js"() {
       init_polyfills();
       init_dist_es17();
       init_dist_es31();
@@ -48614,10 +48614,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectRetentionCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectRetentionCommand.js
   var PutObjectRetentionCommand;
   var init_PutObjectRetentionCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectRetentionCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectRetentionCommand.js"() {
       init_polyfills();
       init_dist_es17();
       init_dist_es31();
@@ -48642,10 +48642,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectTaggingCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectTaggingCommand.js
   var PutObjectTaggingCommand;
   var init_PutObjectTaggingCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectTaggingCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectTaggingCommand.js"() {
       init_polyfills();
       init_dist_es17();
       init_dist_es31();
@@ -48670,10 +48670,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutPublicAccessBlockCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutPublicAccessBlockCommand.js
   var PutPublicAccessBlockCommand;
   var init_PutPublicAccessBlockCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutPublicAccessBlockCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutPublicAccessBlockCommand.js"() {
       init_polyfills();
       init_dist_es17();
       init_dist_es39();
@@ -48697,10 +48697,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/RenameObjectCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/RenameObjectCommand.js
   var RenameObjectCommand;
   var init_RenameObjectCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/RenameObjectCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/RenameObjectCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es39();
@@ -48721,10 +48721,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/RestoreObjectCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/RestoreObjectCommand.js
   var RestoreObjectCommand;
   var init_RestoreObjectCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/RestoreObjectCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/RestoreObjectCommand.js"() {
       init_polyfills();
       init_dist_es17();
       init_dist_es31();
@@ -48749,10 +48749,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/SelectObjectContentCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/SelectObjectContentCommand.js
   var SelectObjectContentCommand;
   var init_SelectObjectContentCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/SelectObjectContentCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/SelectObjectContentCommand.js"() {
       init_polyfills();
       init_dist_es55();
       init_dist_es39();
@@ -48776,10 +48776,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataInventoryTableConfigurationCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataInventoryTableConfigurationCommand.js
   var UpdateBucketMetadataInventoryTableConfigurationCommand;
   var init_UpdateBucketMetadataInventoryTableConfigurationCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataInventoryTableConfigurationCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataInventoryTableConfigurationCommand.js"() {
       init_polyfills();
       init_dist_es17();
       init_dist_es39();
@@ -48803,10 +48803,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataJournalTableConfigurationCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataJournalTableConfigurationCommand.js
   var UpdateBucketMetadataJournalTableConfigurationCommand;
   var init_UpdateBucketMetadataJournalTableConfigurationCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataJournalTableConfigurationCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataJournalTableConfigurationCommand.js"() {
       init_polyfills();
       init_dist_es17();
       init_dist_es39();
@@ -48830,10 +48830,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateObjectEncryptionCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateObjectEncryptionCommand.js
   var UpdateObjectEncryptionCommand;
   var init_UpdateObjectEncryptionCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateObjectEncryptionCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateObjectEncryptionCommand.js"() {
       init_polyfills();
       init_dist_es17();
       init_dist_es31();
@@ -48858,10 +48858,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCommand.js
   var UploadPartCommand;
   var init_UploadPartCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCommand.js"() {
       init_polyfills();
       init_dist_es17();
       init_dist_es31();
@@ -48889,10 +48889,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCopyCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCopyCommand.js
   var UploadPartCopyCommand;
   var init_UploadPartCopyCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCopyCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCopyCommand.js"() {
       init_polyfills();
       init_dist_es31();
       init_dist_es55();
@@ -48915,10 +48915,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/WriteGetObjectResponseCommand.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/WriteGetObjectResponseCommand.js
   var WriteGetObjectResponseCommand;
   var init_WriteGetObjectResponseCommand = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/WriteGetObjectResponseCommand.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/WriteGetObjectResponseCommand.js"() {
       init_polyfills();
       init_dist_es39();
       init_dist_es25();
@@ -48934,10 +48934,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/pagination/ListBucketsPaginator.js
+  // node_modules/@aws-sdk/client-s3/dist-es/pagination/ListBucketsPaginator.js
   var paginateListBuckets;
   var init_ListBucketsPaginator = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/pagination/ListBucketsPaginator.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/pagination/ListBucketsPaginator.js"() {
       init_polyfills();
       init_dist_es27();
       init_ListBucketsCommand();
@@ -48946,10 +48946,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/pagination/ListDirectoryBucketsPaginator.js
+  // node_modules/@aws-sdk/client-s3/dist-es/pagination/ListDirectoryBucketsPaginator.js
   var paginateListDirectoryBuckets;
   var init_ListDirectoryBucketsPaginator = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/pagination/ListDirectoryBucketsPaginator.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/pagination/ListDirectoryBucketsPaginator.js"() {
       init_polyfills();
       init_dist_es27();
       init_ListDirectoryBucketsCommand();
@@ -48958,10 +48958,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/pagination/ListObjectsV2Paginator.js
+  // node_modules/@aws-sdk/client-s3/dist-es/pagination/ListObjectsV2Paginator.js
   var paginateListObjectsV2;
   var init_ListObjectsV2Paginator = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/pagination/ListObjectsV2Paginator.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/pagination/ListObjectsV2Paginator.js"() {
       init_polyfills();
       init_dist_es27();
       init_ListObjectsV2Command();
@@ -48970,10 +48970,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/pagination/ListPartsPaginator.js
+  // node_modules/@aws-sdk/client-s3/dist-es/pagination/ListPartsPaginator.js
   var paginateListParts;
   var init_ListPartsPaginator = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/pagination/ListPartsPaginator.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/pagination/ListPartsPaginator.js"() {
       init_polyfills();
       init_dist_es27();
       init_ListPartsCommand();
@@ -48982,10 +48982,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/util-waiter/dist-es/circularReplacer.js
+  // node_modules/@smithy/util-waiter/dist-es/circularReplacer.js
   var getCircularReplacer;
   var init_circularReplacer = __esm({
-    "../../node_modules/@smithy/util-waiter/dist-es/circularReplacer.js"() {
+    "node_modules/@smithy/util-waiter/dist-es/circularReplacer.js"() {
       init_polyfills();
       getCircularReplacer = () => {
         const seen = /* @__PURE__ */ new WeakSet();
@@ -49002,10 +49002,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/util-waiter/dist-es/utils/sleep.js
+  // node_modules/@smithy/util-waiter/dist-es/utils/sleep.js
   var sleep;
   var init_sleep = __esm({
-    "../../node_modules/@smithy/util-waiter/dist-es/utils/sleep.js"() {
+    "node_modules/@smithy/util-waiter/dist-es/utils/sleep.js"() {
       init_polyfills();
       sleep = (seconds) => {
         return new Promise((resolve) => setTimeout(resolve, seconds * 1e3));
@@ -49013,10 +49013,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/util-waiter/dist-es/waiter.js
+  // node_modules/@smithy/util-waiter/dist-es/waiter.js
   var waiterServiceDefaults, WaiterState, checkExceptions;
   var init_waiter2 = __esm({
-    "../../node_modules/@smithy/util-waiter/dist-es/waiter.js"() {
+    "node_modules/@smithy/util-waiter/dist-es/waiter.js"() {
       init_polyfills();
       init_circularReplacer();
       waiterServiceDefaults = {
@@ -49053,10 +49053,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/util-waiter/dist-es/poller.js
+  // node_modules/@smithy/util-waiter/dist-es/poller.js
   var runPolling, checkWarn403, createMessageFromResponse, exponentialBackoffWithJitter, randomInRange;
   var init_poller = __esm({
-    "../../node_modules/@smithy/util-waiter/dist-es/poller.js"() {
+    "node_modules/@smithy/util-waiter/dist-es/poller.js"() {
       init_polyfills();
       init_circularReplacer();
       init_sleep();
@@ -49146,10 +49146,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/util-waiter/dist-es/utils/validate.js
+  // node_modules/@smithy/util-waiter/dist-es/utils/validate.js
   var validateWaiterOptions;
   var init_validate = __esm({
-    "../../node_modules/@smithy/util-waiter/dist-es/utils/validate.js"() {
+    "node_modules/@smithy/util-waiter/dist-es/utils/validate.js"() {
       init_polyfills();
       validateWaiterOptions = (options) => {
         if (options.maxWaitTime <= 0) {
@@ -49167,19 +49167,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/util-waiter/dist-es/utils/index.js
+  // node_modules/@smithy/util-waiter/dist-es/utils/index.js
   var init_utils3 = __esm({
-    "../../node_modules/@smithy/util-waiter/dist-es/utils/index.js"() {
+    "node_modules/@smithy/util-waiter/dist-es/utils/index.js"() {
       init_polyfills();
       init_sleep();
       init_validate();
     }
   });
 
-  // ../../node_modules/@smithy/util-waiter/dist-es/createWaiter.js
+  // node_modules/@smithy/util-waiter/dist-es/createWaiter.js
   var abortTimeout, createWaiter;
   var init_createWaiter = __esm({
-    "../../node_modules/@smithy/util-waiter/dist-es/createWaiter.js"() {
+    "node_modules/@smithy/util-waiter/dist-es/createWaiter.js"() {
       init_polyfills();
       init_poller();
       init_utils3();
@@ -49231,19 +49231,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@smithy/util-waiter/dist-es/index.js
+  // node_modules/@smithy/util-waiter/dist-es/index.js
   var init_dist_es57 = __esm({
-    "../../node_modules/@smithy/util-waiter/dist-es/index.js"() {
+    "node_modules/@smithy/util-waiter/dist-es/index.js"() {
       init_polyfills();
       init_createWaiter();
       init_waiter2();
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketExists.js
+  // node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketExists.js
   var checkState, waitUntilBucketExists;
   var init_waitForBucketExists = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketExists.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketExists.js"() {
       init_polyfills();
       init_dist_es57();
       init_HeadBucketCommand();
@@ -49269,10 +49269,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketNotExists.js
+  // node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketNotExists.js
   var checkState2, waitUntilBucketNotExists;
   var init_waitForBucketNotExists = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketNotExists.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketNotExists.js"() {
       init_polyfills();
       init_dist_es57();
       init_HeadBucketCommand();
@@ -49297,10 +49297,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectExists.js
+  // node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectExists.js
   var checkState3, waitUntilObjectExists;
   var init_waitForObjectExists = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectExists.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectExists.js"() {
       init_polyfills();
       init_dist_es57();
       init_HeadObjectCommand();
@@ -49326,10 +49326,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectNotExists.js
+  // node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectNotExists.js
   var checkState4, waitUntilObjectNotExists;
   var init_waitForObjectNotExists = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectNotExists.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectNotExists.js"() {
       init_polyfills();
       init_dist_es57();
       init_HeadObjectCommand();
@@ -49354,10 +49354,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/S3.js
+  // node_modules/@aws-sdk/client-s3/dist-es/S3.js
   var commands, paginators, waiters, S3;
   var init_S3 = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/S3.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/S3.js"() {
       init_polyfills();
       init_dist_es25();
       init_AbortMultipartUploadCommand();
@@ -49603,9 +49603,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/index.js
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/index.js
   var init_commands = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/index.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/index.js"() {
       init_polyfills();
       init_AbortMultipartUploadCommand();
       init_CompleteMultipartUploadCommand();
@@ -49717,16 +49717,16 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/pagination/Interfaces.js
+  // node_modules/@aws-sdk/client-s3/dist-es/pagination/Interfaces.js
   var init_Interfaces = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/pagination/Interfaces.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/pagination/Interfaces.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/pagination/index.js
+  // node_modules/@aws-sdk/client-s3/dist-es/pagination/index.js
   var init_pagination2 = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/pagination/index.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/pagination/index.js"() {
       init_polyfills();
       init_Interfaces();
       init_ListBucketsPaginator();
@@ -49736,9 +49736,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/waiters/index.js
+  // node_modules/@aws-sdk/client-s3/dist-es/waiters/index.js
   var init_waiters = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/waiters/index.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/waiters/index.js"() {
       init_polyfills();
       init_waitForBucketExists();
       init_waitForBucketNotExists();
@@ -49747,30 +49747,30 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/models/enums.js
+  // node_modules/@aws-sdk/client-s3/dist-es/models/enums.js
   var init_enums = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/models/enums.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/models/enums.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/models/models_0.js
+  // node_modules/@aws-sdk/client-s3/dist-es/models/models_0.js
   var init_models_0 = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/models/models_0.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/models/models_0.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/models/models_1.js
+  // node_modules/@aws-sdk/client-s3/dist-es/models/models_1.js
   var init_models_1 = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/models/models_1.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/models/models_1.js"() {
       init_polyfills();
     }
   });
 
-  // ../../node_modules/@aws-sdk/client-s3/dist-es/index.js
+  // node_modules/@aws-sdk/client-s3/dist-es/index.js
   var init_dist_es58 = __esm({
-    "../../node_modules/@aws-sdk/client-s3/dist-es/index.js"() {
+    "node_modules/@aws-sdk/client-s3/dist-es/index.js"() {
       init_polyfills();
       init_S3Client();
       init_S3();
@@ -49856,9 +49856,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/safe-buffer/index.js
+  // node_modules/safe-buffer/index.js
   var require_safe_buffer = __commonJS({
-    "../../node_modules/safe-buffer/index.js"(exports, module) {
+    "node_modules/safe-buffer/index.js"(exports, module) {
       init_polyfills();
       var buffer = require_buffer();
       var Buffer5 = buffer.Buffer;
@@ -49915,9 +49915,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/randombytes/browser.js
+  // node_modules/randombytes/browser.js
   var require_browser2 = __commonJS({
-    "../../node_modules/randombytes/browser.js"(exports, module) {
+    "node_modules/randombytes/browser.js"(exports, module) {
       "use strict";
       init_polyfills();
       var MAX_BYTES = 65536;
@@ -49954,9 +49954,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/inherits/inherits_browser.js
+  // node_modules/inherits/inherits_browser.js
   var require_inherits_browser = __commonJS({
-    "../../node_modules/inherits/inherits_browser.js"(exports, module) {
+    "node_modules/inherits/inherits_browser.js"(exports, module) {
       init_polyfills();
       if (typeof Object.create === "function") {
         module.exports = function inherits(ctor, superCtor) {
@@ -49987,9 +49987,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/events/events.js
+  // node_modules/events/events.js
   var require_events = __commonJS({
-    "../../node_modules/events/events.js"(exports, module) {
+    "node_modules/events/events.js"(exports, module) {
       "use strict";
       init_polyfills();
       var R2 = typeof Reflect === "object" ? Reflect : null;
@@ -50357,17 +50357,17 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js
+  // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js
   var require_stream_browser = __commonJS({
-    "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js"(exports, module) {
+    "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js"(exports, module) {
       init_polyfills();
       module.exports = require_events().EventEmitter;
     }
   });
 
-  // ../../node_modules/has-symbols/shams.js
+  // node_modules/has-symbols/shams.js
   var require_shams = __commonJS({
-    "../../node_modules/has-symbols/shams.js"(exports, module) {
+    "node_modules/has-symbols/shams.js"(exports, module) {
       "use strict";
       init_polyfills();
       module.exports = function hasSymbols() {
@@ -50421,9 +50421,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/has-tostringtag/shams.js
+  // node_modules/has-tostringtag/shams.js
   var require_shams2 = __commonJS({
-    "../../node_modules/has-tostringtag/shams.js"(exports, module) {
+    "node_modules/has-tostringtag/shams.js"(exports, module) {
       "use strict";
       init_polyfills();
       var hasSymbols = require_shams();
@@ -50433,135 +50433,135 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/es-object-atoms/index.js
+  // node_modules/es-object-atoms/index.js
   var require_es_object_atoms = __commonJS({
-    "../../node_modules/es-object-atoms/index.js"(exports, module) {
+    "node_modules/es-object-atoms/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       module.exports = Object;
     }
   });
 
-  // ../../node_modules/es-errors/index.js
+  // node_modules/es-errors/index.js
   var require_es_errors = __commonJS({
-    "../../node_modules/es-errors/index.js"(exports, module) {
+    "node_modules/es-errors/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       module.exports = Error;
     }
   });
 
-  // ../../node_modules/es-errors/eval.js
+  // node_modules/es-errors/eval.js
   var require_eval = __commonJS({
-    "../../node_modules/es-errors/eval.js"(exports, module) {
+    "node_modules/es-errors/eval.js"(exports, module) {
       "use strict";
       init_polyfills();
       module.exports = EvalError;
     }
   });
 
-  // ../../node_modules/es-errors/range.js
+  // node_modules/es-errors/range.js
   var require_range = __commonJS({
-    "../../node_modules/es-errors/range.js"(exports, module) {
+    "node_modules/es-errors/range.js"(exports, module) {
       "use strict";
       init_polyfills();
       module.exports = RangeError;
     }
   });
 
-  // ../../node_modules/es-errors/ref.js
+  // node_modules/es-errors/ref.js
   var require_ref = __commonJS({
-    "../../node_modules/es-errors/ref.js"(exports, module) {
+    "node_modules/es-errors/ref.js"(exports, module) {
       "use strict";
       init_polyfills();
       module.exports = ReferenceError;
     }
   });
 
-  // ../../node_modules/es-errors/syntax.js
+  // node_modules/es-errors/syntax.js
   var require_syntax = __commonJS({
-    "../../node_modules/es-errors/syntax.js"(exports, module) {
+    "node_modules/es-errors/syntax.js"(exports, module) {
       "use strict";
       init_polyfills();
       module.exports = SyntaxError;
     }
   });
 
-  // ../../node_modules/es-errors/type.js
+  // node_modules/es-errors/type.js
   var require_type = __commonJS({
-    "../../node_modules/es-errors/type.js"(exports, module) {
+    "node_modules/es-errors/type.js"(exports, module) {
       "use strict";
       init_polyfills();
       module.exports = TypeError;
     }
   });
 
-  // ../../node_modules/es-errors/uri.js
+  // node_modules/es-errors/uri.js
   var require_uri = __commonJS({
-    "../../node_modules/es-errors/uri.js"(exports, module) {
+    "node_modules/es-errors/uri.js"(exports, module) {
       "use strict";
       init_polyfills();
       module.exports = URIError;
     }
   });
 
-  // ../../node_modules/math-intrinsics/abs.js
+  // node_modules/math-intrinsics/abs.js
   var require_abs = __commonJS({
-    "../../node_modules/math-intrinsics/abs.js"(exports, module) {
+    "node_modules/math-intrinsics/abs.js"(exports, module) {
       "use strict";
       init_polyfills();
       module.exports = Math.abs;
     }
   });
 
-  // ../../node_modules/math-intrinsics/floor.js
+  // node_modules/math-intrinsics/floor.js
   var require_floor = __commonJS({
-    "../../node_modules/math-intrinsics/floor.js"(exports, module) {
+    "node_modules/math-intrinsics/floor.js"(exports, module) {
       "use strict";
       init_polyfills();
       module.exports = Math.floor;
     }
   });
 
-  // ../../node_modules/math-intrinsics/max.js
+  // node_modules/math-intrinsics/max.js
   var require_max = __commonJS({
-    "../../node_modules/math-intrinsics/max.js"(exports, module) {
+    "node_modules/math-intrinsics/max.js"(exports, module) {
       "use strict";
       init_polyfills();
       module.exports = Math.max;
     }
   });
 
-  // ../../node_modules/math-intrinsics/min.js
+  // node_modules/math-intrinsics/min.js
   var require_min = __commonJS({
-    "../../node_modules/math-intrinsics/min.js"(exports, module) {
+    "node_modules/math-intrinsics/min.js"(exports, module) {
       "use strict";
       init_polyfills();
       module.exports = Math.min;
     }
   });
 
-  // ../../node_modules/math-intrinsics/pow.js
+  // node_modules/math-intrinsics/pow.js
   var require_pow = __commonJS({
-    "../../node_modules/math-intrinsics/pow.js"(exports, module) {
+    "node_modules/math-intrinsics/pow.js"(exports, module) {
       "use strict";
       init_polyfills();
       module.exports = Math.pow;
     }
   });
 
-  // ../../node_modules/math-intrinsics/round.js
+  // node_modules/math-intrinsics/round.js
   var require_round = __commonJS({
-    "../../node_modules/math-intrinsics/round.js"(exports, module) {
+    "node_modules/math-intrinsics/round.js"(exports, module) {
       "use strict";
       init_polyfills();
       module.exports = Math.round;
     }
   });
 
-  // ../../node_modules/math-intrinsics/isNaN.js
+  // node_modules/math-intrinsics/isNaN.js
   var require_isNaN = __commonJS({
-    "../../node_modules/math-intrinsics/isNaN.js"(exports, module) {
+    "node_modules/math-intrinsics/isNaN.js"(exports, module) {
       "use strict";
       init_polyfills();
       module.exports = Number.isNaN || function isNaN2(a2) {
@@ -50570,9 +50570,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/math-intrinsics/sign.js
+  // node_modules/math-intrinsics/sign.js
   var require_sign = __commonJS({
-    "../../node_modules/math-intrinsics/sign.js"(exports, module) {
+    "node_modules/math-intrinsics/sign.js"(exports, module) {
       "use strict";
       init_polyfills();
       var $isNaN = require_isNaN();
@@ -50585,18 +50585,18 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/gopd/gOPD.js
+  // node_modules/gopd/gOPD.js
   var require_gOPD = __commonJS({
-    "../../node_modules/gopd/gOPD.js"(exports, module) {
+    "node_modules/gopd/gOPD.js"(exports, module) {
       "use strict";
       init_polyfills();
       module.exports = Object.getOwnPropertyDescriptor;
     }
   });
 
-  // ../../node_modules/gopd/index.js
+  // node_modules/gopd/index.js
   var require_gopd = __commonJS({
-    "../../node_modules/gopd/index.js"(exports, module) {
+    "node_modules/gopd/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var $gOPD = require_gOPD();
@@ -50611,9 +50611,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/es-define-property/index.js
+  // node_modules/es-define-property/index.js
   var require_es_define_property = __commonJS({
-    "../../node_modules/es-define-property/index.js"(exports, module) {
+    "node_modules/es-define-property/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var $defineProperty = Object.defineProperty || false;
@@ -50628,9 +50628,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/has-symbols/index.js
+  // node_modules/has-symbols/index.js
   var require_has_symbols = __commonJS({
-    "../../node_modules/has-symbols/index.js"(exports, module) {
+    "node_modules/has-symbols/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var origSymbol = typeof Symbol !== "undefined" && Symbol;
@@ -50653,18 +50653,18 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/get-proto/Reflect.getPrototypeOf.js
+  // node_modules/get-proto/Reflect.getPrototypeOf.js
   var require_Reflect_getPrototypeOf = __commonJS({
-    "../../node_modules/get-proto/Reflect.getPrototypeOf.js"(exports, module) {
+    "node_modules/get-proto/Reflect.getPrototypeOf.js"(exports, module) {
       "use strict";
       init_polyfills();
       module.exports = typeof Reflect !== "undefined" && Reflect.getPrototypeOf || null;
     }
   });
 
-  // ../../node_modules/get-proto/Object.getPrototypeOf.js
+  // node_modules/get-proto/Object.getPrototypeOf.js
   var require_Object_getPrototypeOf = __commonJS({
-    "../../node_modules/get-proto/Object.getPrototypeOf.js"(exports, module) {
+    "node_modules/get-proto/Object.getPrototypeOf.js"(exports, module) {
       "use strict";
       init_polyfills();
       var $Object = require_es_object_atoms();
@@ -50672,9 +50672,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/function-bind/implementation.js
+  // node_modules/function-bind/implementation.js
   var require_implementation = __commonJS({
-    "../../node_modules/function-bind/implementation.js"(exports, module) {
+    "node_modules/function-bind/implementation.js"(exports, module) {
       "use strict";
       init_polyfills();
       var ERROR_MESSAGE = "Function.prototype.bind called on incompatible ";
@@ -50749,9 +50749,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/function-bind/index.js
+  // node_modules/function-bind/index.js
   var require_function_bind = __commonJS({
-    "../../node_modules/function-bind/index.js"(exports, module) {
+    "node_modules/function-bind/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var implementation = require_implementation();
@@ -50759,36 +50759,36 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/call-bind-apply-helpers/functionCall.js
+  // node_modules/call-bind-apply-helpers/functionCall.js
   var require_functionCall = __commonJS({
-    "../../node_modules/call-bind-apply-helpers/functionCall.js"(exports, module) {
+    "node_modules/call-bind-apply-helpers/functionCall.js"(exports, module) {
       "use strict";
       init_polyfills();
       module.exports = Function.prototype.call;
     }
   });
 
-  // ../../node_modules/call-bind-apply-helpers/functionApply.js
+  // node_modules/call-bind-apply-helpers/functionApply.js
   var require_functionApply = __commonJS({
-    "../../node_modules/call-bind-apply-helpers/functionApply.js"(exports, module) {
+    "node_modules/call-bind-apply-helpers/functionApply.js"(exports, module) {
       "use strict";
       init_polyfills();
       module.exports = Function.prototype.apply;
     }
   });
 
-  // ../../node_modules/call-bind-apply-helpers/reflectApply.js
+  // node_modules/call-bind-apply-helpers/reflectApply.js
   var require_reflectApply = __commonJS({
-    "../../node_modules/call-bind-apply-helpers/reflectApply.js"(exports, module) {
+    "node_modules/call-bind-apply-helpers/reflectApply.js"(exports, module) {
       "use strict";
       init_polyfills();
       module.exports = typeof Reflect !== "undefined" && Reflect && Reflect.apply;
     }
   });
 
-  // ../../node_modules/call-bind-apply-helpers/actualApply.js
+  // node_modules/call-bind-apply-helpers/actualApply.js
   var require_actualApply = __commonJS({
-    "../../node_modules/call-bind-apply-helpers/actualApply.js"(exports, module) {
+    "node_modules/call-bind-apply-helpers/actualApply.js"(exports, module) {
       "use strict";
       init_polyfills();
       var bind = require_function_bind();
@@ -50799,9 +50799,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/call-bind-apply-helpers/index.js
+  // node_modules/call-bind-apply-helpers/index.js
   var require_call_bind_apply_helpers = __commonJS({
-    "../../node_modules/call-bind-apply-helpers/index.js"(exports, module) {
+    "node_modules/call-bind-apply-helpers/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var bind = require_function_bind();
@@ -50817,9 +50817,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/dunder-proto/get.js
+  // node_modules/dunder-proto/get.js
   var require_get = __commonJS({
-    "../../node_modules/dunder-proto/get.js"(exports, module) {
+    "node_modules/dunder-proto/get.js"(exports, module) {
       "use strict";
       init_polyfills();
       var callBind = require_call_bind_apply_helpers();
@@ -50849,9 +50849,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/get-proto/index.js
+  // node_modules/get-proto/index.js
   var require_get_proto = __commonJS({
-    "../../node_modules/get-proto/index.js"(exports, module) {
+    "node_modules/get-proto/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var reflectGetProto = require_Reflect_getPrototypeOf();
@@ -50870,9 +50870,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/hasown/index.js
+  // node_modules/hasown/index.js
   var require_hasown = __commonJS({
-    "../../node_modules/hasown/index.js"(exports, module) {
+    "node_modules/hasown/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var call = Function.prototype.call;
@@ -50882,9 +50882,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/get-intrinsic/index.js
+  // node_modules/get-intrinsic/index.js
   var require_get_intrinsic = __commonJS({
-    "../../node_modules/get-intrinsic/index.js"(exports, module) {
+    "node_modules/get-intrinsic/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var undefined2;
@@ -51214,9 +51214,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/call-bound/index.js
+  // node_modules/call-bound/index.js
   var require_call_bound = __commonJS({
-    "../../node_modules/call-bound/index.js"(exports, module) {
+    "node_modules/call-bound/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var GetIntrinsic = require_get_intrinsic();
@@ -51238,9 +51238,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/is-arguments/index.js
+  // node_modules/is-arguments/index.js
   var require_is_arguments = __commonJS({
-    "../../node_modules/is-arguments/index.js"(exports, module) {
+    "node_modules/is-arguments/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var hasToStringTag = require_shams2()();
@@ -51266,9 +51266,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/is-regex/index.js
+  // node_modules/is-regex/index.js
   var require_is_regex = __commonJS({
-    "../../node_modules/is-regex/index.js"(exports, module) {
+    "node_modules/is-regex/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var callBound = require_call_bound();
@@ -51336,9 +51336,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/safe-regex-test/index.js
+  // node_modules/safe-regex-test/index.js
   var require_safe_regex_test = __commonJS({
-    "../../node_modules/safe-regex-test/index.js"(exports, module) {
+    "node_modules/safe-regex-test/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var callBound = require_call_bound();
@@ -51356,9 +51356,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/generator-function/index.js
+  // node_modules/generator-function/index.js
   var require_generator_function = __commonJS({
-    "../../node_modules/generator-function/index.js"(exports, module) {
+    "node_modules/generator-function/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var cached = (
@@ -51370,9 +51370,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/is-generator-function/index.js
+  // node_modules/is-generator-function/index.js
   var require_is_generator_function = __commonJS({
-    "../../node_modules/is-generator-function/index.js"(exports, module) {
+    "node_modules/is-generator-function/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var callBound = require_call_bound();
@@ -51403,9 +51403,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/is-callable/index.js
+  // node_modules/is-callable/index.js
   var require_is_callable = __commonJS({
-    "../../node_modules/is-callable/index.js"(exports, module) {
+    "node_modules/is-callable/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var fnToStr = Function.prototype.toString;
@@ -51522,9 +51522,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/for-each/index.js
+  // node_modules/for-each/index.js
   var require_for_each = __commonJS({
-    "../../node_modules/for-each/index.js"(exports, module) {
+    "node_modules/for-each/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var isCallable = require_is_callable();
@@ -51583,9 +51583,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/possible-typed-array-names/index.js
+  // node_modules/possible-typed-array-names/index.js
   var require_possible_typed_array_names = __commonJS({
-    "../../node_modules/possible-typed-array-names/index.js"(exports, module) {
+    "node_modules/possible-typed-array-names/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       module.exports = [
@@ -51605,9 +51605,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/available-typed-arrays/index.js
+  // node_modules/available-typed-arrays/index.js
   var require_available_typed_arrays = __commonJS({
-    "../../node_modules/available-typed-arrays/index.js"(exports, module) {
+    "node_modules/available-typed-arrays/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var possibleNames = require_possible_typed_array_names();
@@ -51624,9 +51624,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/define-data-property/index.js
+  // node_modules/define-data-property/index.js
   var require_define_data_property = __commonJS({
-    "../../node_modules/define-data-property/index.js"(exports, module) {
+    "node_modules/define-data-property/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var $defineProperty = require_es_define_property();
@@ -51673,9 +51673,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/has-property-descriptors/index.js
+  // node_modules/has-property-descriptors/index.js
   var require_has_property_descriptors = __commonJS({
-    "../../node_modules/has-property-descriptors/index.js"(exports, module) {
+    "node_modules/has-property-descriptors/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var $defineProperty = require_es_define_property();
@@ -51696,9 +51696,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/set-function-length/index.js
+  // node_modules/set-function-length/index.js
   var require_set_function_length = __commonJS({
-    "../../node_modules/set-function-length/index.js"(exports, module) {
+    "node_modules/set-function-length/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var GetIntrinsic = require_get_intrinsic();
@@ -51750,9 +51750,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/call-bind-apply-helpers/applyBind.js
+  // node_modules/call-bind-apply-helpers/applyBind.js
   var require_applyBind = __commonJS({
-    "../../node_modules/call-bind-apply-helpers/applyBind.js"(exports, module) {
+    "node_modules/call-bind-apply-helpers/applyBind.js"(exports, module) {
       "use strict";
       init_polyfills();
       var bind = require_function_bind();
@@ -51764,9 +51764,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/call-bind/index.js
+  // node_modules/call-bind/index.js
   var require_call_bind = __commonJS({
-    "../../node_modules/call-bind/index.js"(exports, module) {
+    "node_modules/call-bind/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var setFunctionLength = require_set_function_length();
@@ -51790,9 +51790,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/which-typed-array/index.js
+  // node_modules/which-typed-array/index.js
   var require_which_typed_array = __commonJS({
-    "../../node_modules/which-typed-array/index.js"(exports, module) {
+    "node_modules/which-typed-array/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var forEach = require_for_each();
@@ -51912,9 +51912,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/is-typed-array/index.js
+  // node_modules/is-typed-array/index.js
   var require_is_typed_array = __commonJS({
-    "../../node_modules/is-typed-array/index.js"(exports, module) {
+    "node_modules/is-typed-array/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var whichTypedArray = require_which_typed_array();
@@ -51924,9 +51924,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/util/support/types.js
+  // node_modules/util/support/types.js
   var require_types = __commonJS({
-    "../../node_modules/util/support/types.js"(exports) {
+    "node_modules/util/support/types.js"(exports) {
       "use strict";
       init_polyfills();
       var isArgumentsObject = require_is_arguments();
@@ -52155,9 +52155,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/util/support/isBufferBrowser.js
+  // node_modules/util/support/isBufferBrowser.js
   var require_isBufferBrowser = __commonJS({
-    "../../node_modules/util/support/isBufferBrowser.js"(exports, module) {
+    "node_modules/util/support/isBufferBrowser.js"(exports, module) {
       init_polyfills();
       module.exports = function isBuffer(arg) {
         return arg && typeof arg === "object" && typeof arg.copy === "function" && typeof arg.fill === "function" && typeof arg.readUInt8 === "function";
@@ -52165,9 +52165,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/util/util.js
+  // node_modules/util/util.js
   var require_util = __commonJS({
-    "../../node_modules/util/util.js"(exports) {
+    "node_modules/util/util.js"(exports) {
       init_polyfills();
       var getOwnPropertyDescriptors = Object.getOwnPropertyDescriptors || function getOwnPropertyDescriptors2(obj) {
         var keys = Object.keys(obj);
@@ -52725,9 +52725,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/buffer_list.js
+  // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/buffer_list.js
   var require_buffer_list = __commonJS({
-    "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/buffer_list.js"(exports, module) {
+    "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/buffer_list.js"(exports, module) {
       "use strict";
       init_polyfills();
       function ownKeys(object, enumerableOnly) {
@@ -52968,9 +52968,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/destroy.js
+  // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/destroy.js
   var require_destroy = __commonJS({
-    "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/destroy.js"(exports, module) {
+    "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/destroy.js"(exports, module) {
       "use strict";
       init_polyfills();
       function destroy(err, cb) {
@@ -53058,9 +53058,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/stream-browserify/node_modules/readable-stream/errors-browser.js
+  // node_modules/stream-browserify/node_modules/readable-stream/errors-browser.js
   var require_errors_browser = __commonJS({
-    "../../node_modules/stream-browserify/node_modules/readable-stream/errors-browser.js"(exports, module) {
+    "node_modules/stream-browserify/node_modules/readable-stream/errors-browser.js"(exports, module) {
       "use strict";
       init_polyfills();
       function _inheritsLoose(subClass, superClass) {
@@ -53168,9 +53168,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/state.js
+  // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/state.js
   var require_state = __commonJS({
-    "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/state.js"(exports, module) {
+    "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/state.js"(exports, module) {
       "use strict";
       init_polyfills();
       var ERR_INVALID_OPT_VALUE = require_errors_browser().codes.ERR_INVALID_OPT_VALUE;
@@ -53194,9 +53194,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/util-deprecate/browser.js
+  // node_modules/util-deprecate/browser.js
   var require_browser3 = __commonJS({
-    "../../node_modules/util-deprecate/browser.js"(exports, module) {
+    "node_modules/util-deprecate/browser.js"(exports, module) {
       init_polyfills();
       module.exports = deprecate;
       function deprecate(fn, msg) {
@@ -53232,9 +53232,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_writable.js
+  // node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_writable.js
   var require_stream_writable = __commonJS({
-    "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_writable.js"(exports, module) {
+    "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_writable.js"(exports, module) {
       "use strict";
       init_polyfills();
       module.exports = Writable;
@@ -53704,9 +53704,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js
+  // node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js
   var require_stream_duplex = __commonJS({
-    "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js"(exports, module) {
+    "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js"(exports, module) {
       "use strict";
       init_polyfills();
       var objectKeys = Object.keys || function(obj) {
@@ -53798,9 +53798,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/string_decoder/node_modules/safe-buffer/index.js
+  // node_modules/string_decoder/node_modules/safe-buffer/index.js
   var require_safe_buffer2 = __commonJS({
-    "../../node_modules/string_decoder/node_modules/safe-buffer/index.js"(exports, module) {
+    "node_modules/string_decoder/node_modules/safe-buffer/index.js"(exports, module) {
       init_polyfills();
       var buffer = require_buffer();
       var Buffer5 = buffer.Buffer;
@@ -53856,9 +53856,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/string_decoder/lib/string_decoder.js
+  // node_modules/string_decoder/lib/string_decoder.js
   var require_string_decoder = __commonJS({
-    "../../node_modules/string_decoder/lib/string_decoder.js"(exports) {
+    "node_modules/string_decoder/lib/string_decoder.js"(exports) {
       "use strict";
       init_polyfills();
       var Buffer5 = require_safe_buffer2().Buffer;
@@ -54095,9 +54095,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/end-of-stream.js
+  // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/end-of-stream.js
   var require_end_of_stream = __commonJS({
-    "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/end-of-stream.js"(exports, module) {
+    "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/end-of-stream.js"(exports, module) {
       "use strict";
       init_polyfills();
       var ERR_STREAM_PREMATURE_CLOSE = require_errors_browser().codes.ERR_STREAM_PREMATURE_CLOSE;
@@ -54185,9 +54185,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/async_iterator.js
+  // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/async_iterator.js
   var require_async_iterator = __commonJS({
-    "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/async_iterator.js"(exports, module) {
+    "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/async_iterator.js"(exports, module) {
       "use strict";
       init_polyfills();
       var _Object$setPrototypeO;
@@ -54369,9 +54369,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/from-browser.js
+  // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/from-browser.js
   var require_from_browser = __commonJS({
-    "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/from-browser.js"(exports, module) {
+    "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/from-browser.js"(exports, module) {
       init_polyfills();
       module.exports = function() {
         throw new Error("Readable.from is not available in the browser");
@@ -54379,9 +54379,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_readable.js
+  // node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_readable.js
   var require_stream_readable = __commonJS({
-    "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_readable.js"(exports, module) {
+    "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_readable.js"(exports, module) {
       "use strict";
       init_polyfills();
       module.exports = Readable;
@@ -55113,9 +55113,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_transform.js
+  // node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_transform.js
   var require_stream_transform = __commonJS({
-    "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_transform.js"(exports, module) {
+    "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_transform.js"(exports, module) {
       "use strict";
       init_polyfills();
       module.exports = Transform;
@@ -55215,9 +55215,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_passthrough.js
+  // node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_passthrough.js
   var require_stream_passthrough = __commonJS({
-    "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_passthrough.js"(exports, module) {
+    "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_passthrough.js"(exports, module) {
       "use strict";
       init_polyfills();
       module.exports = PassThrough;
@@ -55233,9 +55233,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/pipeline.js
+  // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/pipeline.js
   var require_pipeline = __commonJS({
-    "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/pipeline.js"(exports, module) {
+    "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/pipeline.js"(exports, module) {
       "use strict";
       init_polyfills();
       var eos;
@@ -55319,9 +55319,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/stream-browserify/index.js
+  // node_modules/stream-browserify/index.js
   var require_stream_browserify = __commonJS({
-    "../../node_modules/stream-browserify/index.js"(exports, module) {
+    "node_modules/stream-browserify/index.js"(exports, module) {
       init_polyfills();
       module.exports = Stream;
       var EE = require_events().EventEmitter;
@@ -55397,9 +55397,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/hash-base/index.js
+  // node_modules/hash-base/index.js
   var require_hash_base = __commonJS({
-    "../../node_modules/hash-base/index.js"(exports, module) {
+    "node_modules/hash-base/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var Buffer5 = require_safe_buffer().Buffer;
@@ -55486,9 +55486,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/md5.js/index.js
+  // node_modules/md5.js/index.js
   var require_md5 = __commonJS({
-    "../../node_modules/md5.js/index.js"(exports, module) {
+    "node_modules/md5.js/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var inherits = require_inherits_browser();
@@ -55616,9 +55616,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/to-buffer/node_modules/isarray/index.js
+  // node_modules/to-buffer/node_modules/isarray/index.js
   var require_isarray = __commonJS({
-    "../../node_modules/to-buffer/node_modules/isarray/index.js"(exports, module) {
+    "node_modules/to-buffer/node_modules/isarray/index.js"(exports, module) {
       init_polyfills();
       var toString = {}.toString;
       module.exports = Array.isArray || function(arr) {
@@ -55627,9 +55627,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/typed-array-buffer/index.js
+  // node_modules/typed-array-buffer/index.js
   var require_typed_array_buffer = __commonJS({
-    "../../node_modules/typed-array-buffer/index.js"(exports, module) {
+    "node_modules/typed-array-buffer/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var $TypeError = require_type();
@@ -55645,9 +55645,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/to-buffer/index.js
+  // node_modules/to-buffer/index.js
   var require_to_buffer = __commonJS({
-    "../../node_modules/to-buffer/index.js"(exports, module) {
+    "node_modules/to-buffer/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var Buffer5 = require_safe_buffer().Buffer;
@@ -55710,9 +55710,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/ripemd160/node_modules/hash-base/to-buffer.js
+  // node_modules/ripemd160/node_modules/hash-base/to-buffer.js
   var require_to_buffer2 = __commonJS({
-    "../../node_modules/ripemd160/node_modules/hash-base/to-buffer.js"(exports, module) {
+    "node_modules/ripemd160/node_modules/hash-base/to-buffer.js"(exports, module) {
       "use strict";
       init_polyfills();
       var Buffer5 = require_safe_buffer().Buffer;
@@ -55729,9 +55729,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/process-nextick-args/index.js
+  // node_modules/process-nextick-args/index.js
   var require_process_nextick_args = __commonJS({
-    "../../node_modules/process-nextick-args/index.js"(exports, module) {
+    "node_modules/process-nextick-args/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       if (typeof process === "undefined" || false || "v18.0.0".indexOf("v0.") === 0 || "v18.0.0".indexOf("v1.") === 0 && "v18.0.0".indexOf("v1.8.") !== 0) {
@@ -55775,9 +55775,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/isarray/index.js
+  // node_modules/isarray/index.js
   var require_isarray2 = __commonJS({
-    "../../node_modules/isarray/index.js"(exports, module) {
+    "node_modules/isarray/index.js"(exports, module) {
       init_polyfills();
       var toString = {}.toString;
       module.exports = Array.isArray || function(arr) {
@@ -55786,17 +55786,17 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/readable-stream/lib/internal/streams/stream-browser.js
+  // node_modules/readable-stream/lib/internal/streams/stream-browser.js
   var require_stream_browser2 = __commonJS({
-    "../../node_modules/readable-stream/lib/internal/streams/stream-browser.js"(exports, module) {
+    "node_modules/readable-stream/lib/internal/streams/stream-browser.js"(exports, module) {
       init_polyfills();
       module.exports = require_events().EventEmitter;
     }
   });
 
-  // ../../node_modules/readable-stream/node_modules/safe-buffer/index.js
+  // node_modules/readable-stream/node_modules/safe-buffer/index.js
   var require_safe_buffer3 = __commonJS({
-    "../../node_modules/readable-stream/node_modules/safe-buffer/index.js"(exports, module) {
+    "node_modules/readable-stream/node_modules/safe-buffer/index.js"(exports, module) {
       init_polyfills();
       var buffer = require_buffer();
       var Buffer5 = buffer.Buffer;
@@ -55852,9 +55852,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/core-util-is/lib/util.js
+  // node_modules/core-util-is/lib/util.js
   var require_util2 = __commonJS({
-    "../../node_modules/core-util-is/lib/util.js"(exports) {
+    "node_modules/core-util-is/lib/util.js"(exports) {
       init_polyfills();
       function isArray(arg) {
         if (Array.isArray) {
@@ -55923,9 +55923,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/readable-stream/lib/internal/streams/BufferList.js
+  // node_modules/readable-stream/lib/internal/streams/BufferList.js
   var require_BufferList = __commonJS({
-    "../../node_modules/readable-stream/lib/internal/streams/BufferList.js"(exports, module) {
+    "node_modules/readable-stream/lib/internal/streams/BufferList.js"(exports, module) {
       "use strict";
       init_polyfills();
       function _classCallCheck(instance, Constructor) {
@@ -56002,9 +56002,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/readable-stream/lib/internal/streams/destroy.js
+  // node_modules/readable-stream/lib/internal/streams/destroy.js
   var require_destroy2 = __commonJS({
-    "../../node_modules/readable-stream/lib/internal/streams/destroy.js"(exports, module) {
+    "node_modules/readable-stream/lib/internal/streams/destroy.js"(exports, module) {
       "use strict";
       init_polyfills();
       var pna = require_process_nextick_args();
@@ -56072,9 +56072,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/readable-stream/lib/_stream_writable.js
+  // node_modules/readable-stream/lib/_stream_writable.js
   var require_stream_writable2 = __commonJS({
-    "../../node_modules/readable-stream/lib/_stream_writable.js"(exports, module) {
+    "node_modules/readable-stream/lib/_stream_writable.js"(exports, module) {
       "use strict";
       init_polyfills();
       var pna = require_process_nextick_args();
@@ -56513,9 +56513,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/readable-stream/lib/_stream_duplex.js
+  // node_modules/readable-stream/lib/_stream_duplex.js
   var require_stream_duplex2 = __commonJS({
-    "../../node_modules/readable-stream/lib/_stream_duplex.js"(exports, module) {
+    "node_modules/readable-stream/lib/_stream_duplex.js"(exports, module) {
       "use strict";
       init_polyfills();
       var pna = require_process_nextick_args();
@@ -56591,9 +56591,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/readable-stream/lib/_stream_readable.js
+  // node_modules/readable-stream/lib/_stream_readable.js
   var require_stream_readable2 = __commonJS({
-    "../../node_modules/readable-stream/lib/_stream_readable.js"(exports, module) {
+    "node_modules/readable-stream/lib/_stream_readable.js"(exports, module) {
       "use strict";
       init_polyfills();
       var pna = require_process_nextick_args();
@@ -57278,9 +57278,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/readable-stream/lib/_stream_transform.js
+  // node_modules/readable-stream/lib/_stream_transform.js
   var require_stream_transform2 = __commonJS({
-    "../../node_modules/readable-stream/lib/_stream_transform.js"(exports, module) {
+    "node_modules/readable-stream/lib/_stream_transform.js"(exports, module) {
       "use strict";
       init_polyfills();
       module.exports = Transform;
@@ -57379,9 +57379,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/readable-stream/lib/_stream_passthrough.js
+  // node_modules/readable-stream/lib/_stream_passthrough.js
   var require_stream_passthrough2 = __commonJS({
-    "../../node_modules/readable-stream/lib/_stream_passthrough.js"(exports, module) {
+    "node_modules/readable-stream/lib/_stream_passthrough.js"(exports, module) {
       "use strict";
       init_polyfills();
       module.exports = PassThrough;
@@ -57399,9 +57399,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/readable-stream/readable-browser.js
+  // node_modules/readable-stream/readable-browser.js
   var require_readable_browser = __commonJS({
-    "../../node_modules/readable-stream/readable-browser.js"(exports, module) {
+    "node_modules/readable-stream/readable-browser.js"(exports, module) {
       init_polyfills();
       exports = module.exports = require_stream_readable2();
       exports.Stream = exports;
@@ -57413,9 +57413,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/ripemd160/node_modules/hash-base/index.js
+  // node_modules/ripemd160/node_modules/hash-base/index.js
   var require_hash_base2 = __commonJS({
-    "../../node_modules/ripemd160/node_modules/hash-base/index.js"(exports, module) {
+    "node_modules/ripemd160/node_modules/hash-base/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var Buffer5 = require_safe_buffer().Buffer;
@@ -57505,9 +57505,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/ripemd160/index.js
+  // node_modules/ripemd160/index.js
   var require_ripemd160 = __commonJS({
-    "../../node_modules/ripemd160/index.js"(exports, module) {
+    "node_modules/ripemd160/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var Buffer5 = require_buffer().Buffer;
@@ -57947,9 +57947,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/sha.js/hash.js
+  // node_modules/sha.js/hash.js
   var require_hash = __commonJS({
-    "../../node_modules/sha.js/hash.js"(exports, module) {
+    "node_modules/sha.js/hash.js"(exports, module) {
       "use strict";
       init_polyfills();
       var Buffer5 = require_safe_buffer().Buffer;
@@ -58009,9 +58009,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/sha.js/sha.js
+  // node_modules/sha.js/sha.js
   var require_sha = __commonJS({
-    "../../node_modules/sha.js/sha.js"(exports, module) {
+    "node_modules/sha.js/sha.js"(exports, module) {
       "use strict";
       init_polyfills();
       var inherits = require_inherits_browser();
@@ -58094,9 +58094,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/sha.js/sha1.js
+  // node_modules/sha.js/sha1.js
   var require_sha1 = __commonJS({
-    "../../node_modules/sha.js/sha1.js"(exports, module) {
+    "node_modules/sha.js/sha1.js"(exports, module) {
       "use strict";
       init_polyfills();
       var inherits = require_inherits_browser();
@@ -58182,9 +58182,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/sha.js/sha256.js
+  // node_modules/sha.js/sha256.js
   var require_sha256 = __commonJS({
-    "../../node_modules/sha.js/sha256.js"(exports, module) {
+    "node_modules/sha.js/sha256.js"(exports, module) {
       "use strict";
       init_polyfills();
       var inherits = require_inherits_browser();
@@ -58345,9 +58345,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/sha.js/sha224.js
+  // node_modules/sha.js/sha224.js
   var require_sha224 = __commonJS({
-    "../../node_modules/sha.js/sha224.js"(exports, module) {
+    "node_modules/sha.js/sha224.js"(exports, module) {
       "use strict";
       init_polyfills();
       var inherits = require_inherits_browser();
@@ -58387,9 +58387,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/sha.js/sha512.js
+  // node_modules/sha.js/sha512.js
   var require_sha512 = __commonJS({
-    "../../node_modules/sha.js/sha512.js"(exports, module) {
+    "node_modules/sha.js/sha512.js"(exports, module) {
       "use strict";
       init_polyfills();
       var inherits = require_inherits_browser();
@@ -58731,9 +58731,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/sha.js/sha384.js
+  // node_modules/sha.js/sha384.js
   var require_sha384 = __commonJS({
-    "../../node_modules/sha.js/sha384.js"(exports, module) {
+    "node_modules/sha.js/sha384.js"(exports, module) {
       "use strict";
       init_polyfills();
       var inherits = require_inherits_browser();
@@ -58784,9 +58784,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/sha.js/index.js
+  // node_modules/sha.js/index.js
   var require_sha2 = __commonJS({
-    "../../node_modules/sha.js/index.js"(exports, module) {
+    "node_modules/sha.js/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       module.exports = function SHA(algorithm) {
@@ -58806,9 +58806,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/cipher-base/index.js
+  // node_modules/cipher-base/index.js
   var require_cipher_base = __commonJS({
-    "../../node_modules/cipher-base/index.js"(exports, module) {
+    "node_modules/cipher-base/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var Buffer5 = require_safe_buffer().Buffer;
@@ -58902,9 +58902,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/create-hash/browser.js
+  // node_modules/create-hash/browser.js
   var require_browser4 = __commonJS({
-    "../../node_modules/create-hash/browser.js"(exports, module) {
+    "node_modules/create-hash/browser.js"(exports, module) {
       "use strict";
       init_polyfills();
       var inherits = require_inherits_browser();
@@ -58932,9 +58932,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/create-hmac/legacy.js
+  // node_modules/create-hmac/legacy.js
   var require_legacy = __commonJS({
-    "../../node_modules/create-hmac/legacy.js"(exports, module) {
+    "node_modules/create-hmac/legacy.js"(exports, module) {
       "use strict";
       init_polyfills();
       var inherits = require_inherits_browser();
@@ -58974,9 +58974,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/create-hash/md5.js
+  // node_modules/create-hash/md5.js
   var require_md52 = __commonJS({
-    "../../node_modules/create-hash/md5.js"(exports, module) {
+    "node_modules/create-hash/md5.js"(exports, module) {
       init_polyfills();
       var MD5 = require_md5();
       module.exports = function(buffer) {
@@ -58985,9 +58985,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/create-hmac/browser.js
+  // node_modules/create-hmac/browser.js
   var require_browser5 = __commonJS({
-    "../../node_modules/create-hmac/browser.js"(exports, module) {
+    "node_modules/create-hmac/browser.js"(exports, module) {
       "use strict";
       init_polyfills();
       var inherits = require_inherits_browser();
@@ -59043,9 +59043,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/browserify-sign/browser/algorithms.json
+  // node_modules/browserify-sign/browser/algorithms.json
   var require_algorithms = __commonJS({
-    "../../node_modules/browserify-sign/browser/algorithms.json"(exports, module) {
+    "node_modules/browserify-sign/browser/algorithms.json"(exports, module) {
       module.exports = {
         sha224WithRSAEncryption: {
           sign: "rsa",
@@ -59201,18 +59201,18 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/browserify-sign/algos.js
+  // node_modules/browserify-sign/algos.js
   var require_algos = __commonJS({
-    "../../node_modules/browserify-sign/algos.js"(exports, module) {
+    "node_modules/browserify-sign/algos.js"(exports, module) {
       "use strict";
       init_polyfills();
       module.exports = require_algorithms();
     }
   });
 
-  // ../../node_modules/pbkdf2/lib/precondition.js
+  // node_modules/pbkdf2/lib/precondition.js
   var require_precondition = __commonJS({
-    "../../node_modules/pbkdf2/lib/precondition.js"(exports, module) {
+    "node_modules/pbkdf2/lib/precondition.js"(exports, module) {
       "use strict";
       init_polyfills();
       var $isFinite = isFinite;
@@ -59234,9 +59234,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/pbkdf2/lib/default-encoding.js
+  // node_modules/pbkdf2/lib/default-encoding.js
   var require_default_encoding = __commonJS({
-    "../../node_modules/pbkdf2/lib/default-encoding.js"(exports, module) {
+    "node_modules/pbkdf2/lib/default-encoding.js"(exports, module) {
       "use strict";
       init_polyfills();
       var defaultEncoding;
@@ -59253,9 +59253,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/pbkdf2/lib/to-buffer.js
+  // node_modules/pbkdf2/lib/to-buffer.js
   var require_to_buffer3 = __commonJS({
-    "../../node_modules/pbkdf2/lib/to-buffer.js"(exports, module) {
+    "node_modules/pbkdf2/lib/to-buffer.js"(exports, module) {
       "use strict";
       init_polyfills();
       var Buffer5 = require_safe_buffer().Buffer;
@@ -59272,9 +59272,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/pbkdf2/lib/sync-browser.js
+  // node_modules/pbkdf2/lib/sync-browser.js
   var require_sync_browser = __commonJS({
-    "../../node_modules/pbkdf2/lib/sync-browser.js"(exports, module) {
+    "node_modules/pbkdf2/lib/sync-browser.js"(exports, module) {
       "use strict";
       init_polyfills();
       var md5 = require_md52();
@@ -59387,9 +59387,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/pbkdf2/lib/async.js
+  // node_modules/pbkdf2/lib/async.js
   var require_async = __commonJS({
-    "../../node_modules/pbkdf2/lib/async.js"(exports, module) {
+    "node_modules/pbkdf2/lib/async.js"(exports, module) {
       "use strict";
       init_polyfills();
       var Buffer5 = require_safe_buffer().Buffer;
@@ -59510,9 +59510,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/pbkdf2/browser.js
+  // node_modules/pbkdf2/browser.js
   var require_browser6 = __commonJS({
-    "../../node_modules/pbkdf2/browser.js"(exports) {
+    "node_modules/pbkdf2/browser.js"(exports) {
       "use strict";
       init_polyfills();
       exports.pbkdf2 = require_async();
@@ -59520,9 +59520,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/des.js/lib/des/utils.js
+  // node_modules/des.js/lib/des/utils.js
   var require_utils = __commonJS({
-    "../../node_modules/des.js/lib/des/utils.js"(exports) {
+    "node_modules/des.js/lib/des/utils.js"(exports) {
       "use strict";
       init_polyfills();
       exports.readUInt32BE = function readUInt32BE(bytes, off) {
@@ -60287,9 +60287,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/minimalistic-assert/index.js
+  // node_modules/minimalistic-assert/index.js
   var require_minimalistic_assert = __commonJS({
-    "../../node_modules/minimalistic-assert/index.js"(exports, module) {
+    "node_modules/minimalistic-assert/index.js"(exports, module) {
       init_polyfills();
       module.exports = assert;
       function assert(val, msg) {
@@ -60303,9 +60303,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/des.js/lib/des/cipher.js
+  // node_modules/des.js/lib/des/cipher.js
   var require_cipher = __commonJS({
-    "../../node_modules/des.js/lib/des/cipher.js"(exports, module) {
+    "node_modules/des.js/lib/des/cipher.js"(exports, module) {
       "use strict";
       init_polyfills();
       var assert = require_minimalistic_assert();
@@ -60412,9 +60412,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/des.js/lib/des/des.js
+  // node_modules/des.js/lib/des/des.js
   var require_des = __commonJS({
-    "../../node_modules/des.js/lib/des/des.js"(exports, module) {
+    "node_modules/des.js/lib/des/des.js"(exports, module) {
       "use strict";
       init_polyfills();
       var assert = require_minimalistic_assert();
@@ -60540,9 +60540,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/des.js/lib/des/cbc.js
+  // node_modules/des.js/lib/des/cbc.js
   var require_cbc = __commonJS({
-    "../../node_modules/des.js/lib/des/cbc.js"(exports) {
+    "node_modules/des.js/lib/des/cbc.js"(exports) {
       "use strict";
       init_polyfills();
       var assert = require_minimalistic_assert();
@@ -60596,9 +60596,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/des.js/lib/des/ede.js
+  // node_modules/des.js/lib/des/ede.js
   var require_ede = __commonJS({
-    "../../node_modules/des.js/lib/des/ede.js"(exports, module) {
+    "node_modules/des.js/lib/des/ede.js"(exports, module) {
       "use strict";
       init_polyfills();
       var assert = require_minimalistic_assert();
@@ -60645,9 +60645,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/des.js/lib/des.js
+  // node_modules/des.js/lib/des.js
   var require_des2 = __commonJS({
-    "../../node_modules/des.js/lib/des.js"(exports) {
+    "node_modules/des.js/lib/des.js"(exports) {
       "use strict";
       init_polyfills();
       exports.utils = require_utils();
@@ -60658,9 +60658,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/browserify-des/index.js
+  // node_modules/browserify-des/index.js
   var require_browserify_des = __commonJS({
-    "../../node_modules/browserify-des/index.js"(exports, module) {
+    "node_modules/browserify-des/index.js"(exports, module) {
       init_polyfills();
       var CipherBase = require_cipher_base();
       var des = require_des2();
@@ -60714,9 +60714,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/browserify-aes/modes/ecb.js
+  // node_modules/browserify-aes/modes/ecb.js
   var require_ecb = __commonJS({
-    "../../node_modules/browserify-aes/modes/ecb.js"(exports) {
+    "node_modules/browserify-aes/modes/ecb.js"(exports) {
       init_polyfills();
       exports.encrypt = function(self2, block) {
         return self2._cipher.encryptBlock(block);
@@ -60727,9 +60727,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/buffer-xor/index.js
+  // node_modules/buffer-xor/index.js
   var require_buffer_xor = __commonJS({
-    "../../node_modules/buffer-xor/index.js"(exports, module) {
+    "node_modules/buffer-xor/index.js"(exports, module) {
       init_polyfills();
       module.exports = function xor(a2, b2) {
         var length = Math.min(a2.length, b2.length);
@@ -60742,9 +60742,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/browserify-aes/modes/cbc.js
+  // node_modules/browserify-aes/modes/cbc.js
   var require_cbc2 = __commonJS({
-    "../../node_modules/browserify-aes/modes/cbc.js"(exports) {
+    "node_modules/browserify-aes/modes/cbc.js"(exports) {
       init_polyfills();
       var xor = require_buffer_xor();
       exports.encrypt = function(self2, block) {
@@ -60761,9 +60761,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/browserify-aes/modes/cfb.js
+  // node_modules/browserify-aes/modes/cfb.js
   var require_cfb = __commonJS({
-    "../../node_modules/browserify-aes/modes/cfb.js"(exports) {
+    "node_modules/browserify-aes/modes/cfb.js"(exports) {
       init_polyfills();
       var Buffer5 = require_safe_buffer().Buffer;
       var xor = require_buffer_xor();
@@ -60796,9 +60796,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/browserify-aes/modes/cfb8.js
+  // node_modules/browserify-aes/modes/cfb8.js
   var require_cfb8 = __commonJS({
-    "../../node_modules/browserify-aes/modes/cfb8.js"(exports) {
+    "node_modules/browserify-aes/modes/cfb8.js"(exports) {
       init_polyfills();
       var Buffer5 = require_safe_buffer().Buffer;
       function encryptByte(self2, byteParam, decrypt) {
@@ -60822,9 +60822,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/browserify-aes/modes/cfb1.js
+  // node_modules/browserify-aes/modes/cfb1.js
   var require_cfb1 = __commonJS({
-    "../../node_modules/browserify-aes/modes/cfb1.js"(exports) {
+    "node_modules/browserify-aes/modes/cfb1.js"(exports) {
       init_polyfills();
       var Buffer5 = require_safe_buffer().Buffer;
       function encryptByte(self2, byteParam, decrypt) {
@@ -60864,9 +60864,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/browserify-aes/modes/ofb.js
+  // node_modules/browserify-aes/modes/ofb.js
   var require_ofb = __commonJS({
-    "../../node_modules/browserify-aes/modes/ofb.js"(exports) {
+    "node_modules/browserify-aes/modes/ofb.js"(exports) {
       init_polyfills();
       var xor = require_buffer_xor();
       function getBlock(self2) {
@@ -60884,9 +60884,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/browserify-aes/incr32.js
+  // node_modules/browserify-aes/incr32.js
   var require_incr32 = __commonJS({
-    "../../node_modules/browserify-aes/incr32.js"(exports, module) {
+    "node_modules/browserify-aes/incr32.js"(exports, module) {
       init_polyfills();
       function incr32(iv) {
         var len = iv.length;
@@ -60906,9 +60906,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/browserify-aes/modes/ctr.js
+  // node_modules/browserify-aes/modes/ctr.js
   var require_ctr = __commonJS({
-    "../../node_modules/browserify-aes/modes/ctr.js"(exports) {
+    "node_modules/browserify-aes/modes/ctr.js"(exports) {
       init_polyfills();
       var xor = require_buffer_xor();
       var Buffer5 = require_safe_buffer().Buffer;
@@ -60941,9 +60941,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/browserify-aes/modes/list.json
+  // node_modules/browserify-aes/modes/list.json
   var require_list = __commonJS({
-    "../../node_modules/browserify-aes/modes/list.json"(exports, module) {
+    "node_modules/browserify-aes/modes/list.json"(exports, module) {
       module.exports = {
         "aes-128-ecb": {
           cipher: "AES",
@@ -61138,9 +61138,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/browserify-aes/modes/index.js
+  // node_modules/browserify-aes/modes/index.js
   var require_modes = __commonJS({
-    "../../node_modules/browserify-aes/modes/index.js"(exports, module) {
+    "node_modules/browserify-aes/modes/index.js"(exports, module) {
       init_polyfills();
       var modeModules = {
         ECB: require_ecb(),
@@ -61161,9 +61161,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/browserify-aes/aes.js
+  // node_modules/browserify-aes/aes.js
   var require_aes = __commonJS({
-    "../../node_modules/browserify-aes/aes.js"(exports, module) {
+    "node_modules/browserify-aes/aes.js"(exports, module) {
       init_polyfills();
       var Buffer5 = require_safe_buffer().Buffer;
       function asUInt32Array(buf) {
@@ -61336,9 +61336,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/browserify-aes/ghash.js
+  // node_modules/browserify-aes/ghash.js
   var require_ghash = __commonJS({
-    "../../node_modules/browserify-aes/ghash.js"(exports, module) {
+    "node_modules/browserify-aes/ghash.js"(exports, module) {
       init_polyfills();
       var Buffer5 = require_safe_buffer().Buffer;
       var ZEROES = Buffer5.alloc(16, 0);
@@ -61414,9 +61414,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/browserify-aes/authCipher.js
+  // node_modules/browserify-aes/authCipher.js
   var require_authCipher = __commonJS({
-    "../../node_modules/browserify-aes/authCipher.js"(exports, module) {
+    "node_modules/browserify-aes/authCipher.js"(exports, module) {
       init_polyfills();
       var aes = require_aes();
       var Buffer5 = require_safe_buffer().Buffer;
@@ -61517,9 +61517,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/browserify-aes/streamCipher.js
+  // node_modules/browserify-aes/streamCipher.js
   var require_streamCipher = __commonJS({
-    "../../node_modules/browserify-aes/streamCipher.js"(exports, module) {
+    "node_modules/browserify-aes/streamCipher.js"(exports, module) {
       init_polyfills();
       var aes = require_aes();
       var Buffer5 = require_safe_buffer().Buffer;
@@ -61545,9 +61545,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/evp_bytestokey/index.js
+  // node_modules/evp_bytestokey/index.js
   var require_evp_bytestokey = __commonJS({
-    "../../node_modules/evp_bytestokey/index.js"(exports, module) {
+    "node_modules/evp_bytestokey/index.js"(exports, module) {
       init_polyfills();
       var Buffer5 = require_safe_buffer().Buffer;
       var MD5 = require_md5();
@@ -61588,9 +61588,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/browserify-aes/encrypter.js
+  // node_modules/browserify-aes/encrypter.js
   var require_encrypter = __commonJS({
-    "../../node_modules/browserify-aes/encrypter.js"(exports) {
+    "node_modules/browserify-aes/encrypter.js"(exports) {
       init_polyfills();
       var MODES = require_modes();
       var AuthCipher = require_authCipher();
@@ -61685,9 +61685,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/browserify-aes/decrypter.js
+  // node_modules/browserify-aes/decrypter.js
   var require_decrypter = __commonJS({
-    "../../node_modules/browserify-aes/decrypter.js"(exports) {
+    "node_modules/browserify-aes/decrypter.js"(exports) {
       init_polyfills();
       var AuthCipher = require_authCipher();
       var Buffer5 = require_safe_buffer().Buffer;
@@ -61795,9 +61795,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/browserify-aes/browser.js
+  // node_modules/browserify-aes/browser.js
   var require_browser7 = __commonJS({
-    "../../node_modules/browserify-aes/browser.js"(exports) {
+    "node_modules/browserify-aes/browser.js"(exports) {
       init_polyfills();
       var ciphers = require_encrypter();
       var deciphers = require_decrypter();
@@ -61813,9 +61813,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/browserify-des/modes.js
+  // node_modules/browserify-des/modes.js
   var require_modes2 = __commonJS({
-    "../../node_modules/browserify-des/modes.js"(exports) {
+    "node_modules/browserify-des/modes.js"(exports) {
       init_polyfills();
       exports["des-ecb"] = {
         key: 8,
@@ -61844,9 +61844,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/browserify-cipher/browser.js
+  // node_modules/browserify-cipher/browser.js
   var require_browser8 = __commonJS({
-    "../../node_modules/browserify-cipher/browser.js"(exports) {
+    "node_modules/browserify-cipher/browser.js"(exports) {
       init_polyfills();
       var DES = require_browserify_des();
       var aes = require_browser7();
@@ -61906,9 +61906,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/diffie-hellman/node_modules/bn.js/lib/bn.js
+  // node_modules/diffie-hellman/node_modules/bn.js/lib/bn.js
   var require_bn = __commonJS({
-    "../../node_modules/diffie-hellman/node_modules/bn.js/lib/bn.js"(exports, module) {
+    "node_modules/diffie-hellman/node_modules/bn.js/lib/bn.js"(exports, module) {
       init_polyfills();
       (function(module2, exports2) {
         "use strict";
@@ -64718,9 +64718,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/miller-rabin/node_modules/bn.js/lib/bn.js
+  // node_modules/miller-rabin/node_modules/bn.js/lib/bn.js
   var require_bn2 = __commonJS({
-    "../../node_modules/miller-rabin/node_modules/bn.js/lib/bn.js"(exports, module) {
+    "node_modules/miller-rabin/node_modules/bn.js/lib/bn.js"(exports, module) {
       init_polyfills();
       (function(module2, exports2) {
         "use strict";
@@ -67530,9 +67530,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/brorand/index.js
+  // node_modules/brorand/index.js
   var require_brorand = __commonJS({
-    "../../node_modules/brorand/index.js"(exports, module) {
+    "node_modules/brorand/index.js"(exports, module) {
       init_polyfills();
       var r2;
       module.exports = function rand(len) {
@@ -67588,9 +67588,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/miller-rabin/lib/mr.js
+  // node_modules/miller-rabin/lib/mr.js
   var require_mr = __commonJS({
-    "../../node_modules/miller-rabin/lib/mr.js"(exports, module) {
+    "node_modules/miller-rabin/lib/mr.js"(exports, module) {
       init_polyfills();
       var bn = require_bn2();
       var brorand = require_brorand();
@@ -67680,9 +67680,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/diffie-hellman/lib/generatePrime.js
+  // node_modules/diffie-hellman/lib/generatePrime.js
   var require_generatePrime = __commonJS({
-    "../../node_modules/diffie-hellman/lib/generatePrime.js"(exports, module) {
+    "node_modules/diffie-hellman/lib/generatePrime.js"(exports, module) {
       init_polyfills();
       var randomBytes3 = require_browser2();
       module.exports = findPrime;
@@ -67777,9 +67777,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/diffie-hellman/lib/primes.json
+  // node_modules/diffie-hellman/lib/primes.json
   var require_primes = __commonJS({
-    "../../node_modules/diffie-hellman/lib/primes.json"(exports, module) {
+    "node_modules/diffie-hellman/lib/primes.json"(exports, module) {
       module.exports = {
         modp1: {
           gen: "02",
@@ -67817,9 +67817,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/diffie-hellman/lib/dh.js
+  // node_modules/diffie-hellman/lib/dh.js
   var require_dh = __commonJS({
-    "../../node_modules/diffie-hellman/lib/dh.js"(exports, module) {
+    "node_modules/diffie-hellman/lib/dh.js"(exports, module) {
       init_polyfills();
       var BN = require_bn();
       var MillerRabin = require_mr();
@@ -67964,9 +67964,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/diffie-hellman/browser.js
+  // node_modules/diffie-hellman/browser.js
   var require_browser9 = __commonJS({
-    "../../node_modules/diffie-hellman/browser.js"(exports) {
+    "node_modules/diffie-hellman/browser.js"(exports) {
       init_polyfills();
       var generatePrime = require_generatePrime();
       var primes = require_primes();
@@ -68004,9 +68004,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/bn.js/lib/bn.js
+  // node_modules/bn.js/lib/bn.js
   var require_bn3 = __commonJS({
-    "../../node_modules/bn.js/lib/bn.js"(exports, module) {
+    "node_modules/bn.js/lib/bn.js"(exports, module) {
       init_polyfills();
       (function(module2, exports2) {
         "use strict";
@@ -70896,9 +70896,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/browserify-rsa/index.js
+  // node_modules/browserify-rsa/index.js
   var require_browserify_rsa = __commonJS({
-    "../../node_modules/browserify-rsa/index.js"(exports, module) {
+    "node_modules/browserify-rsa/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var BN = require_bn3();
@@ -70936,9 +70936,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/elliptic/package.json
+  // node_modules/elliptic/package.json
   var require_package = __commonJS({
-    "../../node_modules/elliptic/package.json"(exports, module) {
+    "node_modules/elliptic/package.json"(exports, module) {
       module.exports = {
         name: "elliptic",
         version: "6.6.1",
@@ -70998,9 +70998,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/elliptic/node_modules/bn.js/lib/bn.js
+  // node_modules/elliptic/node_modules/bn.js/lib/bn.js
   var require_bn4 = __commonJS({
-    "../../node_modules/elliptic/node_modules/bn.js/lib/bn.js"(exports, module) {
+    "node_modules/elliptic/node_modules/bn.js/lib/bn.js"(exports, module) {
       init_polyfills();
       (function(module2, exports2) {
         "use strict";
@@ -73810,9 +73810,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/minimalistic-crypto-utils/lib/utils.js
+  // node_modules/minimalistic-crypto-utils/lib/utils.js
   var require_utils2 = __commonJS({
-    "../../node_modules/minimalistic-crypto-utils/lib/utils.js"(exports) {
+    "node_modules/minimalistic-crypto-utils/lib/utils.js"(exports) {
       "use strict";
       init_polyfills();
       var utils = exports;
@@ -73870,9 +73870,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/elliptic/lib/elliptic/utils.js
+  // node_modules/elliptic/lib/elliptic/utils.js
   var require_utils3 = __commonJS({
-    "../../node_modules/elliptic/lib/elliptic/utils.js"(exports) {
+    "node_modules/elliptic/lib/elliptic/utils.js"(exports) {
       "use strict";
       init_polyfills();
       var utils = exports;
@@ -73977,9 +73977,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/elliptic/lib/elliptic/curve/base.js
+  // node_modules/elliptic/lib/elliptic/curve/base.js
   var require_base = __commonJS({
-    "../../node_modules/elliptic/lib/elliptic/curve/base.js"(exports, module) {
+    "node_modules/elliptic/lib/elliptic/curve/base.js"(exports, module) {
       "use strict";
       init_polyfills();
       var BN = require_bn4();
@@ -74300,9 +74300,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/elliptic/lib/elliptic/curve/short.js
+  // node_modules/elliptic/lib/elliptic/curve/short.js
   var require_short = __commonJS({
-    "../../node_modules/elliptic/lib/elliptic/curve/short.js"(exports, module) {
+    "node_modules/elliptic/lib/elliptic/curve/short.js"(exports, module) {
       "use strict";
       init_polyfills();
       var utils = require_utils3();
@@ -74999,9 +74999,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/elliptic/lib/elliptic/curve/mont.js
+  // node_modules/elliptic/lib/elliptic/curve/mont.js
   var require_mont = __commonJS({
-    "../../node_modules/elliptic/lib/elliptic/curve/mont.js"(exports, module) {
+    "node_modules/elliptic/lib/elliptic/curve/mont.js"(exports, module) {
       "use strict";
       init_polyfills();
       var BN = require_bn4();
@@ -75128,9 +75128,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/elliptic/lib/elliptic/curve/edwards.js
+  // node_modules/elliptic/lib/elliptic/curve/edwards.js
   var require_edwards = __commonJS({
-    "../../node_modules/elliptic/lib/elliptic/curve/edwards.js"(exports, module) {
+    "node_modules/elliptic/lib/elliptic/curve/edwards.js"(exports, module) {
       "use strict";
       init_polyfills();
       var utils = require_utils3();
@@ -75430,9 +75430,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/elliptic/lib/elliptic/curve/index.js
+  // node_modules/elliptic/lib/elliptic/curve/index.js
   var require_curve = __commonJS({
-    "../../node_modules/elliptic/lib/elliptic/curve/index.js"(exports) {
+    "node_modules/elliptic/lib/elliptic/curve/index.js"(exports) {
       "use strict";
       init_polyfills();
       var curve = exports;
@@ -75443,9 +75443,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/hash.js/lib/hash/utils.js
+  // node_modules/hash.js/lib/hash/utils.js
   var require_utils4 = __commonJS({
-    "../../node_modules/hash.js/lib/hash/utils.js"(exports) {
+    "node_modules/hash.js/lib/hash/utils.js"(exports) {
       "use strict";
       init_polyfills();
       var assert = require_minimalistic_assert();
@@ -75689,9 +75689,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/hash.js/lib/hash/common.js
+  // node_modules/hash.js/lib/hash/common.js
   var require_common = __commonJS({
-    "../../node_modules/hash.js/lib/hash/common.js"(exports) {
+    "node_modules/hash.js/lib/hash/common.js"(exports) {
       "use strict";
       init_polyfills();
       var utils = require_utils4();
@@ -75769,9 +75769,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/hash.js/lib/hash/sha/common.js
+  // node_modules/hash.js/lib/hash/sha/common.js
   var require_common2 = __commonJS({
-    "../../node_modules/hash.js/lib/hash/sha/common.js"(exports) {
+    "node_modules/hash.js/lib/hash/sha/common.js"(exports) {
       "use strict";
       init_polyfills();
       var utils = require_utils4();
@@ -75816,9 +75816,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/hash.js/lib/hash/sha/1.js
+  // node_modules/hash.js/lib/hash/sha/1.js
   var require__ = __commonJS({
-    "../../node_modules/hash.js/lib/hash/sha/1.js"(exports, module) {
+    "node_modules/hash.js/lib/hash/sha/1.js"(exports, module) {
       "use strict";
       init_polyfills();
       var utils = require_utils4();
@@ -75889,9 +75889,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/hash.js/lib/hash/sha/256.js
+  // node_modules/hash.js/lib/hash/sha/256.js
   var require__2 = __commonJS({
-    "../../node_modules/hash.js/lib/hash/sha/256.js"(exports, module) {
+    "node_modules/hash.js/lib/hash/sha/256.js"(exports, module) {
       "use strict";
       init_polyfills();
       var utils = require_utils4();
@@ -76042,9 +76042,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/hash.js/lib/hash/sha/224.js
+  // node_modules/hash.js/lib/hash/sha/224.js
   var require__3 = __commonJS({
-    "../../node_modules/hash.js/lib/hash/sha/224.js"(exports, module) {
+    "node_modules/hash.js/lib/hash/sha/224.js"(exports, module) {
       "use strict";
       init_polyfills();
       var utils = require_utils4();
@@ -76079,9 +76079,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/hash.js/lib/hash/sha/512.js
+  // node_modules/hash.js/lib/hash/sha/512.js
   var require__4 = __commonJS({
-    "../../node_modules/hash.js/lib/hash/sha/512.js"(exports, module) {
+    "node_modules/hash.js/lib/hash/sha/512.js"(exports, module) {
       "use strict";
       init_polyfills();
       var utils = require_utils4();
@@ -76519,9 +76519,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/hash.js/lib/hash/sha/384.js
+  // node_modules/hash.js/lib/hash/sha/384.js
   var require__5 = __commonJS({
-    "../../node_modules/hash.js/lib/hash/sha/384.js"(exports, module) {
+    "node_modules/hash.js/lib/hash/sha/384.js"(exports, module) {
       "use strict";
       init_polyfills();
       var utils = require_utils4();
@@ -76564,9 +76564,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/hash.js/lib/hash/sha.js
+  // node_modules/hash.js/lib/hash/sha.js
   var require_sha3 = __commonJS({
-    "../../node_modules/hash.js/lib/hash/sha.js"(exports) {
+    "node_modules/hash.js/lib/hash/sha.js"(exports) {
       "use strict";
       init_polyfills();
       exports.sha1 = require__();
@@ -76577,9 +76577,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/hash.js/lib/hash/ripemd.js
+  // node_modules/hash.js/lib/hash/ripemd.js
   var require_ripemd = __commonJS({
-    "../../node_modules/hash.js/lib/hash/ripemd.js"(exports) {
+    "node_modules/hash.js/lib/hash/ripemd.js"(exports) {
       "use strict";
       init_polyfills();
       var utils = require_utils4();
@@ -77019,9 +77019,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/hash.js/lib/hash/hmac.js
+  // node_modules/hash.js/lib/hash/hmac.js
   var require_hmac = __commonJS({
-    "../../node_modules/hash.js/lib/hash/hmac.js"(exports, module) {
+    "node_modules/hash.js/lib/hash/hmac.js"(exports, module) {
       "use strict";
       init_polyfills();
       var utils = require_utils4();
@@ -77061,9 +77061,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/hash.js/lib/hash.js
+  // node_modules/hash.js/lib/hash.js
   var require_hash2 = __commonJS({
-    "../../node_modules/hash.js/lib/hash.js"(exports) {
+    "node_modules/hash.js/lib/hash.js"(exports) {
       init_polyfills();
       var hash = exports;
       hash.utils = require_utils4();
@@ -77080,9 +77080,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/elliptic/lib/elliptic/precomputed/secp256k1.js
+  // node_modules/elliptic/lib/elliptic/precomputed/secp256k1.js
   var require_secp256k1 = __commonJS({
-    "../../node_modules/elliptic/lib/elliptic/precomputed/secp256k1.js"(exports, module) {
+    "node_modules/elliptic/lib/elliptic/precomputed/secp256k1.js"(exports, module) {
       init_polyfills();
       module.exports = {
         doubles: {
@@ -77867,9 +77867,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/elliptic/lib/elliptic/curves.js
+  // node_modules/elliptic/lib/elliptic/curves.js
   var require_curves = __commonJS({
-    "../../node_modules/elliptic/lib/elliptic/curves.js"(exports) {
+    "node_modules/elliptic/lib/elliptic/curves.js"(exports) {
       "use strict";
       init_polyfills();
       var curves = exports;
@@ -78044,9 +78044,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/hmac-drbg/lib/hmac-drbg.js
+  // node_modules/hmac-drbg/lib/hmac-drbg.js
   var require_hmac_drbg = __commonJS({
-    "../../node_modules/hmac-drbg/lib/hmac-drbg.js"(exports, module) {
+    "node_modules/hmac-drbg/lib/hmac-drbg.js"(exports, module) {
       "use strict";
       init_polyfills();
       var hash = require_hash2();
@@ -78139,9 +78139,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/elliptic/lib/elliptic/ec/key.js
+  // node_modules/elliptic/lib/elliptic/ec/key.js
   var require_key = __commonJS({
-    "../../node_modules/elliptic/lib/elliptic/ec/key.js"(exports, module) {
+    "node_modules/elliptic/lib/elliptic/ec/key.js"(exports, module) {
       "use strict";
       init_polyfills();
       var BN = require_bn4();
@@ -78234,9 +78234,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/elliptic/lib/elliptic/ec/signature.js
+  // node_modules/elliptic/lib/elliptic/ec/signature.js
   var require_signature = __commonJS({
-    "../../node_modules/elliptic/lib/elliptic/ec/signature.js"(exports, module) {
+    "node_modules/elliptic/lib/elliptic/ec/signature.js"(exports, module) {
       "use strict";
       init_polyfills();
       var BN = require_bn4();
@@ -78390,9 +78390,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/elliptic/lib/elliptic/ec/index.js
+  // node_modules/elliptic/lib/elliptic/ec/index.js
   var require_ec = __commonJS({
-    "../../node_modules/elliptic/lib/elliptic/ec/index.js"(exports, module) {
+    "node_modules/elliptic/lib/elliptic/ec/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var BN = require_bn4();
@@ -78598,9 +78598,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/elliptic/lib/elliptic/eddsa/key.js
+  // node_modules/elliptic/lib/elliptic/eddsa/key.js
   var require_key2 = __commonJS({
-    "../../node_modules/elliptic/lib/elliptic/eddsa/key.js"(exports, module) {
+    "node_modules/elliptic/lib/elliptic/eddsa/key.js"(exports, module) {
       "use strict";
       init_polyfills();
       var utils = require_utils3();
@@ -78673,9 +78673,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/elliptic/lib/elliptic/eddsa/signature.js
+  // node_modules/elliptic/lib/elliptic/eddsa/signature.js
   var require_signature2 = __commonJS({
-    "../../node_modules/elliptic/lib/elliptic/eddsa/signature.js"(exports, module) {
+    "node_modules/elliptic/lib/elliptic/eddsa/signature.js"(exports, module) {
       "use strict";
       init_polyfills();
       var BN = require_bn4();
@@ -78724,9 +78724,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/elliptic/lib/elliptic/eddsa/index.js
+  // node_modules/elliptic/lib/elliptic/eddsa/index.js
   var require_eddsa = __commonJS({
-    "../../node_modules/elliptic/lib/elliptic/eddsa/index.js"(exports, module) {
+    "node_modules/elliptic/lib/elliptic/eddsa/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var hash = require_hash2();
@@ -78813,9 +78813,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/elliptic/lib/elliptic.js
+  // node_modules/elliptic/lib/elliptic.js
   var require_elliptic = __commonJS({
-    "../../node_modules/elliptic/lib/elliptic.js"(exports) {
+    "node_modules/elliptic/lib/elliptic.js"(exports) {
       "use strict";
       init_polyfills();
       var elliptic = exports;
@@ -78829,9 +78829,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/asn1.js/node_modules/bn.js/lib/bn.js
+  // node_modules/asn1.js/node_modules/bn.js/lib/bn.js
   var require_bn5 = __commonJS({
-    "../../node_modules/asn1.js/node_modules/bn.js/lib/bn.js"(exports, module) {
+    "node_modules/asn1.js/node_modules/bn.js/lib/bn.js"(exports, module) {
       init_polyfills();
       (function(module2, exports2) {
         "use strict";
@@ -81641,9 +81641,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/asn1.js/lib/asn1/api.js
+  // node_modules/asn1.js/lib/asn1/api.js
   var require_api = __commonJS({
-    "../../node_modules/asn1.js/lib/asn1/api.js"(exports) {
+    "node_modules/asn1.js/lib/asn1/api.js"(exports) {
       init_polyfills();
       var asn1 = require_asn1();
       var inherits = require_inherits_browser();
@@ -81695,9 +81695,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/asn1.js/lib/asn1/base/reporter.js
+  // node_modules/asn1.js/lib/asn1/base/reporter.js
   var require_reporter = __commonJS({
-    "../../node_modules/asn1.js/lib/asn1/base/reporter.js"(exports) {
+    "node_modules/asn1.js/lib/asn1/base/reporter.js"(exports) {
       init_polyfills();
       var inherits = require_inherits_browser();
       function Reporter(options) {
@@ -81796,9 +81796,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/asn1.js/lib/asn1/base/buffer.js
+  // node_modules/asn1.js/lib/asn1/base/buffer.js
   var require_buffer2 = __commonJS({
-    "../../node_modules/asn1.js/lib/asn1/base/buffer.js"(exports) {
+    "node_modules/asn1.js/lib/asn1/base/buffer.js"(exports) {
       init_polyfills();
       var inherits = require_inherits_browser();
       var Reporter = require_base2().Reporter;
@@ -81899,9 +81899,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/asn1.js/lib/asn1/base/node.js
+  // node_modules/asn1.js/lib/asn1/base/node.js
   var require_node = __commonJS({
-    "../../node_modules/asn1.js/lib/asn1/base/node.js"(exports, module) {
+    "node_modules/asn1.js/lib/asn1/base/node.js"(exports, module) {
       init_polyfills();
       var Reporter = require_base2().Reporter;
       var EncoderBuffer = require_base2().EncoderBuffer;
@@ -82433,9 +82433,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/asn1.js/lib/asn1/base/index.js
+  // node_modules/asn1.js/lib/asn1/base/index.js
   var require_base2 = __commonJS({
-    "../../node_modules/asn1.js/lib/asn1/base/index.js"(exports) {
+    "node_modules/asn1.js/lib/asn1/base/index.js"(exports) {
       init_polyfills();
       var base = exports;
       base.Reporter = require_reporter().Reporter;
@@ -82445,9 +82445,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/asn1.js/lib/asn1/constants/der.js
+  // node_modules/asn1.js/lib/asn1/constants/der.js
   var require_der = __commonJS({
-    "../../node_modules/asn1.js/lib/asn1/constants/der.js"(exports) {
+    "node_modules/asn1.js/lib/asn1/constants/der.js"(exports) {
       init_polyfills();
       var constants = require_constants();
       exports.tagClass = {
@@ -82492,9 +82492,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/asn1.js/lib/asn1/constants/index.js
+  // node_modules/asn1.js/lib/asn1/constants/index.js
   var require_constants = __commonJS({
-    "../../node_modules/asn1.js/lib/asn1/constants/index.js"(exports) {
+    "node_modules/asn1.js/lib/asn1/constants/index.js"(exports) {
       init_polyfills();
       var constants = exports;
       constants._reverse = function reverse(map) {
@@ -82511,9 +82511,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/asn1.js/lib/asn1/decoders/der.js
+  // node_modules/asn1.js/lib/asn1/decoders/der.js
   var require_der2 = __commonJS({
-    "../../node_modules/asn1.js/lib/asn1/decoders/der.js"(exports, module) {
+    "node_modules/asn1.js/lib/asn1/decoders/der.js"(exports, module) {
       init_polyfills();
       var inherits = require_inherits_browser();
       var asn1 = require_asn1();
@@ -82775,9 +82775,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/asn1.js/lib/asn1/decoders/pem.js
+  // node_modules/asn1.js/lib/asn1/decoders/pem.js
   var require_pem = __commonJS({
-    "../../node_modules/asn1.js/lib/asn1/decoders/pem.js"(exports, module) {
+    "node_modules/asn1.js/lib/asn1/decoders/pem.js"(exports, module) {
       init_polyfills();
       var inherits = require_inherits_browser();
       var Buffer5 = require_buffer().Buffer;
@@ -82821,9 +82821,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/asn1.js/lib/asn1/decoders/index.js
+  // node_modules/asn1.js/lib/asn1/decoders/index.js
   var require_decoders = __commonJS({
-    "../../node_modules/asn1.js/lib/asn1/decoders/index.js"(exports) {
+    "node_modules/asn1.js/lib/asn1/decoders/index.js"(exports) {
       init_polyfills();
       var decoders = exports;
       decoders.der = require_der2();
@@ -82831,9 +82831,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/asn1.js/lib/asn1/encoders/der.js
+  // node_modules/asn1.js/lib/asn1/encoders/der.js
   var require_der3 = __commonJS({
-    "../../node_modules/asn1.js/lib/asn1/encoders/der.js"(exports, module) {
+    "node_modules/asn1.js/lib/asn1/encoders/der.js"(exports, module) {
       init_polyfills();
       var inherits = require_inherits_browser();
       var Buffer5 = require_buffer().Buffer;
@@ -83063,9 +83063,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/asn1.js/lib/asn1/encoders/pem.js
+  // node_modules/asn1.js/lib/asn1/encoders/pem.js
   var require_pem2 = __commonJS({
-    "../../node_modules/asn1.js/lib/asn1/encoders/pem.js"(exports, module) {
+    "node_modules/asn1.js/lib/asn1/encoders/pem.js"(exports, module) {
       init_polyfills();
       var inherits = require_inherits_browser();
       var DEREncoder = require_der3();
@@ -83087,9 +83087,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/asn1.js/lib/asn1/encoders/index.js
+  // node_modules/asn1.js/lib/asn1/encoders/index.js
   var require_encoders = __commonJS({
-    "../../node_modules/asn1.js/lib/asn1/encoders/index.js"(exports) {
+    "node_modules/asn1.js/lib/asn1/encoders/index.js"(exports) {
       init_polyfills();
       var encoders = exports;
       encoders.der = require_der3();
@@ -83097,9 +83097,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/asn1.js/lib/asn1.js
+  // node_modules/asn1.js/lib/asn1.js
   var require_asn1 = __commonJS({
-    "../../node_modules/asn1.js/lib/asn1.js"(exports) {
+    "node_modules/asn1.js/lib/asn1.js"(exports) {
       init_polyfills();
       var asn1 = exports;
       asn1.bignum = require_bn5();
@@ -83111,9 +83111,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/parse-asn1/certificate.js
+  // node_modules/parse-asn1/certificate.js
   var require_certificate = __commonJS({
-    "../../node_modules/parse-asn1/certificate.js"(exports, module) {
+    "node_modules/parse-asn1/certificate.js"(exports, module) {
       "use strict";
       init_polyfills();
       var asn = require_asn1();
@@ -83191,9 +83191,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/parse-asn1/asn1.js
+  // node_modules/parse-asn1/asn1.js
   var require_asn12 = __commonJS({
-    "../../node_modules/parse-asn1/asn1.js"(exports) {
+    "node_modules/parse-asn1/asn1.js"(exports) {
       "use strict";
       init_polyfills();
       var asn1 = require_asn1();
@@ -83305,9 +83305,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/parse-asn1/aesid.json
+  // node_modules/parse-asn1/aesid.json
   var require_aesid = __commonJS({
-    "../../node_modules/parse-asn1/aesid.json"(exports, module) {
+    "node_modules/parse-asn1/aesid.json"(exports, module) {
       module.exports = {
         "2.16.840.1.101.3.4.1.1": "aes-128-ecb",
         "2.16.840.1.101.3.4.1.2": "aes-128-cbc",
@@ -83325,9 +83325,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/parse-asn1/fixProc.js
+  // node_modules/parse-asn1/fixProc.js
   var require_fixProc = __commonJS({
-    "../../node_modules/parse-asn1/fixProc.js"(exports, module) {
+    "node_modules/parse-asn1/fixProc.js"(exports, module) {
       "use strict";
       init_polyfills();
       var findProc = /Proc-Type: 4,ENCRYPTED[\n\r]+DEK-Info: AES-((?:128)|(?:192)|(?:256))-CBC,([0-9A-H]+)[\n\r]+([0-9A-z\n\r+/=]+)[\n\r]+/m;
@@ -83363,9 +83363,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/parse-asn1/index.js
+  // node_modules/parse-asn1/index.js
   var require_parse_asn1 = __commonJS({
-    "../../node_modules/parse-asn1/index.js"(exports, module) {
+    "node_modules/parse-asn1/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var asn1 = require_asn12();
@@ -83478,9 +83478,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/browserify-sign/browser/curves.json
+  // node_modules/browserify-sign/browser/curves.json
   var require_curves2 = __commonJS({
-    "../../node_modules/browserify-sign/browser/curves.json"(exports, module) {
+    "node_modules/browserify-sign/browser/curves.json"(exports, module) {
       module.exports = {
         "1.3.132.0.10": "secp256k1",
         "1.3.132.0.33": "p224",
@@ -83492,9 +83492,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/browserify-sign/browser/sign.js
+  // node_modules/browserify-sign/browser/sign.js
   var require_sign2 = __commonJS({
-    "../../node_modules/browserify-sign/browser/sign.js"(exports, module) {
+    "node_modules/browserify-sign/browser/sign.js"(exports, module) {
       "use strict";
       init_polyfills();
       var Buffer5 = require_safe_buffer().Buffer;
@@ -83647,9 +83647,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/browserify-sign/browser/verify.js
+  // node_modules/browserify-sign/browser/verify.js
   var require_verify = __commonJS({
-    "../../node_modules/browserify-sign/browser/verify.js"(exports, module) {
+    "node_modules/browserify-sign/browser/verify.js"(exports, module) {
       "use strict";
       init_polyfills();
       var Buffer5 = require_safe_buffer().Buffer;
@@ -83738,9 +83738,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/browserify-sign/browser/index.js
+  // node_modules/browserify-sign/browser/index.js
   var require_browser10 = __commonJS({
-    "../../node_modules/browserify-sign/browser/index.js"(exports, module) {
+    "node_modules/browserify-sign/browser/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       var Buffer5 = require_safe_buffer().Buffer;
@@ -83820,9 +83820,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/create-ecdh/node_modules/bn.js/lib/bn.js
+  // node_modules/create-ecdh/node_modules/bn.js/lib/bn.js
   var require_bn6 = __commonJS({
-    "../../node_modules/create-ecdh/node_modules/bn.js/lib/bn.js"(exports, module) {
+    "node_modules/create-ecdh/node_modules/bn.js/lib/bn.js"(exports, module) {
       init_polyfills();
       (function(module2, exports2) {
         "use strict";
@@ -86632,9 +86632,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/create-ecdh/browser.js
+  // node_modules/create-ecdh/browser.js
   var require_browser11 = __commonJS({
-    "../../node_modules/create-ecdh/browser.js"(exports, module) {
+    "node_modules/create-ecdh/browser.js"(exports, module) {
       init_polyfills();
       var elliptic = require_elliptic();
       var BN = require_bn6();
@@ -86751,9 +86751,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/public-encrypt/mgf.js
+  // node_modules/public-encrypt/mgf.js
   var require_mgf = __commonJS({
-    "../../node_modules/public-encrypt/mgf.js"(exports, module) {
+    "node_modules/public-encrypt/mgf.js"(exports, module) {
       init_polyfills();
       var createHash4 = require_browser4();
       var Buffer5 = require_safe_buffer().Buffer;
@@ -86775,9 +86775,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/public-encrypt/xor.js
+  // node_modules/public-encrypt/xor.js
   var require_xor = __commonJS({
-    "../../node_modules/public-encrypt/xor.js"(exports, module) {
+    "node_modules/public-encrypt/xor.js"(exports, module) {
       init_polyfills();
       module.exports = function xor(a2, b2) {
         var len = a2.length;
@@ -86790,9 +86790,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/public-encrypt/node_modules/bn.js/lib/bn.js
+  // node_modules/public-encrypt/node_modules/bn.js/lib/bn.js
   var require_bn7 = __commonJS({
-    "../../node_modules/public-encrypt/node_modules/bn.js/lib/bn.js"(exports, module) {
+    "node_modules/public-encrypt/node_modules/bn.js/lib/bn.js"(exports, module) {
       init_polyfills();
       (function(module2, exports2) {
         "use strict";
@@ -89602,9 +89602,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/public-encrypt/withPublic.js
+  // node_modules/public-encrypt/withPublic.js
   var require_withPublic = __commonJS({
-    "../../node_modules/public-encrypt/withPublic.js"(exports, module) {
+    "node_modules/public-encrypt/withPublic.js"(exports, module) {
       init_polyfills();
       var BN = require_bn7();
       var Buffer5 = require_safe_buffer().Buffer;
@@ -89615,9 +89615,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/public-encrypt/publicEncrypt.js
+  // node_modules/public-encrypt/publicEncrypt.js
   var require_publicEncrypt = __commonJS({
-    "../../node_modules/public-encrypt/publicEncrypt.js"(exports, module) {
+    "node_modules/public-encrypt/publicEncrypt.js"(exports, module) {
       init_polyfills();
       var parseKeys = require_parse_asn1();
       var randomBytes3 = require_browser2();
@@ -89708,9 +89708,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/public-encrypt/privateDecrypt.js
+  // node_modules/public-encrypt/privateDecrypt.js
   var require_privateDecrypt = __commonJS({
-    "../../node_modules/public-encrypt/privateDecrypt.js"(exports, module) {
+    "node_modules/public-encrypt/privateDecrypt.js"(exports, module) {
       init_polyfills();
       var parseKeys = require_parse_asn1();
       var mgf = require_mgf();
@@ -89815,9 +89815,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/public-encrypt/browser.js
+  // node_modules/public-encrypt/browser.js
   var require_browser12 = __commonJS({
-    "../../node_modules/public-encrypt/browser.js"(exports) {
+    "node_modules/public-encrypt/browser.js"(exports) {
       init_polyfills();
       exports.publicEncrypt = require_publicEncrypt();
       exports.privateDecrypt = require_privateDecrypt();
@@ -89830,9 +89830,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/randomfill/browser.js
+  // node_modules/randomfill/browser.js
   var require_browser13 = __commonJS({
-    "../../node_modules/randomfill/browser.js"(exports) {
+    "node_modules/randomfill/browser.js"(exports) {
       "use strict";
       init_polyfills();
       function oldBrowser() {
@@ -89933,9 +89933,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/crypto-browserify/index.js
+  // node_modules/crypto-browserify/index.js
   var require_crypto_browserify = __commonJS({
-    "../../node_modules/crypto-browserify/index.js"(exports) {
+    "node_modules/crypto-browserify/index.js"(exports) {
       "use strict";
       init_polyfills();
       exports.randomBytes = exports.rng = exports.pseudoRandomBytes = exports.prng = require_browser2();
@@ -91878,9 +91878,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/tweetnacl/nacl-fast.js
+  // node_modules/tweetnacl/nacl-fast.js
   var require_nacl_fast = __commonJS({
-    "../../node_modules/tweetnacl/nacl-fast.js"(exports, module) {
+    "node_modules/tweetnacl/nacl-fast.js"(exports, module) {
       init_polyfills();
       (function(nacl2) {
         "use strict";
@@ -97498,9 +97498,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/path-browserify/index.js
+  // node_modules/path-browserify/index.js
   var require_path_browserify = __commonJS({
-    "../../node_modules/path-browserify/index.js"(exports, module) {
+    "node_modules/path-browserify/index.js"(exports, module) {
       "use strict";
       init_polyfills();
       function assertPath(path2) {
@@ -100087,10 +100087,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/jimp/dist/browser/index.js
+  // node_modules/jimp/dist/browser/index.js
   var browser_exports = {};
   var init_browser = __esm({
-    "../../node_modules/jimp/dist/browser/index.js"() {
+    "node_modules/jimp/dist/browser/index.js"() {
       init_polyfills();
     }
   });
@@ -100686,7 +100686,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/peerjs-js-binarypack/dist/binarypack.mjs
+  // node_modules/peerjs-js-binarypack/dist/binarypack.mjs
   function $e8379818650e2442$var$concatArrayBuffers(bufs) {
     let size = 0;
     for (const buf of bufs) size += buf.byteLength;
@@ -100711,7 +100711,7 @@ ${toHex(hashedRequest)}`;
   }
   var $e8379818650e2442$export$93654d4f2d6cd524, $0cfd7828ad59115f$var$Unpacker, $0cfd7828ad59115f$export$b9ec4b114aa40074;
   var init_binarypack = __esm({
-    "../../node_modules/peerjs-js-binarypack/dist/binarypack.mjs"() {
+    "node_modules/peerjs-js-binarypack/dist/binarypack.mjs"() {
       init_polyfills();
       $e8379818650e2442$export$93654d4f2d6cd524 = class {
         constructor() {
@@ -101132,7 +101132,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/webrtc-adapter/src/js/utils.js
+  // node_modules/webrtc-adapter/src/js/utils.js
   function extractVersion(uastring, expr, pos) {
     const match = uastring.match(expr);
     return match && match.length >= pos && parseFloat(match[pos], 10);
@@ -101344,7 +101344,7 @@ ${toHex(hashedRequest)}`;
   }
   var logDisabled_, deprecationWarnings_;
   var init_utils4 = __esm({
-    "../../node_modules/webrtc-adapter/src/js/utils.js"() {
+    "node_modules/webrtc-adapter/src/js/utils.js"() {
       "use strict";
       init_polyfills();
       logDisabled_ = true;
@@ -101352,7 +101352,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/webrtc-adapter/src/js/chrome/getusermedia.js
+  // node_modules/webrtc-adapter/src/js/chrome/getusermedia.js
   function shimGetUserMedia(window2, browserDetails) {
     const navigator2 = window2 && window2.navigator;
     if (!navigator2.mediaDevices) {
@@ -101510,7 +101510,7 @@ ${toHex(hashedRequest)}`;
   }
   var logging;
   var init_getusermedia = __esm({
-    "../../node_modules/webrtc-adapter/src/js/chrome/getusermedia.js"() {
+    "node_modules/webrtc-adapter/src/js/chrome/getusermedia.js"() {
       "use strict";
       init_polyfills();
       init_utils4();
@@ -101518,7 +101518,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/webrtc-adapter/src/js/chrome/chrome_shim.js
+  // node_modules/webrtc-adapter/src/js/chrome/chrome_shim.js
   var chrome_shim_exports = {};
   __export(chrome_shim_exports, {
     fixNegotiationNeeded: () => fixNegotiationNeeded,
@@ -102058,7 +102058,7 @@ ${toHex(hashedRequest)}`;
     });
   }
   var init_chrome_shim = __esm({
-    "../../node_modules/webrtc-adapter/src/js/chrome/chrome_shim.js"() {
+    "node_modules/webrtc-adapter/src/js/chrome/chrome_shim.js"() {
       "use strict";
       init_polyfills();
       init_utils4();
@@ -102066,7 +102066,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/webrtc-adapter/src/js/firefox/getusermedia.js
+  // node_modules/webrtc-adapter/src/js/firefox/getusermedia.js
   function shimGetUserMedia2(window2, browserDetails) {
     const navigator2 = window2 && window2.navigator;
     const MediaStreamTrack2 = window2 && window2.MediaStreamTrack;
@@ -102116,14 +102116,14 @@ ${toHex(hashedRequest)}`;
     }
   }
   var init_getusermedia2 = __esm({
-    "../../node_modules/webrtc-adapter/src/js/firefox/getusermedia.js"() {
+    "node_modules/webrtc-adapter/src/js/firefox/getusermedia.js"() {
       "use strict";
       init_polyfills();
       init_utils4();
     }
   });
 
-  // ../../node_modules/webrtc-adapter/src/js/firefox/getdisplaymedia.js
+  // node_modules/webrtc-adapter/src/js/firefox/getdisplaymedia.js
   function shimGetDisplayMedia(window2, preferredMediaSource) {
     if (window2.navigator.mediaDevices && "getDisplayMedia" in window2.navigator.mediaDevices) {
       return;
@@ -102147,13 +102147,13 @@ ${toHex(hashedRequest)}`;
     };
   }
   var init_getdisplaymedia = __esm({
-    "../../node_modules/webrtc-adapter/src/js/firefox/getdisplaymedia.js"() {
+    "node_modules/webrtc-adapter/src/js/firefox/getdisplaymedia.js"() {
       "use strict";
       init_polyfills();
     }
   });
 
-  // ../../node_modules/webrtc-adapter/src/js/firefox/firefox_shim.js
+  // node_modules/webrtc-adapter/src/js/firefox/firefox_shim.js
   var firefox_shim_exports = {};
   __export(firefox_shim_exports, {
     shimAddTransceiver: () => shimAddTransceiver,
@@ -102397,7 +102397,7 @@ ${toHex(hashedRequest)}`;
     };
   }
   var init_firefox_shim = __esm({
-    "../../node_modules/webrtc-adapter/src/js/firefox/firefox_shim.js"() {
+    "node_modules/webrtc-adapter/src/js/firefox/firefox_shim.js"() {
       "use strict";
       init_polyfills();
       init_utils4();
@@ -102406,7 +102406,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/webrtc-adapter/src/js/safari/safari_shim.js
+  // node_modules/webrtc-adapter/src/js/safari/safari_shim.js
   var safari_shim_exports = {};
   __export(safari_shim_exports, {
     shimAudioContext: () => shimAudioContext,
@@ -102722,16 +102722,16 @@ ${toHex(hashedRequest)}`;
     window2.AudioContext = window2.webkitAudioContext;
   }
   var init_safari_shim = __esm({
-    "../../node_modules/webrtc-adapter/src/js/safari/safari_shim.js"() {
+    "node_modules/webrtc-adapter/src/js/safari/safari_shim.js"() {
       "use strict";
       init_polyfills();
       init_utils4();
     }
   });
 
-  // ../../node_modules/sdp/sdp.js
+  // node_modules/sdp/sdp.js
   var require_sdp = __commonJS({
-    "../../node_modules/sdp/sdp.js"(exports, module) {
+    "node_modules/sdp/sdp.js"(exports, module) {
       "use strict";
       init_polyfills();
       var SDPUtils2 = {};
@@ -103342,7 +103342,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/webrtc-adapter/src/js/common_shim.js
+  // node_modules/webrtc-adapter/src/js/common_shim.js
   var common_shim_exports = {};
   __export(common_shim_exports, {
     removeExtmapAllowMixed: () => removeExtmapAllowMixed,
@@ -103687,7 +103687,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_sdp;
   var init_common_shim = __esm({
-    "../../node_modules/webrtc-adapter/src/js/common_shim.js"() {
+    "node_modules/webrtc-adapter/src/js/common_shim.js"() {
       "use strict";
       init_polyfills();
       import_sdp = __toESM(require_sdp());
@@ -103695,7 +103695,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/webrtc-adapter/src/js/adapter_factory.js
+  // node_modules/webrtc-adapter/src/js/adapter_factory.js
   function adapterFactory({ window: window2 } = {}, options = {
     shimChrome: true,
     shimFirefox: true,
@@ -103797,7 +103797,7 @@ ${toHex(hashedRequest)}`;
   }
   var sdp;
   var init_adapter_factory = __esm({
-    "../../node_modules/webrtc-adapter/src/js/adapter_factory.js"() {
+    "node_modules/webrtc-adapter/src/js/adapter_factory.js"() {
       init_polyfills();
       init_utils4();
       init_chrome_shim();
@@ -103808,10 +103808,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/webrtc-adapter/src/js/adapter_core.js
+  // node_modules/webrtc-adapter/src/js/adapter_core.js
   var adapter, adapter_core_default;
   var init_adapter_core = __esm({
-    "../../node_modules/webrtc-adapter/src/js/adapter_core.js"() {
+    "node_modules/webrtc-adapter/src/js/adapter_core.js"() {
       "use strict";
       init_polyfills();
       init_adapter_factory();
@@ -103820,7 +103820,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/peerjs/dist/bundler.mjs
+  // node_modules/peerjs/dist/bundler.mjs
   function $parcel$export(e2, n2, v2, s2) {
     Object.defineProperty(e2, n2, { get: v2, set: s2, enumerable: true, configurable: true });
   }
@@ -103863,7 +103863,7 @@ ${toHex(hashedRequest)}`;
   }
   var $fcbcc7538a6776d5$export$f1c5f4c9cb95390b, $fb63e766cfafaab9$var$webRTCAdapter, $fb63e766cfafaab9$export$25be9502477c137d, $9a84a32bf0bf36bb$export$f35f128fd59ea256, $0e5fd1585784c252$export$4e61f672936bec77, $4f4134156c446392$var$DEFAULT_CONFIG, $4f4134156c446392$export$f8f26dd395d7e1bd, $4f4134156c446392$export$7debb50ef11d5e0b, $257947e92926277a$var$LOG_PREFIX, $257947e92926277a$var$Logger, $257947e92926277a$export$2e2bcd8739ae039, $c4dcfd1d1ea86647$exports, $c4dcfd1d1ea86647$var$has, $c4dcfd1d1ea86647$var$prefix, $78455e22dea96b8c$exports, $78455e22dea96b8c$export$3157d57b4135e3bc, $78455e22dea96b8c$export$9547aaa2e39030ff, $78455e22dea96b8c$export$7974935686149686, $78455e22dea96b8c$export$49ae800c114df41d, $78455e22dea96b8c$export$89f507cf986a947, $78455e22dea96b8c$export$3b5c4a4b6354f023, $78455e22dea96b8c$export$adb4a1754da6f10d, $520832d44ba058c8$export$83d89fbfd8236492, $8f5bfa60836d261d$export$4798917dbf149b79, $b82fb8fc0514bfc1$export$89e6bb5ad64bf4a, $23779d1881157a18$export$6a678e589c8a4542, $23779d1881157a18$export$98871882f492de82, $5045192fc6d387ba$export$23a2a68283c24d80, __, _$5c1d08c7c57da9a3$export$4a84e95a2324ac29, $5c1d08c7c57da9a3$export$4a84e95a2324ac29, $abf266641927cd89$export$2c4e825dc9120f87, __2, __22, _$6366c4ca161bc297$export$d365f7ad9d7df9c9, $6366c4ca161bc297$export$d365f7ad9d7df9c9, $a229bedbcaa6ca23$export$ff7c9d4c11d94e8b, $9fcfddb3ae148f88$export$f0a5a64d5bb37108, $bbaee3f15f714663$export$6f88fe47d32c9c94, $817f931e3f9096cf$export$48880ac635f47186, __3, _$416260bce337df90$export$ecd1fc136c422448, $416260bce337df90$export$ecd1fc136c422448, $dd0187d7f28e386f$export$2e2bcd8739ae039;
   var init_bundler = __esm({
-    "../../node_modules/peerjs/dist/bundler.mjs"() {
+    "node_modules/peerjs/dist/bundler.mjs"() {
       init_polyfills();
       init_binarypack();
       init_adapter_core();
@@ -105397,9 +105397,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/qrcode/lib/can-promise.js
+  // node_modules/qrcode/lib/can-promise.js
   var require_can_promise = __commonJS({
-    "../../node_modules/qrcode/lib/can-promise.js"(exports, module) {
+    "node_modules/qrcode/lib/can-promise.js"(exports, module) {
       init_polyfills();
       module.exports = function() {
         return typeof Promise === "function" && Promise.prototype && Promise.prototype.then;
@@ -105407,9 +105407,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/qrcode/lib/core/utils.js
+  // node_modules/qrcode/lib/core/utils.js
   var require_utils5 = __commonJS({
-    "../../node_modules/qrcode/lib/core/utils.js"(exports) {
+    "node_modules/qrcode/lib/core/utils.js"(exports) {
       init_polyfills();
       var toSJISFunction;
       var CODEWORDS_COUNT = [
@@ -105487,9 +105487,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/qrcode/lib/core/error-correction-level.js
+  // node_modules/qrcode/lib/core/error-correction-level.js
   var require_error_correction_level = __commonJS({
-    "../../node_modules/qrcode/lib/core/error-correction-level.js"(exports) {
+    "node_modules/qrcode/lib/core/error-correction-level.js"(exports) {
       init_polyfills();
       exports.L = { bit: 1 };
       exports.M = { bit: 0 };
@@ -105533,9 +105533,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/qrcode/lib/core/bit-buffer.js
+  // node_modules/qrcode/lib/core/bit-buffer.js
   var require_bit_buffer = __commonJS({
-    "../../node_modules/qrcode/lib/core/bit-buffer.js"(exports, module) {
+    "node_modules/qrcode/lib/core/bit-buffer.js"(exports, module) {
       init_polyfills();
       function BitBuffer() {
         this.buffer = [];
@@ -105569,9 +105569,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/qrcode/lib/core/bit-matrix.js
+  // node_modules/qrcode/lib/core/bit-matrix.js
   var require_bit_matrix = __commonJS({
-    "../../node_modules/qrcode/lib/core/bit-matrix.js"(exports, module) {
+    "node_modules/qrcode/lib/core/bit-matrix.js"(exports, module) {
       init_polyfills();
       function BitMatrix(size) {
         if (!size || size < 1) {
@@ -105599,9 +105599,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/qrcode/lib/core/alignment-pattern.js
+  // node_modules/qrcode/lib/core/alignment-pattern.js
   var require_alignment_pattern = __commonJS({
-    "../../node_modules/qrcode/lib/core/alignment-pattern.js"(exports) {
+    "node_modules/qrcode/lib/core/alignment-pattern.js"(exports) {
       init_polyfills();
       var getSymbolSize = require_utils5().getSymbolSize;
       exports.getRowColCoords = function getRowColCoords(version) {
@@ -105635,9 +105635,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/qrcode/lib/core/finder-pattern.js
+  // node_modules/qrcode/lib/core/finder-pattern.js
   var require_finder_pattern = __commonJS({
-    "../../node_modules/qrcode/lib/core/finder-pattern.js"(exports) {
+    "node_modules/qrcode/lib/core/finder-pattern.js"(exports) {
       init_polyfills();
       var getSymbolSize = require_utils5().getSymbolSize;
       var FINDER_PATTERN_SIZE = 7;
@@ -105655,9 +105655,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/qrcode/lib/core/mask-pattern.js
+  // node_modules/qrcode/lib/core/mask-pattern.js
   var require_mask_pattern = __commonJS({
-    "../../node_modules/qrcode/lib/core/mask-pattern.js"(exports) {
+    "node_modules/qrcode/lib/core/mask-pattern.js"(exports) {
       init_polyfills();
       exports.Patterns = {
         PATTERN000: 0,
@@ -105798,9 +105798,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/qrcode/lib/core/error-correction-code.js
+  // node_modules/qrcode/lib/core/error-correction-code.js
   var require_error_correction_code = __commonJS({
-    "../../node_modules/qrcode/lib/core/error-correction-code.js"(exports) {
+    "node_modules/qrcode/lib/core/error-correction-code.js"(exports) {
       init_polyfills();
       var ECLevel = require_error_correction_level();
       var EC_BLOCKS_TABLE = [
@@ -106160,9 +106160,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/qrcode/lib/core/galois-field.js
+  // node_modules/qrcode/lib/core/galois-field.js
   var require_galois_field = __commonJS({
-    "../../node_modules/qrcode/lib/core/galois-field.js"(exports) {
+    "node_modules/qrcode/lib/core/galois-field.js"(exports) {
       init_polyfills();
       var EXP_TABLE = new Uint8Array(512);
       var LOG_TABLE = new Uint8Array(256);
@@ -106194,9 +106194,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/qrcode/lib/core/polynomial.js
+  // node_modules/qrcode/lib/core/polynomial.js
   var require_polynomial = __commonJS({
-    "../../node_modules/qrcode/lib/core/polynomial.js"(exports) {
+    "node_modules/qrcode/lib/core/polynomial.js"(exports) {
       init_polyfills();
       var GF = require_galois_field();
       exports.mul = function mul(p1, p2) {
@@ -106231,9 +106231,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/qrcode/lib/core/reed-solomon-encoder.js
+  // node_modules/qrcode/lib/core/reed-solomon-encoder.js
   var require_reed_solomon_encoder = __commonJS({
-    "../../node_modules/qrcode/lib/core/reed-solomon-encoder.js"(exports, module) {
+    "node_modules/qrcode/lib/core/reed-solomon-encoder.js"(exports, module) {
       init_polyfills();
       var Polynomial = require_polynomial();
       function ReedSolomonEncoder(degree) {
@@ -106264,9 +106264,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/qrcode/lib/core/version-check.js
+  // node_modules/qrcode/lib/core/version-check.js
   var require_version_check = __commonJS({
-    "../../node_modules/qrcode/lib/core/version-check.js"(exports) {
+    "node_modules/qrcode/lib/core/version-check.js"(exports) {
       init_polyfills();
       exports.isValid = function isValid(version) {
         return !isNaN(version) && version >= 1 && version <= 40;
@@ -106274,9 +106274,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/qrcode/lib/core/regex.js
+  // node_modules/qrcode/lib/core/regex.js
   var require_regex = __commonJS({
-    "../../node_modules/qrcode/lib/core/regex.js"(exports) {
+    "node_modules/qrcode/lib/core/regex.js"(exports) {
       init_polyfills();
       var numeric = "[0-9]+";
       var alphanumeric = "[A-Z $%*+\\-./:]+";
@@ -106303,9 +106303,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/qrcode/lib/core/mode.js
+  // node_modules/qrcode/lib/core/mode.js
   var require_mode = __commonJS({
-    "../../node_modules/qrcode/lib/core/mode.js"(exports) {
+    "node_modules/qrcode/lib/core/mode.js"(exports) {
       init_polyfills();
       var VersionCheck = require_version_check();
       var Regex = require_regex();
@@ -106385,9 +106385,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/qrcode/lib/core/version.js
+  // node_modules/qrcode/lib/core/version.js
   var require_version = __commonJS({
-    "../../node_modules/qrcode/lib/core/version.js"(exports) {
+    "node_modules/qrcode/lib/core/version.js"(exports) {
       init_polyfills();
       var Utils = require_utils5();
       var ECCode = require_error_correction_code();
@@ -106481,9 +106481,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/qrcode/lib/core/format-info.js
+  // node_modules/qrcode/lib/core/format-info.js
   var require_format_info = __commonJS({
-    "../../node_modules/qrcode/lib/core/format-info.js"(exports) {
+    "node_modules/qrcode/lib/core/format-info.js"(exports) {
       init_polyfills();
       var Utils = require_utils5();
       var G15 = 1 << 10 | 1 << 8 | 1 << 5 | 1 << 4 | 1 << 2 | 1 << 1 | 1 << 0;
@@ -106500,9 +106500,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/qrcode/lib/core/numeric-data.js
+  // node_modules/qrcode/lib/core/numeric-data.js
   var require_numeric_data = __commonJS({
-    "../../node_modules/qrcode/lib/core/numeric-data.js"(exports, module) {
+    "node_modules/qrcode/lib/core/numeric-data.js"(exports, module) {
       init_polyfills();
       var Mode = require_mode();
       function NumericData(data) {
@@ -106536,9 +106536,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/qrcode/lib/core/alphanumeric-data.js
+  // node_modules/qrcode/lib/core/alphanumeric-data.js
   var require_alphanumeric_data = __commonJS({
-    "../../node_modules/qrcode/lib/core/alphanumeric-data.js"(exports, module) {
+    "node_modules/qrcode/lib/core/alphanumeric-data.js"(exports, module) {
       init_polyfills();
       var Mode = require_mode();
       var ALPHA_NUM_CHARS = [
@@ -106616,9 +106616,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/qrcode/lib/core/byte-data.js
+  // node_modules/qrcode/lib/core/byte-data.js
   var require_byte_data = __commonJS({
-    "../../node_modules/qrcode/lib/core/byte-data.js"(exports, module) {
+    "node_modules/qrcode/lib/core/byte-data.js"(exports, module) {
       init_polyfills();
       var Mode = require_mode();
       function ByteData(data) {
@@ -106647,9 +106647,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/qrcode/lib/core/kanji-data.js
+  // node_modules/qrcode/lib/core/kanji-data.js
   var require_kanji_data = __commonJS({
-    "../../node_modules/qrcode/lib/core/kanji-data.js"(exports, module) {
+    "node_modules/qrcode/lib/core/kanji-data.js"(exports, module) {
       init_polyfills();
       var Mode = require_mode();
       var Utils = require_utils5();
@@ -106687,9 +106687,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/dijkstrajs/dijkstra.js
+  // node_modules/dijkstrajs/dijkstra.js
   var require_dijkstra = __commonJS({
-    "../../node_modules/dijkstrajs/dijkstra.js"(exports, module) {
+    "node_modules/dijkstrajs/dijkstra.js"(exports, module) {
       "use strict";
       init_polyfills();
       var dijkstra = {
@@ -106789,9 +106789,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/qrcode/lib/core/segments.js
+  // node_modules/qrcode/lib/core/segments.js
   var require_segments = __commonJS({
-    "../../node_modules/qrcode/lib/core/segments.js"(exports) {
+    "node_modules/qrcode/lib/core/segments.js"(exports) {
       init_polyfills();
       var Mode = require_mode();
       var NumericData = require_numeric_data();
@@ -106976,9 +106976,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/qrcode/lib/core/qrcode.js
+  // node_modules/qrcode/lib/core/qrcode.js
   var require_qrcode = __commonJS({
-    "../../node_modules/qrcode/lib/core/qrcode.js"(exports) {
+    "node_modules/qrcode/lib/core/qrcode.js"(exports) {
       init_polyfills();
       var Utils = require_utils5();
       var ECLevel = require_error_correction_level();
@@ -107238,9 +107238,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/qrcode/lib/renderer/utils.js
+  // node_modules/qrcode/lib/renderer/utils.js
   var require_utils6 = __commonJS({
-    "../../node_modules/qrcode/lib/renderer/utils.js"(exports) {
+    "node_modules/qrcode/lib/renderer/utils.js"(exports) {
       init_polyfills();
       function hex2rgba(hex) {
         if (typeof hex === "number") {
@@ -107319,9 +107319,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/qrcode/lib/renderer/canvas.js
+  // node_modules/qrcode/lib/renderer/canvas.js
   var require_canvas = __commonJS({
-    "../../node_modules/qrcode/lib/renderer/canvas.js"(exports) {
+    "node_modules/qrcode/lib/renderer/canvas.js"(exports) {
       init_polyfills();
       var Utils = require_utils6();
       function clearCanvas(ctx, canvas, size) {
@@ -107373,9 +107373,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/qrcode/lib/renderer/svg-tag.js
+  // node_modules/qrcode/lib/renderer/svg-tag.js
   var require_svg_tag = __commonJS({
-    "../../node_modules/qrcode/lib/renderer/svg-tag.js"(exports) {
+    "node_modules/qrcode/lib/renderer/svg-tag.js"(exports) {
       init_polyfills();
       var Utils = require_utils6();
       function getColorAttrib(color, attrib) {
@@ -107432,9 +107432,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/qrcode/lib/browser.js
+  // node_modules/qrcode/lib/browser.js
   var require_browser14 = __commonJS({
-    "../../node_modules/qrcode/lib/browser.js"(exports) {
+    "node_modules/qrcode/lib/browser.js"(exports) {
       init_polyfills();
       var canPromise = require_can_promise();
       var QRCode2 = require_qrcode();
@@ -107503,7 +107503,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/html5-qrcode/esm/core.js
+  // node_modules/html5-qrcode/esm/core.js
   function isValidHtml5QrcodeSupportedFormats(format2) {
     return Object.values(Html5QrcodeSupportedFormats).includes(format2);
   }
@@ -107521,7 +107521,7 @@ ${toHex(hashedRequest)}`;
   }
   var Html5QrcodeSupportedFormats, html5QrcodeSupportedFormatsTextMap, DecodedTextType, Html5QrcodeScanType, Html5QrcodeConstants, QrcodeResultFormat, Html5QrcodeResultFactory, Html5QrcodeErrorTypes, Html5QrcodeErrorFactory, BaseLoggger;
   var init_core = __esm({
-    "../../node_modules/html5-qrcode/esm/core.js"() {
+    "node_modules/html5-qrcode/esm/core.js"() {
       init_polyfills();
       (function(Html5QrcodeSupportedFormats2) {
         Html5QrcodeSupportedFormats2[Html5QrcodeSupportedFormats2["QR_CODE"] = 0] = "QR_CODE";
@@ -107666,10 +107666,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/html5-qrcode/esm/strings.js
+  // node_modules/html5-qrcode/esm/strings.js
   var Html5QrcodeStrings, Html5QrcodeScannerStrings, LibraryInfoStrings;
   var init_strings = __esm({
-    "../../node_modules/html5-qrcode/esm/strings.js"() {
+    "node_modules/html5-qrcode/esm/strings.js"() {
       init_polyfills();
       Html5QrcodeStrings = (function() {
         function Html5QrcodeStrings2() {
@@ -107806,10 +107806,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/html5-qrcode/esm/utils.js
+  // node_modules/html5-qrcode/esm/utils.js
   var VideoConstraintsUtil;
   var init_utils5 = __esm({
-    "../../node_modules/html5-qrcode/esm/utils.js"() {
+    "node_modules/html5-qrcode/esm/utils.js"() {
       init_polyfills();
       VideoConstraintsUtil = (function() {
         function VideoConstraintsUtil2() {
@@ -107846,9 +107846,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/html5-qrcode/third_party/zxing-js.umd.js
+  // node_modules/html5-qrcode/third_party/zxing-js.umd.js
   var require_zxing_js_umd = __commonJS({
-    "../../node_modules/html5-qrcode/third_party/zxing-js.umd.js"(exports, module) {
+    "node_modules/html5-qrcode/third_party/zxing-js.umd.js"(exports, module) {
       init_polyfills();
       (function(global2, factory) {
         typeof exports === "object" && typeof module !== "undefined" ? factory(exports) : typeof define === "function" && define.amd ? define(["exports"], factory) : (global2 = typeof globalThis !== "undefined" ? globalThis : global2 || self, factory(global2.ZXing = {}));
@@ -133290,10 +133290,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/html5-qrcode/esm/zxing-html5-qrcode-decoder.js
+  // node_modules/html5-qrcode/esm/zxing-html5-qrcode-decoder.js
   var ZXing, ZXingHtml5QrcodeDecoder;
   var init_zxing_html5_qrcode_decoder = __esm({
-    "../../node_modules/html5-qrcode/esm/zxing-html5-qrcode-decoder.js"() {
+    "node_modules/html5-qrcode/esm/zxing-html5-qrcode-decoder.js"() {
       init_polyfills();
       ZXing = __toESM(require_zxing_js_umd());
       init_core();
@@ -133399,10 +133399,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/html5-qrcode/esm/native-bar-code-detector.js
+  // node_modules/html5-qrcode/esm/native-bar-code-detector.js
   var __awaiter2, __generator2, BarcodeDetectorDelegate;
   var init_native_bar_code_detector = __esm({
-    "../../node_modules/html5-qrcode/esm/native-bar-code-detector.js"() {
+    "node_modules/html5-qrcode/esm/native-bar-code-detector.js"() {
       init_polyfills();
       init_core();
       __awaiter2 = function(thisArg, _arguments, P2, generator) {
@@ -133608,10 +133608,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/html5-qrcode/esm/code-decoder.js
+  // node_modules/html5-qrcode/esm/code-decoder.js
   var __awaiter3, __generator3, Html5QrcodeShim;
   var init_code_decoder = __esm({
-    "../../node_modules/html5-qrcode/esm/code-decoder.js"() {
+    "node_modules/html5-qrcode/esm/code-decoder.js"() {
       init_polyfills();
       init_zxing_html5_qrcode_decoder();
       init_native_bar_code_detector();
@@ -133814,10 +133814,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/html5-qrcode/esm/camera/core-impl.js
+  // node_modules/html5-qrcode/esm/camera/core-impl.js
   var __extends, __awaiter4, __generator4, AbstractCameraCapability, AbstractRangeCameraCapability, ZoomFeatureImpl, TorchFeatureImpl, CameraCapabilitiesImpl, RenderedCameraImpl, CameraImpl;
   var init_core_impl = __esm({
-    "../../node_modules/html5-qrcode/esm/camera/core-impl.js"() {
+    "node_modules/html5-qrcode/esm/camera/core-impl.js"() {
       init_polyfills();
       __extends = /* @__PURE__ */ (function() {
         var extendStatics = function(d2, b2) {
@@ -134195,10 +134195,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/html5-qrcode/esm/camera/factories.js
+  // node_modules/html5-qrcode/esm/camera/factories.js
   var __awaiter5, __generator5, CameraFactory;
   var init_factories = __esm({
-    "../../node_modules/html5-qrcode/esm/camera/factories.js"() {
+    "node_modules/html5-qrcode/esm/camera/factories.js"() {
       init_polyfills();
       init_core_impl();
       __awaiter5 = function(thisArg, _arguments, P2, generator) {
@@ -134322,10 +134322,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/html5-qrcode/esm/camera/retriever.js
+  // node_modules/html5-qrcode/esm/camera/retriever.js
   var __awaiter6, __generator6, CameraRetriever;
   var init_retriever = __esm({
-    "../../node_modules/html5-qrcode/esm/camera/retriever.js"() {
+    "node_modules/html5-qrcode/esm/camera/retriever.js"() {
       init_polyfills();
       init_strings();
       __awaiter6 = function(thisArg, _arguments, P2, generator) {
@@ -134512,10 +134512,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/html5-qrcode/esm/state-manager.js
+  // node_modules/html5-qrcode/esm/state-manager.js
   var Html5QrcodeScannerState, StateManagerImpl, StateManagerProxy, StateManagerFactory;
   var init_state_manager = __esm({
-    "../../node_modules/html5-qrcode/esm/state-manager.js"() {
+    "node_modules/html5-qrcode/esm/state-manager.js"() {
       init_polyfills();
       (function(Html5QrcodeScannerState2) {
         Html5QrcodeScannerState2[Html5QrcodeScannerState2["UNKNOWN"] = 0] = "UNKNOWN";
@@ -134622,10 +134622,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/html5-qrcode/esm/html5-qrcode.js
+  // node_modules/html5-qrcode/esm/html5-qrcode.js
   var __extends2, Constants, InternalHtml5QrcodeConfig, Html5Qrcode;
   var init_html5_qrcode = __esm({
-    "../../node_modules/html5-qrcode/esm/html5-qrcode.js"() {
+    "node_modules/html5-qrcode/esm/html5-qrcode.js"() {
       init_polyfills();
       init_core();
       init_strings();
@@ -135404,10 +135404,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/html5-qrcode/esm/image-assets.js
+  // node_modules/html5-qrcode/esm/image-assets.js
   var SVG_XML_PREFIX, ASSET_CAMERA_SCAN, ASSET_FILE_SCAN, ASSET_INFO_ICON_16PX, ASSET_CLOSE_ICON_16PX;
   var init_image_assets = __esm({
-    "../../node_modules/html5-qrcode/esm/image-assets.js"() {
+    "node_modules/html5-qrcode/esm/image-assets.js"() {
       init_polyfills();
       SVG_XML_PREFIX = "data:image/svg+xml;base64,";
       ASSET_CAMERA_SCAN = SVG_XML_PREFIX + "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNzEuNjQzIDM3MS42NDMiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDM3MS42NDMgMzcxLjY0MyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PHBhdGggZD0iTTEwNS4wODQgMzguMjcxaDE2My43Njh2MjBIMTA1LjA4NHoiLz48cGF0aCBkPSJNMzExLjU5NiAxOTAuMTg5Yy03LjQ0MS05LjM0Ny0xOC40MDMtMTYuMjA2LTMyLjc0My0yMC41MjJWMzBjMC0xNi41NDItMTMuNDU4LTMwLTMwLTMwSDEyNS4wODRjLTE2LjU0MiAwLTMwIDEzLjQ1OC0zMCAzMHYxMjAuMTQzaC04LjI5NmMtMTYuNTQyIDAtMzAgMTMuNDU4LTMwIDMwdjEuMzMzYTI5LjgwNCAyOS44MDQgMCAwIDAgNC42MDMgMTUuOTM5Yy03LjM0IDUuNDc0LTEyLjEwMyAxNC4yMjEtMTIuMTAzIDI0LjA2MXYxLjMzM2MwIDkuODQgNC43NjMgMTguNTg3IDEyLjEwMyAyNC4wNjJhMjkuODEgMjkuODEgMCAwIDAtNC42MDMgMTUuOTM4djEuMzMzYzAgMTYuNTQyIDEzLjQ1OCAzMCAzMCAzMGg4LjMyNGMuNDI3IDExLjYzMSA3LjUwMyAyMS41ODcgMTcuNTM0IDI2LjE3Ny45MzEgMTAuNTAzIDQuMDg0IDMwLjE4NyAxNC43NjggNDUuNTM3YTkuOTg4IDkuOTg4IDAgMCAwIDguMjE2IDQuMjg4IDkuOTU4IDkuOTU4IDAgMCAwIDUuNzA0LTEuNzkzYzQuNTMzLTMuMTU1IDUuNjUtOS4zODggMi40OTUtMTMuOTIxLTYuNzk4LTkuNzY3LTkuNjAyLTIyLjYwOC0xMC43Ni0zMS40aDgyLjY4NWMuMjcyLjQxNC41NDUuODE4LjgxNSAxLjIxIDMuMTQyIDQuNTQxIDkuMzcyIDUuNjc5IDEzLjkxMyAyLjUzNCA0LjU0Mi0zLjE0MiA1LjY3Ny05LjM3MSAyLjUzNS0xMy45MTMtMTEuOTE5LTE3LjIyOS04Ljc4Ny0zNS44ODQgOS41ODEtNTcuMDEyIDMuMDY3LTIuNjUyIDEyLjMwNy0xMS43MzIgMTEuMjE3LTI0LjAzMy0uODI4LTkuMzQzLTcuMTA5LTE3LjE5NC0xOC42NjktMjMuMzM3YTkuODU3IDkuODU3IDAgMCAwLTEuMDYxLS40ODZjLS40NjYtLjE4Mi0xMS40MDMtNC41NzktOS43NDEtMTUuNzA2IDEuMDA3LTYuNzM3IDE0Ljc2OC04LjI3MyAyMy43NjYtNy42NjYgMjMuMTU2IDEuNTY5IDM5LjY5OCA3LjgwMyA0Ny44MzYgMTguMDI2IDUuNzUyIDcuMjI1IDcuNjA3IDE2LjYyMyA1LjY3MyAyOC43MzMtLjQxMyAyLjU4NS0uODI0IDUuMjQxLTEuMjQ1IDcuOTU5LTUuNzU2IDM3LjE5NC0xMi45MTkgODMuNDgzLTQ5Ljg3IDExNC42NjEtNC4yMjEgMy41NjEtNC43NTYgOS44Ny0xLjE5NCAxNC4wOTJhOS45OCA5Ljk4IDAgMCAwIDcuNjQ4IDMuNTUxIDkuOTU1IDkuOTU1IDAgMCAwIDYuNDQ0LTIuMzU4YzQyLjY3Mi0zNi4wMDUgNTAuODAyLTg4LjUzMyA1Ni43MzctMTI2Ljg4OC40MTUtMi42ODQuODIxLTUuMzA5IDEuMjI5LTcuODYzIDIuODM0LTE3LjcyMS0uNDU1LTMyLjY0MS05Ljc3Mi00NC4zNDV6bS0yMzIuMzA4IDQyLjYyYy01LjUxNCAwLTEwLTQuNDg2LTEwLTEwdi0xLjMzM2MwLTUuNTE0IDQuNDg2LTEwIDEwLTEwaDE1djIxLjMzM2gtMTV6bS0yLjUtNTIuNjY2YzAtNS41MTQgNC40ODYtMTAgMTAtMTBoNy41djIxLjMzM2gtNy41Yy01LjUxNCAwLTEwLTQuNDg2LTEwLTEwdi0xLjMzM3ptMTcuNSA5My45OTloLTcuNWMtNS41MTQgMC0xMC00LjQ4Ni0xMC0xMHYtMS4zMzNjMC01LjUxNCA0LjQ4Ni0xMCAxMC0xMGg3LjV2MjEuMzMzem0zMC43OTYgMjguODg3Yy01LjUxNCAwLTEwLTQuNDg2LTEwLTEwdi04LjI3MWg5MS40NTdjLS44NTEgNi42NjgtLjQzNyAxMi43ODcuNzMxIDE4LjI3MWgtODIuMTg4em03OS40ODItMTEzLjY5OGMtMy4xMjQgMjAuOTA2IDEyLjQyNyAzMy4xODQgMjEuNjI1IDM3LjA0IDUuNDQxIDIuOTY4IDcuNTUxIDUuNjQ3IDcuNzAxIDcuMTg4LjIxIDIuMTUtMi41NTMgNS42ODQtNC40NzcgNy4yNTEtLjQ4Mi4zNzgtLjkyOS44LTEuMzM1IDEuMjYxLTYuOTg3IDcuOTM2LTExLjk4MiAxNS41Mi0xNS40MzIgMjIuNjg4aC05Ny41NjRWMzBjMC01LjUxNCA0LjQ4Ni0xMCAxMC0xMGgxMjMuNzY5YzUuNTE0IDAgMTAgNC40ODYgMTAgMTB2MTM1LjU3OWMtMy4wMzItLjM4MS02LjE1LS42OTQtOS4zODktLjkxNC0yNS4xNTktMS42OTQtNDIuMzcgNy43NDgtNDQuODk4IDI0LjY2NnoiLz48cGF0aCBkPSJNMTc5LjEyOSA4My4xNjdoLTI0LjA2YTUgNSAwIDAgMC01IDV2MjQuMDYxYTUgNSAwIDAgMCA1IDVoMjQuMDZhNSA1IDAgMCAwIDUtNVY4OC4xNjdhNSA1IDAgMCAwLTUtNXpNMTcyLjYyOSAxNDIuODZoLTEyLjU2VjEzMC44YTUgNSAwIDEgMC0xMCAwdjE3LjA2MWE1IDUgMCAwIDAgNSA1aDE3LjU2YTUgNSAwIDEgMCAwLTEwLjAwMXpNMjE2LjU2OCA4My4xNjdoLTI0LjA2YTUgNSAwIDAgMC01IDV2MjQuMDYxYTUgNSAwIDAgMCA1IDVoMjQuMDZhNSA1IDAgMCAwIDUtNVY4OC4xNjdhNSA1IDAgMCAwLTUtNXptLTUgMjQuMDYxaC0xNC4wNlY5My4xNjdoMTQuMDZ2MTQuMDYxek0yMTEuNjY5IDEyNS45MzZIMTk3LjQxYTUgNSAwIDAgMC01IDV2MTQuMjU3YTUgNSAwIDAgMCA1IDVoMTQuMjU5YTUgNSAwIDAgMCA1LTV2LTE0LjI1N2E1IDUgMCAwIDAtNS01eiIvPjwvc3ZnPg==";
@@ -135417,10 +135417,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/html5-qrcode/esm/storage.js
+  // node_modules/html5-qrcode/esm/storage.js
   var PersistedDataFactory, PersistedDataManager;
   var init_storage = __esm({
-    "../../node_modules/html5-qrcode/esm/storage.js"() {
+    "node_modules/html5-qrcode/esm/storage.js"() {
       init_polyfills();
       PersistedDataFactory = (function() {
         function PersistedDataFactory2() {
@@ -135474,10 +135474,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/html5-qrcode/esm/ui.js
+  // node_modules/html5-qrcode/esm/ui.js
   var LibraryInfoDiv, LibraryInfoIcon, LibraryInfoContainer;
   var init_ui = __esm({
-    "../../node_modules/html5-qrcode/esm/ui.js"() {
+    "node_modules/html5-qrcode/esm/ui.js"() {
       init_polyfills();
       init_image_assets();
       init_strings();
@@ -135600,10 +135600,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/html5-qrcode/esm/camera/permissions.js
+  // node_modules/html5-qrcode/esm/camera/permissions.js
   var __awaiter7, __generator7, CameraPermissions;
   var init_permissions = __esm({
-    "../../node_modules/html5-qrcode/esm/camera/permissions.js"() {
+    "node_modules/html5-qrcode/esm/camera/permissions.js"() {
       init_polyfills();
       __awaiter7 = function(thisArg, _arguments, P2, generator) {
         function adopt(value) {
@@ -135729,10 +135729,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/html5-qrcode/esm/ui/scanner/scan-type-selector.js
+  // node_modules/html5-qrcode/esm/ui/scanner/scan-type-selector.js
   var ScanTypeSelector;
   var init_scan_type_selector = __esm({
-    "../../node_modules/html5-qrcode/esm/ui/scanner/scan-type-selector.js"() {
+    "node_modules/html5-qrcode/esm/ui/scanner/scan-type-selector.js"() {
       init_polyfills();
       init_core();
       ScanTypeSelector = (function() {
@@ -135781,10 +135781,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/html5-qrcode/esm/ui/scanner/base.js
+  // node_modules/html5-qrcode/esm/ui/scanner/base.js
   var PublicUiElementIdAndClasses, BaseUiElementFactory;
   var init_base = __esm({
-    "../../node_modules/html5-qrcode/esm/ui/scanner/base.js"() {
+    "node_modules/html5-qrcode/esm/ui/scanner/base.js"() {
       init_polyfills();
       PublicUiElementIdAndClasses = (function() {
         function PublicUiElementIdAndClasses2() {
@@ -135819,10 +135819,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/html5-qrcode/esm/ui/scanner/torch-button.js
+  // node_modules/html5-qrcode/esm/ui/scanner/torch-button.js
   var __awaiter8, __generator8, TorchController, TorchButton;
   var init_torch_button = __esm({
-    "../../node_modules/html5-qrcode/esm/ui/scanner/torch-button.js"() {
+    "node_modules/html5-qrcode/esm/ui/scanner/torch-button.js"() {
       init_polyfills();
       init_strings();
       init_base();
@@ -136049,10 +136049,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/html5-qrcode/esm/ui/scanner/file-selection-ui.js
+  // node_modules/html5-qrcode/esm/ui/scanner/file-selection-ui.js
   var FileSelectionUi;
   var init_file_selection_ui = __esm({
-    "../../node_modules/html5-qrcode/esm/ui/scanner/file-selection-ui.js"() {
+    "node_modules/html5-qrcode/esm/ui/scanner/file-selection-ui.js"() {
       init_polyfills();
       init_strings();
       init_base();
@@ -136206,10 +136206,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/html5-qrcode/esm/ui/scanner/camera-selection-ui.js
+  // node_modules/html5-qrcode/esm/ui/scanner/camera-selection-ui.js
   var CameraSelectionUi;
   var init_camera_selection_ui = __esm({
-    "../../node_modules/html5-qrcode/esm/ui/scanner/camera-selection-ui.js"() {
+    "node_modules/html5-qrcode/esm/ui/scanner/camera-selection-ui.js"() {
       init_polyfills();
       init_base();
       init_strings();
@@ -136295,10 +136295,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/html5-qrcode/esm/ui/scanner/camera-zoom-ui.js
+  // node_modules/html5-qrcode/esm/ui/scanner/camera-zoom-ui.js
   var CameraZoomUi;
   var init_camera_zoom_ui = __esm({
-    "../../node_modules/html5-qrcode/esm/ui/scanner/camera-zoom-ui.js"() {
+    "node_modules/html5-qrcode/esm/ui/scanner/camera-zoom-ui.js"() {
       init_polyfills();
       init_base();
       init_strings();
@@ -136374,7 +136374,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/html5-qrcode/esm/html5-qrcode-scanner.js
+  // node_modules/html5-qrcode/esm/html5-qrcode-scanner.js
   function toHtml5QrcodeCameraScanConfig(config) {
     return {
       fps: config.fps,
@@ -136394,7 +136394,7 @@ ${toHex(hashedRequest)}`;
   }
   var Html5QrcodeScannerStatus, Html5QrcodeScanner;
   var init_html5_qrcode_scanner = __esm({
-    "../../node_modules/html5-qrcode/esm/html5-qrcode-scanner.js"() {
+    "node_modules/html5-qrcode/esm/html5-qrcode-scanner.js"() {
       init_polyfills();
       init_core();
       init_html5_qrcode();
@@ -137005,9 +137005,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/html5-qrcode/esm/index.js
+  // node_modules/html5-qrcode/esm/index.js
   var init_esm = __esm({
-    "../../node_modules/html5-qrcode/esm/index.js"() {
+    "node_modules/html5-qrcode/esm/index.js"() {
       init_polyfills();
       init_html5_qrcode();
       init_html5_qrcode_scanner();
@@ -137060,9 +137060,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/react/cjs/react-jsx-runtime.development.js
+  // node_modules/react/cjs/react-jsx-runtime.development.js
   var require_react_jsx_runtime_development = __commonJS({
-    "../../node_modules/react/cjs/react-jsx-runtime.development.js"(exports) {
+    "node_modules/react/cjs/react-jsx-runtime.development.js"(exports) {
       "use strict";
       init_polyfills();
       (function() {
@@ -137318,9 +137318,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // ../../node_modules/react/jsx-runtime.js
+  // node_modules/react/jsx-runtime.js
   var require_jsx_runtime = __commonJS({
-    "../../node_modules/react/jsx-runtime.js"(exports, module) {
+    "node_modules/react/jsx-runtime.js"(exports, module) {
       "use strict";
       init_polyfills();
       if (false) {
