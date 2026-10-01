@@ -73260,6 +73260,9 @@ ${toHex(hashedRequest)}`;
                 const result2 = await publicRemote.downloadFile(PATHS.MANIFEST);
                 if (result2 && result2.data) {
                   remoteManifest = JSON.parse(new TextDecoder().decode(result2.data));
+                  if (remoteManifest && remoteManifest.subManifests && Object.keys(remoteManifest.subManifests).length > 0 && this.ctx.resolveFullManifest) {
+                    remoteManifest = await this.ctx.resolveFullManifest(this.ctx.config.paths.userId, remoteManifest);
+                  }
                   Logger.info("Sync", "Remote manifest downloaded for diffing.");
                 }
               }
@@ -73519,14 +73522,30 @@ ${toHex(hashedRequest)}`;
               return;
             }
             Logger.info("Sync", `Using manifest for ${user.userId}`);
+            const unchangedPartitions = /* @__PURE__ */ new Set();
+            if (manifest.subManifests) {
+              for (const [key, ref] of Object.entries(manifest.subManifests)) {
+                const cacheKey = `submanifest:${user.userId}:${ref.path}`;
+                const cachedHash = await this.ctx.storage.getGenericRemoteHashCache(cacheKey);
+                if (cachedHash === ref.hash) {
+                  unchangedPartitions.add(key);
+                }
+              }
+            }
+            const isPartitionUnchanged = (dateStr) => {
+              const year2 = dateStr.length >= 4 && /^\d{4}$/.test(dateStr.substring(0, 4)) ? dateStr.substring(0, 4) : "misc";
+              return unchangedPartitions.has(year2);
+            };
             if (manifest.modules["core"]) {
               for (const dateStr of manifest.modules["core"]) {
+                if (isPartitionUnchanged(dateStr)) continue;
                 await this.pullUserDay(user.userId, dateStr, user.publicKey);
               }
             }
             for (const [moduleName, dates] of Object.entries(manifest.modules)) {
               if (moduleName === "core") continue;
               for (const dateStr of dates) {
+                if (isPartitionUnchanged(dateStr)) continue;
                 const remotePath = this.ctx.getModulePath(moduleName, `${dateStr}.db`, "public");
                 const localPath = this.ctx.getModulePath(moduleName, `${user.userId}/${dateStr}.db`, "followed");
                 const changed = await this.pullUserFile(user.userId, remotePath, user.publicKey, localPath, false);
@@ -73536,6 +73555,7 @@ ${toHex(hashedRequest)}`;
             const myId = this.ctx.config.paths.userId;
             if (manifest.dms && manifest.dms[myId]) {
               for (const dateStr of manifest.dms[myId]) {
+                if (isPartitionUnchanged(dateStr)) continue;
                 for (const moduleDef of this.ctx.registeredModules) {
                   const moduleName = moduleDef.name;
                   const dmPath = this.ctx.getModulePath(moduleName, `dms/${myId}/${dateStr}.db`, "public");
@@ -73547,11 +73567,20 @@ ${toHex(hashedRequest)}`;
             }
             if (manifest.receipts && manifest.receipts[myId]) {
               for (const dateStr of manifest.receipts[myId]) {
+                if (isPartitionUnchanged(dateStr)) continue;
                 for (const moduleDef of this.ctx.registeredModules) {
                   const moduleName = moduleDef.name;
                   const receiptPath = this.ctx.getModulePath(moduleName, `receipts/${myId}/${dateStr}.db`, "public");
                   const localPath = this.ctx.getModulePath(moduleName, `${user.userId}/receipts/${myId}/${dateStr}.db`, "followed");
                   await this.pullUserFile(user.userId, receiptPath, user.publicKey, localPath, false);
+                }
+              }
+            }
+            if (manifest.subManifests) {
+              for (const [key, ref] of Object.entries(manifest.subManifests)) {
+                if (!unchangedPartitions.has(key)) {
+                  const cacheKey = `submanifest:${user.userId}:${ref.path}`;
+                  await this.ctx.storage.setGenericRemoteHashCache(cacheKey, ref.hash);
                 }
               }
             }
@@ -74031,8 +74060,10 @@ ${toHex(hashedRequest)}`;
           return rootManifest;
         }
         async resolveSubManifest(userId, partitionKey, ref) {
-          const localPath = `followed/${userId}/${ref.path}`;
-          const cachedHash = await this.ctx.storage.getGenericRemoteHashCache(`submanifest:${userId}:${ref.path}`);
+          const isOwn = userId === this.ctx.userId;
+          const localPath = isOwn ? ref.path : `followed/${userId}/${ref.path}`;
+          const cacheKey = `submanifest:${userId}:${ref.path}`;
+          const cachedHash = await this.ctx.storage.getGenericRemoteHashCache(cacheKey);
           if (cachedHash === ref.hash) {
             const data = await this.ctx.storage.getFile(localPath);
             if (data) {
@@ -74044,12 +74075,13 @@ ${toHex(hashedRequest)}`;
             }
           }
           try {
-            const userRemote = this.ctx.createRemote(userId);
+            const userRemote = isOwn ? this.ctx.getPublicRemote() : this.ctx.createRemote(userId);
+            if (!userRemote) return null;
             const result = await userRemote.downloadFile(ref.path);
             if (result && result.data) {
               const subManifest = JSON.parse(new TextDecoder().decode(result.data));
               await this.ctx.storage.saveFile(localPath, result.data);
-              await this.ctx.storage.setGenericRemoteHashCache(`submanifest:${userId}:${ref.path}`, ref.hash);
+              await this.ctx.storage.setGenericRemoteHashCache(cacheKey, ref.hash);
               return subManifest;
             }
           } catch (e2) {
@@ -74072,8 +74104,39 @@ ${toHex(hashedRequest)}`;
           for (const [key, ref] of Object.entries(rootManifest.subManifests)) {
             if (!ref || !ref.path) continue;
             const sub = await this.resolveSubManifest(userId, key, ref);
-            if (sub && sub.files) {
-              Object.assign(merged.files, sub.files);
+            if (sub) {
+              if (sub.files) {
+                Object.assign(merged.files, sub.files);
+              }
+              if (sub.modules) {
+                for (const [mod, dates] of Object.entries(sub.modules)) {
+                  if (!merged.modules[mod]) merged.modules[mod] = [];
+                  for (const d2 of dates) {
+                    if (!merged.modules[mod].includes(d2)) merged.modules[mod].push(d2);
+                  }
+                }
+              }
+              if (sub.dms) {
+                for (const [recipient, dates] of Object.entries(sub.dms)) {
+                  if (!merged.dms[recipient]) merged.dms[recipient] = [];
+                  for (const d2 of dates) {
+                    if (!merged.dms[recipient].includes(d2)) merged.dms[recipient].push(d2);
+                  }
+                }
+              }
+              if (sub.groups) {
+                for (const [grp, dates] of Object.entries(sub.groups)) {
+                  if (!merged.groups[grp]) merged.groups[grp] = [];
+                  for (const d2 of dates) {
+                    if (!merged.groups[grp].includes(d2)) merged.groups[grp].push(d2);
+                  }
+                }
+              }
+              if (sub.blobs) {
+                for (const b2 of sub.blobs) {
+                  if (!merged.blobs.includes(b2)) merged.blobs.push(b2);
+                }
+              }
             }
           }
           return merged;
@@ -76766,6 +76829,8 @@ ${toHex(hashedRequest)}`;
             generateManifest: () => this.manifestManager.generateManifest(),
             fetchManifest: (uid) => this.manifestManager.fetchManifest(uid),
             fetchManifestWithMeta: (uid, options) => this.manifestManager.fetchManifestWithMeta(uid, options),
+            resolveFullManifest: (uid, root2) => this.manifestManager.resolveFullManifest(uid, root2),
+            resolveSubManifest: (uid, pKey, ref) => this.manifestManager.resolveSubManifest(uid, pKey, ref),
             syncGroups: (today) => this.groupManager.syncGroups(today),
             encrypt: (d2, k2) => this.encrypt(d2, k2),
             decrypt: (d2, k2) => this.decrypt(d2, k2),

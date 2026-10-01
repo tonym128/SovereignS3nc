@@ -7,6 +7,7 @@ import { WebRTCRemoteAdapter } from '../../../src/adapters/WebRTCRemoteAdapter';
 import { IRemoteAdapter } from '../../../src/interfaces/IRemoteAdapter';
 import { Buffer } from 'buffer';
 import { SyncStatusIndicator, QuickStartCard, toast, ToastContainer } from '@sovereigns3nc/demo-shared';
+import { CRDTRow } from '../../../src/core/crdt';
 
 const App = () => {
     // --- State ---
@@ -185,12 +186,14 @@ const App = () => {
         if (!title || !boardModule) return;
         
         try {
-            await boardModule.postToGroup(selectedGroup.id, selectedGroup.sharedKey, JSON.stringify({
+            const taskRow = new CRDTRow({
                 title,
                 column,
                 priority: 'medium',
                 createdAt: Date.now()
-            }));
+            }, config.userId);
+
+            await boardModule.postToGroup(selectedGroup.id, selectedGroup.sharedKey, taskRow.toJSONString());
             
             await loadTasks();
             sov?.sync();
@@ -204,10 +207,10 @@ const App = () => {
     const moveTask = async (task: Post, newColumn: string) => {
         if (!boardModule || !selectedGroup) return;
         const today = new Date().toISOString().split('T')[0];
-        const data = JSON.parse(task.content);
-        data.column = newColumn;
+        const taskRow = CRDTRow.fromJSON<any>(task.content, config.userId);
+        taskRow.set('column', newColumn, Date.now(), config.userId);
         
-        await boardModule.editGroupPost(selectedGroup.id, selectedGroup.sharedKey, task.id, today, JSON.stringify(data));
+        await boardModule.editGroupPost(selectedGroup.id, selectedGroup.sharedKey, task.id, today, taskRow.toJSONString());
         await loadTasks();
         sov?.sync();
     };
