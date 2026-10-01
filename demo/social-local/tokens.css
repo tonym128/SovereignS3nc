@@ -136,3 +136,66 @@
     --sov-danger: #f85149;
   }
 }
+
+/* Surface & Component Dark Mode Overrides */
+[data-theme="dark"],
+[data-bs-theme="dark"],
+.dark-theme {
+  color-scheme: dark;
+}
+
+[data-theme="dark"] body,
+[data-bs-theme="dark"] body,
+.dark-theme body,
+body.dark-theme {
+  background-color: var(--sov-bg) !important;
+  color: var(--sov-text) !important;
+}
+
+[data-theme="dark"] .card,
+[data-bs-theme="dark"] .card,
+.dark-theme .card {
+  background-color: var(--sov-surface) !important;
+  border-color: var(--sov-border) !important;
+  color: var(--sov-text) !important;
+}
+
+[data-theme="dark"] .modal-content,
+[data-bs-theme="dark"] .modal-content,
+.dark-theme .modal-content {
+  background-color: var(--sov-surface-elevated) !important;
+  border-color: var(--sov-border) !important;
+  color: var(--sov-text) !important;
+}
+
+[data-theme="dark"] .form-control,
+[data-theme="dark"] .form-select,
+[data-bs-theme="dark"] .form-control,
+[data-bs-theme="dark"] .form-select,
+.dark-theme .form-control,
+.dark-theme .form-select {
+  background-color: var(--sov-surface-elevated) !important;
+  border-color: var(--sov-border) !important;
+  color: var(--sov-text) !important;
+}
+
+[data-theme="dark"] .kanban-column,
+.dark-theme .kanban-column {
+  background-color: var(--sov-surface) !important;
+  border-color: var(--sov-border) !important;
+}
+
+[data-theme="dark"] .kanban-task,
+.dark-theme .kanban-task {
+  background-color: var(--sov-surface-elevated) !important;
+  border-color: var(--sov-border) !important;
+  color: var(--sov-text) !important;
+}
+
+[data-theme="dark"] .list-group-item,
+[data-bs-theme="dark"] .list-group-item,
+.dark-theme .list-group-item {
+  background-color: var(--sov-surface) !important;
+  border-color: var(--sov-border) !important;
+  color: var(--sov-text) !important;
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { UserAvatar } from './MediaAndUser';
 import { ProfileModule } from '../../../../src/modules/Profile';
+import { DarkModeToggle } from '@sovereigns3nc/demo-shared';
 
 export interface NavigationProps {
     config: any;
@@ -134,6 +135,7 @@ export const Navigation: React.FC<NavigationProps> = ({
                     <button className="btn btn-sm btn-outline-secondary ms-2 mobile-hide" onClick={() => sync(true)} disabled={syncing || config.syncMode === 'offline'} aria-label="Sync Now">
                         {syncing ? '...' : config.syncMode === 'offline' ? 'Offline' : 'Sync'}
                     </button>
+                    <DarkModeToggle className="ms-2 mobile-hide" />
                     <button className="btn btn-sm btn-outline-danger ms-2 mobile-hide" onClick={logout} aria-label="Logout">Logout</button>
                 </div>
             </nav>

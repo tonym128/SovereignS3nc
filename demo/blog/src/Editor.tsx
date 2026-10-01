@@ -6,7 +6,7 @@ import { ProfileModule } from '../../../src/modules/Profile';
 import { MediaUtils } from '../../../src/utils/MediaUtils';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
-import { SyncStatusIndicator, toast, ToastContainer } from '@sovereigns3nc/demo-shared';
+import { SyncStatusIndicator, toast, ToastContainer, DarkModeToggle } from '@sovereigns3nc/demo-shared';
 
 const Editor = () => {
     const [config, setConfig] = useState({
@@ -445,6 +445,7 @@ const Editor = () => {
                     <button className={`btn btn-sm ${view === 'media' ? 'btn-dark' : 'btn-outline-dark'}`} onClick={() => setView('media')}>Media</button>
                     <button className="btn btn-sm btn-outline-success" onClick={exportStaticSite}>Export Site</button>
                     <a href="index.html" target="_blank" className="btn btn-sm btn-outline-secondary">View Live</a>
+                    <DarkModeToggle />
                 </div>
             </nav>
 

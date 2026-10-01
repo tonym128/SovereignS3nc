@@ -6,7 +6,7 @@ import { ProfileModule } from '../../../src/modules/Profile';
 import { WebRTCRemoteAdapter } from '../../../src/adapters/WebRTCRemoteAdapter';
 import { IRemoteAdapter } from '../../../src/interfaces/IRemoteAdapter';
 import { Buffer } from 'buffer';
-import { SyncStatusIndicator, QuickStartCard, toast, ToastContainer } from '@sovereigns3nc/demo-shared';
+import { SyncStatusIndicator, QuickStartCard, toast, ToastContainer, DarkModeToggle } from '@sovereigns3nc/demo-shared';
 import { CRDTRow } from '../../../src/core/crdt';
 
 const App = () => {
@@ -337,6 +337,7 @@ const App = () => {
                         </button>
                     )}
 
+                    <DarkModeToggle />
                     <SyncStatusIndicator
                         syncing={syncing}
                         lastSync={lastSync}

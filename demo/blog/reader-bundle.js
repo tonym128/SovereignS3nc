@@ -3372,7 +3372,7 @@
           return dispatcher;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React = require_react(), Internals = {
+        var React4 = require_react(), Internals = {
           d: {
             f: noop,
             r: function() {
@@ -3390,7 +3390,7 @@
           },
           p: 0,
           findDOMNode: null
-        }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+        }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React4.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
         "function" === typeof Map && null != Map.prototype && "function" === typeof Map.prototype.forEach && "function" === typeof Set && null != Set.prototype && "function" === typeof Set.prototype.clear && "function" === typeof Set.prototype.forEach || console.error(
           "React depends on Map and Set built-in types. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills"
         );
@@ -4927,7 +4927,7 @@
           "number" === type && getActiveElement(node.ownerDocument) === node || node.defaultValue === "" + value || (node.defaultValue = "" + value);
         }
         function validateOptionProps(element, props) {
-          null == props.value && ("object" === typeof props.children && null !== props.children ? React.Children.forEach(props.children, function(child) {
+          null == props.value && ("object" === typeof props.children && null !== props.children ? React4.Children.forEach(props.children, function(child) {
             null == child || "string" === typeof child || "number" === typeof child || "bigint" === typeof child || didWarnInvalidChild || (didWarnInvalidChild = true, console.error(
               "Cannot infer the option value of complex children. Pass a `value` prop or use a plain string as children to <option>."
             ));
@@ -20559,14 +20559,14 @@
           ));
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var Scheduler = require_scheduler(), React = require_react(), ReactDOM = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
+        var Scheduler = require_scheduler(), React4 = require_react(), ReactDOM = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
         /* @__PURE__ */ Symbol.for("react.scope");
         var REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity");
         /* @__PURE__ */ Symbol.for("react.legacy_hidden");
         /* @__PURE__ */ Symbol.for("react.tracing_marker");
         var REACT_MEMO_CACHE_SENTINEL = /* @__PURE__ */ Symbol.for("react.memo_cache_sentinel");
         /* @__PURE__ */ Symbol.for("react.view_transition");
-        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
+        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React4.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
           pending: false,
           data: null,
           method: null,
@@ -23354,7 +23354,7 @@
           }
         };
         (function() {
-          var isomorphicReactPackageVersion = React.version;
+          var isomorphicReactPackageVersion = React4.version;
           if ("19.2.5" !== isomorphicReactPackageVersion)
             throw Error(
               'Incompatible React versions: The "react" and "react-dom" packages must have the exact same version. Instead got:\n  - react:      ' + (isomorphicReactPackageVersion + "\n  - react-dom:  19.2.5\nLearn more: https://react.dev/warnings/version-mismatch")
@@ -102631,18 +102631,18 @@ Please report this to https://github.com/markedjs/marked.`, e2) {
         function isValidElement(object) {
           return "object" === typeof object && null !== object && object.$$typeof === REACT_ELEMENT_TYPE;
         }
-        var React = require_react(), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), ReactSharedInternals = React.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
+        var React4 = require_react(), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), ReactSharedInternals = React4.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
           return null;
         };
-        React = {
+        React4 = {
           react_stack_bottom_frame: function(callStackForError) {
             return callStackForError();
           }
         };
         var specialPropKeyWarningShown;
         var didWarnAboutElementRef = {};
-        var unknownOwnerDebugStack = React.react_stack_bottom_frame.bind(
-          React,
+        var unknownOwnerDebugStack = React4.react_stack_bottom_frame.bind(
+          React4,
           UnknownOwner
         )();
         var unknownOwnerDebugTask = createTask(getTaskName(UnknownOwner));
@@ -102687,22 +102687,213 @@ Please report this to https://github.com/markedjs/marked.`, e2) {
     }
   });
 
+  // demo/shared/src/SyncStatusIndicator.tsx
+  var import_jsx_runtime;
+  var init_SyncStatusIndicator = __esm({
+    "demo/shared/src/SyncStatusIndicator.tsx"() {
+      "use strict";
+      init_polyfills();
+      import_jsx_runtime = __toESM(require_jsx_runtime());
+    }
+  });
+
+  // demo/shared/src/QuickStartCard.tsx
+  var import_jsx_runtime2;
+  var init_QuickStartCard = __esm({
+    "demo/shared/src/QuickStartCard.tsx"() {
+      "use strict";
+      init_polyfills();
+      import_jsx_runtime2 = __toESM(require_jsx_runtime());
+    }
+  });
+
+  // demo/shared/src/ModalDialog.tsx
+  var import_react, import_jsx_runtime3;
+  var init_ModalDialog = __esm({
+    "demo/shared/src/ModalDialog.tsx"() {
+      "use strict";
+      init_polyfills();
+      import_react = __toESM(require_react());
+      import_jsx_runtime3 = __toESM(require_jsx_runtime());
+    }
+  });
+
+  // demo/shared/src/Toast.tsx
+  var import_react2, import_jsx_runtime4, ToastManager, toast, ToastContext;
+  var init_Toast = __esm({
+    "demo/shared/src/Toast.tsx"() {
+      "use strict";
+      init_polyfills();
+      import_react2 = __toESM(require_react());
+      import_jsx_runtime4 = __toESM(require_jsx_runtime());
+      ToastManager = class {
+        constructor() {
+          this.activeToasts = [];
+          this.listeners = /* @__PURE__ */ new Set();
+          this.timerHandles = /* @__PURE__ */ new Map();
+        }
+        subscribe(listener) {
+          this.listeners.add(listener);
+          listener([...this.activeToasts]);
+          return () => this.listeners.delete(listener);
+        }
+        notify() {
+          for (const listener of this.listeners) {
+            listener([...this.activeToasts]);
+          }
+        }
+        show(toast2) {
+          const id = toast2.id || `toast-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
+          const fullToast = {
+            id,
+            duration: toast2.duration ?? 4e3,
+            ...toast2
+          };
+          this.activeToasts = [...this.activeToasts, fullToast];
+          this.notify();
+          if (fullToast.duration && fullToast.duration > 0) {
+            const handle = setTimeout(() => {
+              this.dismiss(id);
+            }, fullToast.duration);
+            this.timerHandles.set(id, handle);
+          }
+          return id;
+        }
+        dismiss(id) {
+          const handle = this.timerHandles.get(id);
+          if (handle) {
+            clearTimeout(handle);
+            this.timerHandles.delete(id);
+          }
+          this.activeToasts = this.activeToasts.filter((t8) => t8.id !== id);
+          this.notify();
+        }
+        clear() {
+          for (const handle of this.timerHandles.values()) {
+            clearTimeout(handle);
+          }
+          this.timerHandles.clear();
+          this.activeToasts = [];
+          this.notify();
+        }
+        success(message, title = "Success") {
+          return this.show({ type: "success", title, message });
+        }
+        error(message, title = "Error") {
+          return this.show({ type: "error", title, message, duration: 6e3 });
+        }
+        warning(message, title = "Warning") {
+          return this.show({ type: "warning", title, message });
+        }
+        info(message, title = "Info") {
+          return this.show({ type: "info", title, message });
+        }
+      };
+      toast = new ToastManager();
+      ToastContext = (0, import_react2.createContext)(null);
+    }
+  });
+
+  // demo/shared/src/DarkModeToggle.tsx
+  function getSystemTheme() {
+    if (typeof window !== "undefined" && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      return "dark";
+    }
+    return "light";
+  }
+  function applyTheme(theme) {
+    if (typeof document === "undefined") return;
+    const resolved = theme === "auto" ? getSystemTheme() : theme;
+    document.documentElement.setAttribute("data-theme", resolved);
+    document.documentElement.setAttribute("data-bs-theme", resolved);
+    if (resolved === "dark") {
+      document.documentElement.classList.add("dark-theme");
+      document.body?.classList.add("dark-theme");
+    } else {
+      document.documentElement.classList.remove("dark-theme");
+      document.body?.classList.remove("dark-theme");
+    }
+  }
+  function useDarkMode() {
+    const [theme, setTheme] = (0, import_react3.useState)(() => {
+      if (typeof window !== "undefined") {
+        const saved = localStorage.getItem("sov-theme");
+        if (saved) return saved;
+      }
+      return "auto";
+    });
+    (0, import_react3.useEffect)(() => {
+      applyTheme(theme);
+      if (typeof window !== "undefined") {
+        localStorage.setItem("sov-theme", theme);
+      }
+    }, [theme]);
+    const toggle = () => {
+      setTheme((prev) => {
+        const current = prev === "auto" ? getSystemTheme() : prev;
+        return current === "dark" ? "light" : "dark";
+      });
+    };
+    const isDark = theme === "dark" || theme === "auto" && getSystemTheme() === "dark";
+    return { theme, setTheme, toggle, isDark };
+  }
+  var import_react3, import_jsx_runtime5, DarkModeToggle;
+  var init_DarkModeToggle = __esm({
+    "demo/shared/src/DarkModeToggle.tsx"() {
+      "use strict";
+      init_polyfills();
+      import_react3 = __toESM(require_react());
+      import_jsx_runtime5 = __toESM(require_jsx_runtime());
+      DarkModeToggle = ({ className = "" }) => {
+        const { toggle, isDark } = useDarkMode();
+        return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(
+          "button",
+          {
+            type: "button",
+            className: `btn btn-sm btn-outline-secondary d-flex align-items-center gap-1 sov-dark-mode-btn ${className}`,
+            onClick: toggle,
+            "aria-label": `Switch to ${isDark ? "light" : "dark"} mode`,
+            title: `Switch to ${isDark ? "light" : "dark"} mode`,
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("i", { className: `bi ${isDark ? "bi-sun-fill text-warning" : "bi-moon-stars-fill"}` }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "d-none d-sm-inline", children: isDark ? "Light" : "Dark" })
+            ]
+          }
+        );
+      };
+    }
+  });
+
+  // demo/shared/src/index.ts
+  var init_src = __esm({
+    "demo/shared/src/index.ts"() {
+      "use strict";
+      init_polyfills();
+      init_SyncStatusIndicator();
+      init_QuickStartCard();
+      init_ModalDialog();
+      init_Toast();
+      init_DarkModeToggle();
+    }
+  });
+
   // demo/blog/src/Reader.tsx
   var require_Reader = __commonJS({
     "demo/blog/src/Reader.tsx"() {
       init_polyfills();
-      var import_react = __toESM(require_react());
+      var import_react4 = __toESM(require_react());
       var import_client6 = __toESM(require_client());
       init_SovereignS3nc();
       init_Feed();
       init_marked_esm();
       init_purify_es();
-      var import_jsx_runtime = __toESM(require_jsx_runtime());
+      init_src();
+      var import_jsx_runtime6 = __toESM(require_jsx_runtime());
       var BlogPost = ({ post, getBlob, isDetail, onSelect }) => {
         const data = JSON.parse(post.content);
-        const [processedContent, setProcessedContent] = (0, import_react.useState)("");
-        const [processedSynopsis, setProcessedSynopsis] = (0, import_react.useState)("");
-        (0, import_react.useEffect)(() => {
+        const [processedContent, setProcessedContent] = (0, import_react4.useState)("");
+        const [processedSynopsis, setProcessedSynopsis] = (0, import_react4.useState)("");
+        (0, import_react4.useEffect)(() => {
           const process3 = async () => {
             const resolver = async (text2) => {
               let result = text2;
@@ -102731,27 +102922,27 @@ Please report this to https://github.com/markedjs/marked.`, e2) {
           ADD_ATTR: ["src"],
           ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto|tel|data|blob):|[^&#?\/ ]*(?:[#?\/]|$))/i
         };
-        return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("article", { className: "post-card", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", { className: "post-title", onClick: onSelect, style: { cursor: onSelect ? "pointer" : "default" }, children: data.title }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "post-meta", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { children: [
+        return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("article", { className: "post-card", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h2", { className: "post-title", onClick: onSelect, style: { cursor: onSelect ? "pointer" : "default" }, children: data.title }),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "post-meta", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("span", { children: [
               "Published on ",
               new Date(data.publishedAt).toLocaleDateString()
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "mx-2", children: "\u2022" }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "mx-2", children: "\u2022" }),
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("span", { children: [
               "By ",
               post.userId
             ] })
           ] }),
-          isDetail ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "post-content", dangerouslySetInnerHTML: { __html: purify.sanitize(g3.parse(processedContent), purifyConfig) } }) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "post-content", dangerouslySetInnerHTML: { __html: purify.sanitize(g3.parse(processedSynopsis), purifyConfig) } }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { className: "btn btn-link p-0 mt-2", onClick: onSelect, children: "Read More \u2192" })
+          isDetail ? /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "post-content", dangerouslySetInnerHTML: { __html: purify.sanitize(g3.parse(processedContent), purifyConfig) } }) : /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "post-content", dangerouslySetInnerHTML: { __html: purify.sanitize(g3.parse(processedSynopsis), purifyConfig) } }),
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-link p-0 mt-2", onClick: onSelect, children: "Read More \u2192" })
           ] })
         ] });
       };
       var Reader = () => {
-        const [config, setConfig] = (0, import_react.useState)({
+        const [config, setConfig] = (0, import_react4.useState)({
           endpoint: "http://127.0.0.1:9000",
           region: "rustfs",
           accessKeyId: "",
@@ -102760,13 +102951,13 @@ Please report this to https://github.com/markedjs/marked.`, e2) {
           appId: "sov-blog",
           authorId: ""
         });
-        const [sov, setSov] = (0, import_react.useState)(null);
-        const [posts, setPosts] = (0, import_react.useState)([]);
-        const [initialized, setInitialized] = (0, import_react.useState)(false);
-        const [blobCache, setBlobCache] = (0, import_react.useState)({});
-        const [newAuthorId, setNewAuthorId] = (0, import_react.useState)("author-1");
-        const [selectedPostId, setSelectedPostId] = (0, import_react.useState)(null);
-        const [authors, setAuthors] = (0, import_react.useState)([]);
+        const [sov, setSov] = (0, import_react4.useState)(null);
+        const [posts, setPosts] = (0, import_react4.useState)([]);
+        const [initialized, setInitialized] = (0, import_react4.useState)(false);
+        const [blobCache, setBlobCache] = (0, import_react4.useState)({});
+        const [newAuthorId, setNewAuthorId] = (0, import_react4.useState)("author-1");
+        const [selectedPostId, setSelectedPostId] = (0, import_react4.useState)(null);
+        const [authors, setAuthors] = (0, import_react4.useState)([]);
         const init = async (targetAuthor) => {
           setInitialized(false);
           setPosts([]);
@@ -102843,46 +103034,47 @@ Please report this to https://github.com/markedjs/marked.`, e2) {
           }
           return "";
         };
-        (0, import_react.useEffect)(() => {
+        (0, import_react4.useEffect)(() => {
           init();
         }, []);
         if (!initialized) {
-          return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "container mt-5 text-center", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "spinner-border text-primary", role: "status" }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "mt-3", children: "Loading Sovereign Blog..." })
+          return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "container mt-5 text-center", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "spinner-border text-primary", role: "status" }),
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { className: "mt-3", children: "Loading Sovereign Blog..." })
           ] });
         }
         const selectedPost = posts.find((p2) => p2.id === selectedPostId);
-        return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "container", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("header", { className: "blog-header", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "d-flex justify-content-center gap-2 mb-4 no-print", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("select", { className: "form-select form-select-sm w-auto", value: newAuthorId, onChange: (e2) => {
+        return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "container", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("header", { className: "blog-header", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "d-flex justify-content-center gap-2 mb-4 no-print", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("select", { className: "form-select form-select-sm w-auto", value: newAuthorId, onChange: (e2) => {
                 setNewAuthorId(e2.target.value);
                 if (e2.target.value) init(e2.target.value);
               }, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { value: "", children: "Select Author..." }),
-                authors.map((a2) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { value: a2.userId, children: a2.userId }, a2.userId))
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: "", children: "Select Author..." }),
+                authors.map((a2) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: a2.userId, children: a2.userId }, a2.userId))
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { className: "btn btn-sm btn-outline-dark", onClick: () => init(newAuthorId), children: "Refresh" })
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-sm btn-outline-dark", onClick: () => init(newAuthorId), children: "Refresh" }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(DarkModeToggle, {})
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", { className: "blog-title", style: { cursor: "pointer" }, onClick: () => setSelectedPostId(null), children: "Sovereign Thoughts" }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "lead text-muted", children: "A decentralized blog powered by SovereignS3nc" })
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h1", { className: "blog-title", style: { cursor: "pointer" }, onClick: () => setSelectedPostId(null), children: "Sovereign Thoughts" }),
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { className: "lead text-muted", children: "A decentralized blog powered by SovereignS3nc" })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("main", { children: selectedPost ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { className: "btn btn-sm btn-outline-dark mb-4", onClick: () => setSelectedPostId(null), children: "\u2190 Back to List" }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(BlogPost, { post: selectedPost, getBlob, isDetail: true })
-          ] }) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
-            posts.map((post) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(BlogPost, { post, getBlob, isDetail: false, onSelect: () => setSelectedPostId(post.id) }, post.id)),
-            posts.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "text-center text-muted mt-5", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: "No posts found yet. The author hasn't published anything." }) })
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("main", { children: selectedPost ? /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-sm btn-outline-dark mb-4", onClick: () => setSelectedPostId(null), children: "\u2190 Back to List" }),
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(BlogPost, { post: selectedPost, getBlob, isDetail: true })
+          ] }) : /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { children: [
+            posts.map((post) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(BlogPost, { post, getBlob, isDetail: false, onSelect: () => setSelectedPostId(post.id) }, post.id)),
+            posts.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "text-center text-muted mt-5", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { children: "No posts found yet. The author hasn't published anything." }) })
           ] }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("footer", { className: "py-5 text-center text-muted border-top", children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("footer", { className: "py-5 text-center text-muted border-top", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("p", { children: [
             "Built with ",
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", { href: "https://github.com/sovereigns3nc", className: "text-dark", children: "SovereignS3nc" })
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("a", { href: "https://github.com/sovereigns3nc", className: "text-dark", children: "SovereignS3nc" })
           ] }) })
         ] });
       };
       var root2 = (0, import_client6.createRoot)(document.getElementById("root"));
-      root2.render(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Reader, {}));
+      root2.render(/* @__PURE__ */ (0, import_jsx_runtime6.jsx)(Reader, {}));
     }
   });
   require_Reader();

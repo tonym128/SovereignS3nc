@@ -4,6 +4,7 @@ import { SovereignS3nc } from '../../../src/SovereignS3nc';
 import { FeedModule, Post } from '../../../src/modules/Feed';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
+import { DarkModeToggle } from '@sovereigns3nc/demo-shared';
 
 const BlogPost = ({ post, getBlob, isDetail, onSelect }: { post: Post, getBlob: (path: string, userId: string) => Promise<string>, isDetail: boolean, onSelect?: () => void }) => {
     const data = JSON.parse(post.content);
@@ -193,6 +194,7 @@ const Reader = () => {
                         {authors.map(a => <option key={a.userId} value={a.userId}>{a.userId}</option>)}
                     </select>
                     <button className="btn btn-sm btn-outline-dark" onClick={() => init(newAuthorId)}>Refresh</button>
+                    <DarkModeToggle />
                 </div>
                 <h1 className="blog-title" style={{ cursor: 'pointer' }} onClick={() => setSelectedPostId(null)}>Sovereign Thoughts</h1>
                 <p className="lead text-muted">A decentralized blog powered by SovereignS3nc</p>
