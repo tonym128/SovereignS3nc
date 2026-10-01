@@ -14,7 +14,7 @@ const SCENES: Scene[] = [
     {
         id: 'scene-1',
         title: 'The Centralized Trap vs. Zero-Knowledge S3',
-        narration: 'When building modern web and mobile applications, we are often told to rely on centralized backend-as-a-service platforms like Supabase or Firebase. But what happens when the network drops? Your app freezes. What happens when your database server gets hacked? All your users unencrypted data leaks. Meet SovereignS3nc: a zero-server, offline-first storage library. Every byte of data is stored in a local, relational SQLite database inside your browser, encrypted with modern X25519 and AES-256-GCM cryptography, and synchronized directly with any standard S3 bucket or via peer-to-peer WebRTC. Zero application servers. Zero unencrypted data on the cloud. 100 percent offline resilience.',
+        narration: 'When building modern web and mobile applications, we are often told to rely on centralized backend-as-a-service platforms like Supabase or Firebase. But what happens when the network drops? Your app freezes. What happens when your database server gets hacked? All your users unencrypted data leaks. Meet Sovereign Sync: a zero-server, offline-first storage library. Every byte of data is stored in a local, relational SQLite database inside your browser, encrypted with modern X25519 and AES-256-GCM cryptography, and synchronized directly with any standard S3 bucket or via peer-to-peer WebRTC. Zero application servers. Zero unencrypted data on the cloud. 100 percent offline resilience.',
         htmlContent: `
         <div class="slide">
             <div class="badge-pill">SovereignS3nc v3.2.0</div>
@@ -59,7 +59,7 @@ const SCENES: Scene[] = [
     {
         id: 'scene-2',
         title: 'Live Code: 60-Second Reactive Notes App',
-        narration: 'Let us build a fully syncing, encrypted notes application in under 60 seconds. First, we install sovereigns3nc and @sovereigns3nc/react. We wrap our application with SovereignProvider, specifying our user credentials and S3 endpoint. Now, we use the useRepository hook to read and write notes directly into local SQLite. Every time create is called, our note is instantly saved to local IndexedDB and committed to our daily SQLite partition in microseconds. No waiting for server round-trips.',
+        narration: 'Let us build a fully syncing, encrypted notes application in under 60 seconds. First, we install Sovereign Sync and the Sovereign Sync React package. We wrap our application with SovereignProvider, specifying our user credentials and S3 endpoint. Now, we use the useRepository hook to read and write notes directly into local SQLite. Every time create is called, our note is instantly saved to local IndexedDB and committed to our daily SQLite partition in microseconds. No waiting for server round-trips.',
         htmlContent: `
         <div class="slide">
             <div class="badge-pill">Developer Experience</div>
@@ -110,7 +110,7 @@ const SCENES: Scene[] = [
     {
         id: 'scene-3',
         title: 'Airplane Mode & Multi-Device Sync',
-        narration: 'Let us test offline mode. We turn off Wi-Fi in DevTools. We add notes, modify existing ones, and reorder them. The app responds instantly because everything runs against local SQLite WebAssembly. Now, we re-enable network connectivity. In the background, SovereignS3nc worker engine wakes up, generates an incremental Merkle manifest, and pushes only the changed partitions to S3. Opening the S3 console reveals what the cloud provider sees: salted private GUIDs and pure AES-256-GCM ciphertext. The storage provider knows nothing about your notes.',
+        narration: 'Let us test offline mode. We turn off Wi-Fi in DevTools. We add notes, modify existing ones, and reorder them. The app responds instantly because everything runs against local SQLite WebAssembly. Now, we re-enable network connectivity. In the background, Sovereign Sync worker engine wakes up, generates an incremental Merkle manifest, and pushes only the changed partitions to S3. Opening the S3 console reveals what the cloud provider sees: salted private GUIDs and pure AES-256-GCM ciphertext. The storage provider knows nothing about your notes.',
         htmlContent: `
         <div class="slide">
             <div class="badge-pill">Sync & Encryption</div>
@@ -160,7 +160,7 @@ const SCENES: Scene[] = [
     {
         id: 'scene-4',
         title: 'Production Ready: 5 Live Demos & Call to Action',
-        narration: 'SovereignS3nc gives you the simplicity of serverless object storage, the speed of local SQLite, and the security of zero-trust end-to-end encryption. Try out our five live demo apps—including full Kanban boards, encrypted feeds, and multi-user messaging—right now in your browser. Install sovereigns3nc today from npm and check out the documentation. Take control of your users data sovereignty!',
+        narration: 'Sovereign Sync gives you the simplicity of serverless object storage, the speed of local SQLite, and the security of zero-trust end-to-end encryption. Try out our five live demo apps—including full Kanban boards, encrypted feeds, and multi-user messaging—right now in your browser. Install Sovereign Sync today from npm and check out the documentation. Take control of your users data sovereignty!',
         htmlContent: `
         <div class="slide">
             <div class="badge-pill">Ecosystem</div>
@@ -298,13 +298,33 @@ export async function generateVideo(rootDir: string = path.resolve(__dirname, '.
             const scene = SCENES[i];
             console.log(`📽️ Processing [${scene.id}]: ${scene.title}...`);
 
-            // 1. Generate Voiceover Audio using espeak-ng
-            const wavPath = path.join(tempDir, `${scene.id}.wav`);
-            const espeakCmd = `espeak-ng -v en-us -s 145 -p 42 -w "${wavPath}" "${scene.narration}"`;
-            execSync(espeakCmd);
+            // 1. Generate Voiceover Audio using modern neural TTS (edge-tts)
+            const textPath = path.join(tempDir, `${scene.id}.txt`);
+            const audioPath = path.join(tempDir, `${scene.id}.mp3`);
+            fs.writeFileSync(textPath, scene.narration, 'utf8');
+
+            const voice = process.env.TTS_VOICE || 'en-US-AndrewNeural';
+            let ttsSuccess = false;
+
+            try {
+                // edge-tts generates lifelike Microsoft Azure neural voices
+                execSync(`edge-tts --voice "${voice}" --file "${textPath}" --write-media "${audioPath}"`, { stdio: 'pipe' });
+                ttsSuccess = true;
+                console.log(`   🎙️ Generated lifelike neural voice (${voice})`);
+            } catch (ttsErr: any) {
+                console.warn(`   ⚠️ edge-tts failed (${ttsErr.message}), falling back to espeak-ng...`);
+            }
+
+            if (!ttsSuccess) {
+                const wavPath = path.join(tempDir, `${scene.id}.wav`);
+                const espeakCmd = `espeak-ng -v en-us -s 145 -p 42 -w "${wavPath}" "${scene.narration}"`;
+                execSync(espeakCmd);
+                fs.copyFileSync(wavPath, audioPath);
+                console.log(`   🎙️ Generated fallback voice (espeak-ng)`);
+            }
 
             // Get exact duration of the generated audio
-            const durationOutput = execSync(`ffprobe -i "${wavPath}" -show_entries format=duration -v quiet -of csv="p=0"`).toString().trim();
+            const durationOutput = execSync(`ffprobe -i "${audioPath}" -show_entries format=duration -v quiet -of csv="p=0"`).toString().trim();
             const durationSec = parseFloat(durationOutput);
             console.log(`   🎙️ Audio duration: ${durationSec.toFixed(2)}s`);
 
@@ -333,9 +353,9 @@ export async function generateVideo(rootDir: string = path.resolve(__dirname, '.
                 console.log(`   🖼️ Saved video poster: ${path.join(outDir, 'poster.png')}`);
             }
 
-            // 3. Encode Scene Video with ffmpeg
+            // 3. Encode Scene Video with ffmpeg (with 0.75s post-narration padding for smooth scene transitions)
             const sceneMp4 = path.join(tempDir, `${scene.id}.mp4`);
-            const ffmpegSceneCmd = `ffmpeg -y -loop 1 -i "${pngPath}" -i "${wavPath}" -c:v libx264 -tune stillimage -c:a aac -b:a 192k -pix_fmt yuv420p -shortest "${sceneMp4}"`;
+            const ffmpegSceneCmd = `ffmpeg -y -loop 1 -i "${pngPath}" -i "${audioPath}" -af "apad=pad_dur=0.75" -c:v libx264 -tune stillimage -c:a aac -b:a 192k -pix_fmt yuv420p -shortest "${sceneMp4}"`;
             execSync(ffmpegSceneCmd, { stdio: 'pipe' });
 
             sceneVideos.push(sceneMp4);
