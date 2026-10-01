@@ -106,6 +106,22 @@ describe('Goal 1 — HKDF-SHA256 (RFC 5869) Key Expansion', () => {
         expect(v2).not.toBe(rawShared);
     });
 
+    test('deriveSharedSecret with different contexts produces different keys', () => {
+        const km = makeKeyManager(aliceKeys.secretKey, aliceKeys.publicKey);
+        const bobPub = Buffer.from(bobKeys.publicKey).toString('hex');
+        const dmKey = km.deriveSharedSecret(bobPub, 'SovereignS3nc-DM-v2');
+        const customKey = km.deriveSharedSecret(bobPub, 'SovereignS3nc-Custom-v1');
+        expect(dmKey).not.toBe(customKey);
+    });
+
+    test('calculateHashedContent salts hash with key', () => {
+        const km = makeKeyManager(aliceKeys.secretKey, aliceKeys.publicKey);
+        const data = Buffer.from('hello world payload');
+        const hashPlain = km.calculateHashedContent(data);
+        const hashSalted = km.calculateHashedContent(data, 'secret-salt-key');
+        expect(hashPlain).not.toBe(hashSalted);
+    });
+
     test('Full encrypt-decrypt roundtrip using HKDF-derived key', async () => {
         (global as any).indexedDB = new IDBFactory();
         const alice = new SovereignS3nc(
