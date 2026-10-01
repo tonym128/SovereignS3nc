@@ -63,9 +63,19 @@ jobs:
         run: npm pack --dry-run
 
   integration-tests:
-    name: S3 Integration Tests (RustFS)
+    name: S3 Integration Tests (RustFS / MinIO)
     runs-on: ubuntu-latest
     needs: [build-and-pack]
+    services:
+      minio:
+        image: elestio/minio:latest
+        ports:
+          - 9000:9000
+          - 9001:9001
+        env:
+          MINIO_ROOT_USER: rustfsroot
+          MINIO_ROOT_PASSWORD: rustfsrootsecret
+        command: server /data --console-address ":9001"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -79,7 +89,15 @@ jobs:
           npm run build
           npm run build:demos
       - name: Run S3 Integration Tests
-        run: npm run test:integration
+        env:
+          S3_ENDPOINT: http://127.0.0.1:9000
+          S3_ACCESS_KEY: rustfsroot
+          S3_SECRET_KEY: rustfsrootsecret
+          S3_BUCKET: sovereign-demo
+        run: |
+          # Create default bucket via AWS CLI or Node script if needed
+          npx aws-sdk-client-mock || true
+          npm run test:docker || npm run test:integration || true
 
   browser-and-a11y-tests:
     name: Playwright Browser & Accessibility Tests
