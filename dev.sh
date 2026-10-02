@@ -431,6 +431,20 @@ function ngrok_start() {
     echo "════════════════════════════════════════════════════"
     echo ""
 
+    # ── Use alternate port to avoid conflicts with system services ────────────
+    # Override with NGROK_RUSTFS_PORT env var if you need a different port.
+    RUSTFS_PORT="${NGROK_RUSTFS_PORT:-9100}"
+
+    # ── Pre-flight: check ports are free ──────────────────────────────────────
+    for PORT in "$RUSTFS_PORT" 8888; do
+        if ss -tlnp | grep -q ":${PORT} "; then
+            OCCUPANT=$(ss -tlnp | grep ":${PORT} " | grep -oP '(?<=\(")\w+' | head -1)
+            echo "❌  Port $PORT is already in use by: ${OCCUPANT:-unknown process}"
+            echo "    Set NGROK_RUSTFS_PORT=<free-port> to use a different S3 port."
+            exit 1
+        fi
+    done
+
     # ── Kill any leftover ngrok processes ──────────────────────────────────────
     pkill -u "$(whoami)" -f "ngrok http" 2>/dev/null || true
 
