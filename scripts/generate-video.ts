@@ -17,7 +17,7 @@ const SCENES: Scene[] = [
         narration: 'When building modern web and mobile applications, we are often told to rely on centralized backend-as-a-service platforms like Supabase or Firebase. But what happens when the network drops? Your app freezes. What happens when your database server gets hacked? All your users unencrypted data leaks. Meet Sovereign Sync: a zero-server, offline-first storage library. Every byte of data is stored in a local, relational SQLite database inside your browser, encrypted with modern X25519 and AES-256-GCM cryptography, and synchronized directly with any standard S3 bucket or via peer-to-peer WebRTC. Zero application servers. Zero unencrypted data on the cloud. 100 percent offline resilience.',
         htmlContent: `
         <div class="slide">
-            <div class="badge-pill">SovereignS3nc v3.2.1</div>
+            <div class="badge-pill">SovereignS3nc v3.2.2</div>
             <h1 class="hero-title">Zero-Trust. Offline-First.</h1>
             <p class="hero-subtitle">Client-to-Storage Relational Engine for S3 & WebRTC</p>
 

@@ -100386,7 +100386,7 @@ ${toHex(hashedRequest)}`;
           };
         }
       };
-      _SovereignS3nc.VERSION = "3.2.1";
+      _SovereignS3nc.VERSION = "3.2.2";
       SovereignS3nc = _SovereignS3nc;
     }
   });

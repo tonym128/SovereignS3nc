@@ -27,7 +27,7 @@ import { ModuleContext } from './core/ModuleContext';
 import { Inspector, DebugSnapshot } from './utils/Inspector';
 
 export class SovereignS3nc extends EventEmitter {
-    public static readonly VERSION = '3.2.1';
+    public static readonly VERSION = '3.2.2';
     private storage: IStorage;
     private remote?: IRemoteAdapter; 
     private publicRemote?: IRemoteAdapter;
