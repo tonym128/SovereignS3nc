@@ -378,10 +378,15 @@
         if (!window.Sovereign && typeof window.SovereignS3nc !== 'undefined') {
             window.Sovereign = { SovereignS3nc: window.SovereignS3nc };
         }
-        // Fallback loader if accessed directly from /demo/playground/ during dev
+        // Robust fallback loader if accessed from different path depths or during dev
         if (!window.Sovereign) {
             const fallbackScript = document.createElement('script');
-            fallbackScript.src = '../../dist/sovereigns3nc.global.js';
+            fallbackScript.src = '../sovereigns3nc.global.js';
+            fallbackScript.onerror = () => {
+                const devScript = document.createElement('script');
+                devScript.src = '../../dist/sovereigns3nc.global.js';
+                document.head.appendChild(devScript);
+            };
             document.head.appendChild(fallbackScript);
         }
     </script>
@@ -820,7 +825,7 @@ return { totalFiles: files.length, details };`
                 version: "1.0.0",
                 scripts: { "dev": "vite", "build": "vite build" },
                 dependencies: {
-                    "sovereigns3nc": "^3.2.0"
+                    "sovereigns3nc": "^3.2.1"
                 },
                 devDependencies: {
                     "typescript": "^5.3.3",
@@ -828,18 +833,7 @@ return { totalFiles: files.length, details };`
                 }
             }, null, 2);
 
-            document.getElementById('sb_index_html').value = `<!DOCTYPE html>
-<html>
-<head>
-    <title>SovereignS3nc StackBlitz</title>
-</head>
-<body style="background:#0d1117;color:#c9d1d9;font-family:sans-serif;padding:2rem;">
-    <h2>SovereignS3nc StackBlitz Sandbox</h2>
-    <p>Check browser console or inspect output below:</p>
-    <pre id="output" style="background:#161b22;padding:1rem;border-radius:6px;"></pre>
-    <script type="module" src="/src/index.ts"><\\/script>
-</body>
-</html>`;
+            document.getElementById('sb_index_html').value = '<!DOCTYPE html>\n<html>\n<head>\n    <title>SovereignS3nc StackBlitz</title>\n</head>\n<body style="background:#0d1117;color:#c9d1d9;font-family:sans-serif;padding:2rem;">\n    <h2>SovereignS3nc StackBlitz Sandbox</h2>\n    <p>Check browser console or inspect output below:</p>\n    <pre id="output" style="background:#161b22;padding:1rem;border-radius:6px;"></pre>\n    <script type="module" src="/src/index.ts"></' + 'script>\n</body>\n</html>';
 
             document.getElementById('sb_index_ts').value = `import * as Sovereign from 'sovereigns3nc';
 
@@ -861,7 +855,12 @@ async function main() {
 main();`;
 
             document.getElementById('sb_vite_config').value = `import { defineConfig } from 'vite';
-export default defineConfig({});`;
+export default defineConfig({
+    server: {
+        host: true,
+        allowedHosts: true
+    }
+});`;
 
             document.getElementById('sb_tsconfig').value = JSON.stringify({
                 compilerOptions: {
