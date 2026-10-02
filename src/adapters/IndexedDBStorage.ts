@@ -207,8 +207,8 @@ export class IndexedDBStorage implements IStorage {
         });
     }
 
-    async listFiles(prefix: string): Promise<string[]> {
-        const sanitizedPrefix = this.sanitizePath(prefix);
+    async listFiles(prefix: string = ''): Promise<string[]> {
+        const sanitizedPrefix = this.sanitizePath(prefix || '');
         return new Promise((resolve, reject) => {
             try {
                 const store = this.getStore('files');
@@ -222,6 +222,17 @@ export class IndexedDBStorage implements IStorage {
                 reject(e);
             }
         });
+    }
+
+    async writeFile(path: string, data: string | Uint8Array): Promise<void> {
+        const bytes = typeof data === 'string' ? new TextEncoder().encode(data) : data;
+        return this.saveFile(path, bytes);
+    }
+
+    async readFile(path: string, asText = true): Promise<any> {
+        const bytes = await this.getFile(path);
+        if (!bytes) return null;
+        return asText ? new TextDecoder().decode(bytes) : bytes;
     }
 
     async getGenericRemoteHashCache(path: string): Promise<string | null> {

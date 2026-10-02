@@ -71,7 +71,17 @@ export interface IStorage {
   /**
    * List all files in a prefix.
    */
-  listFiles(prefix: string): Promise<string[]>;
+  listFiles(prefix?: string): Promise<string[]>;
+
+  /**
+   * Helper to write string or binary data directly.
+   */
+  writeFile?(path: string, data: string | Uint8Array): Promise<void>;
+
+  /**
+   * Helper to read file content as UTF-8 string or binary.
+   */
+  readFile?(path: string, asText?: boolean): Promise<any>;
 
   /**
    * Get the cached hash of what we believe is on the remote for a generic file.

@@ -35,6 +35,18 @@ export class ProfileModule {
     }
 
     /**
+     * Sets or updates user profile attributes via an object.
+     */
+    async setProfile(profile: Partial<Profile> | { name?: string; bio?: string; avatar?: string }): Promise<void> {
+        const current = (await this.getProfile()) || { name: '', bio: '', avatar: undefined, userId: this.context.userId, updatedAt: 0 };
+        return this.updateProfile(
+            profile.name !== undefined ? profile.name : current.name,
+            profile.bio !== undefined ? profile.bio : current.bio,
+            profile.avatar !== undefined ? profile.avatar : current.avatar
+        );
+    }
+
+    /**
      * Updates the current user's profile.
      */
     async updateProfile(name: string, bio: string, avatar?: string) {

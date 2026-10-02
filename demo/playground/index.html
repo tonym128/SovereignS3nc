@@ -410,7 +410,7 @@ console.log('👤 User ID:', client.getUserId());
 console.log('🔑 Public Identity Key:', client.getPublicKey());
 
 // Access Profile module to store user identity
-const profileModule = client.getModule('profile');
+const profileModule = new Sovereign.ProfileModule(client);
 await profileModule.setProfile({
     name: 'Sovereign Explorer',
     bio: 'Testing client-side zero-trust storage in the browser.',
@@ -485,49 +485,37 @@ const client = new Sovereign.SovereignS3nc({
 });
 await client.init();
 
-const storage = client.getStorage();
-const today = new Date().toISOString().split('T')[0];
-console.log('📅 Creating DailyDatabase SQLite partition for:', today);
-
-const dailyDb = new Sovereign.DailyDatabase(
-    storage,
-    'metrics',
-    today,
-    'public',
-    {
-        version: 1,
-        up: async (db) => {
-            db.exec(\`
-                CREATE TABLE IF NOT EXISTS metrics (
-                    id TEXT PRIMARY KEY,
-                    metric TEXT NOT NULL,
-                    value REAL NOT NULL,
-                    timestamp INTEGER NOT NULL
-                );
-                CREATE INDEX IF NOT EXISTS idx_metrics_ts ON metrics(timestamp DESC);
-            \`);
+// Register the metrics module with its SQLite table schema
+client.registerModule({
+    name: 'metrics',
+    tables: [
+        {
+            name: 'metrics',
+            schema: 'id TEXT PRIMARY KEY, metric TEXT NOT NULL, value REAL NOT NULL, timestamp INTEGER NOT NULL'
         }
-    }
-);
+    ]
+});
 
-await dailyDb.init();
+const dailyDb = client.getDailyDatabase('metrics');
+const today = new Date().toISOString().split('T')[0];
+const partitionPath = \`public/modules/metrics/\${today}.db\`;
+console.log('📅 Using DailyDatabase SQLite partition for:', partitionPath);
 
-// Insert records
-dailyDb.exec(
-    "INSERT INTO metrics (id, metric, value, timestamp) VALUES ('m1', 'cpu_usage', 14.5, ?)",
-    [Date.now()]
-);
-dailyDb.exec(
-    "INSERT INTO metrics (id, metric, value, timestamp) VALUES ('m2', 'memory_mb', 256.0, ?)",
-    [Date.now() + 50]
-);
+// Insert records using withDatabase (automatically manages SQLite lifecycle and persistence)
+await dailyDb.withDatabase(partitionPath, (db) => {
+    db.run("INSERT INTO metrics (id, metric, value, timestamp) VALUES (?, ?, ?, ?)", ['m1', 'cpu_usage', 14.5, Date.now()]);
+    db.run("INSERT INTO metrics (id, metric, value, timestamp) VALUES (?, ?, ?, ?)", ['m2', 'memory_mb', 256.0, Date.now() + 50]);
+    console.log('💾 Inserted metrics into in-memory SQLite partition.');
+}, { save: true });
 
-// Query records
-const rows = dailyDb.query("SELECT * FROM metrics ORDER BY timestamp DESC");
+// Query records back from the partition
+const rows = await dailyDb.withDatabase(partitionPath, (db) => {
+    const res = db.exec("SELECT * FROM metrics ORDER BY timestamp DESC");
+    if (!res || !res.length) return [];
+    const columns = res[0].columns;
+    return res[0].values.map(row => Object.fromEntries(columns.map((col, i) => [col, row[i]])));
+});
 console.log('📊 Queried Records from in-browser SQLite:', rows);
-
-await dailyDb.flush();
-console.log('💾 Daily database partition successfully persisted.');
 
 return { partition: today, count: rows.length, rows };`,
 

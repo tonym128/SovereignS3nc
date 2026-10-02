@@ -292,13 +292,6 @@ export class SovereignS3nc extends EventEmitter {
         return new ModuleContext(this, moduleName);
     }
 
-    /**
-     * Retrieves an active module instance by constructor class or registered module name.
-     */
-    public getModule<T = any>(predicateOrName: string | (new (...args: any[]) => T)): T | undefined {
-        return this.getModuleInstance<T>(predicateOrName);
-    }
-
     public getModulePath(moduleName: string, subPath: string, type: 'private' | 'public' | 'followed'): string {
         if (!/^[a-z0-9_-]+$/i.test(moduleName)) {
             throw new ModuleError(moduleName, `Invalid module name: "${moduleName}". Only alphanumeric, underscore, and hyphen are allowed.`);
@@ -340,6 +333,28 @@ export class SovereignS3nc extends EventEmitter {
         } else {
             return this.moduleInstances.find((m: any) => m instanceof predicateOrName);
         }
+    }
+
+    public getModule<T = any>(predicateOrName: string | (new (...args: any[]) => T)): T | undefined {
+        let instance = this.getModuleInstance<T>(predicateOrName);
+        if (!instance && typeof predicateOrName === 'string') {
+            const key = predicateOrName.toLowerCase();
+            try {
+                if (key === 'profile') {
+                    const { ProfileModule } = require('./modules/Profile');
+                    instance = new ProfileModule(this) as any;
+                } else if (key === 'feed') {
+                    const { FeedModule } = require('./modules/Feed');
+                    instance = new FeedModule(this) as any;
+                } else if (key === 'messaging') {
+                    const { MessagingModule } = require('./modules/Messaging');
+                    instance = new MessagingModule(this) as any;
+                }
+            } catch (e) {
+                Logger.warn('Sovereign', `Auto-instantiation of module ${predicateOrName} failed`, e);
+            }
+        }
+        return instance;
     }
 
     public connectNativeRTC(transport: NativeWebRTCTransport) {

@@ -48,6 +48,7 @@
     isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
     mod
   ));
+  var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
   var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
 
   // node_modules/base64-js/index.js
@@ -91487,8 +91488,8 @@ ${toHex(hashedRequest)}`;
             }
           });
         }
-        async listFiles(prefix) {
-          const sanitizedPrefix = this.sanitizePath(prefix);
+        async listFiles(prefix = "") {
+          const sanitizedPrefix = this.sanitizePath(prefix || "");
           return new Promise((resolve, reject) => {
             try {
               const store = this.getStore("files");
@@ -91502,6 +91503,15 @@ ${toHex(hashedRequest)}`;
               reject(e2);
             }
           });
+        }
+        async writeFile(path2, data) {
+          const bytes = typeof data === "string" ? new TextEncoder().encode(data) : data;
+          return this.saveFile(path2, bytes);
+        }
+        async readFile(path2, asText = true) {
+          const bytes = await this.getFile(path2);
+          if (!bytes) return null;
+          return asText ? new TextDecoder().decode(bytes) : bytes;
         }
         async getGenericRemoteHashCache(path2) {
           return new Promise((resolve, reject) => {
@@ -97502,6 +97512,1284 @@ ${toHex(hashedRequest)}`;
     }
   });
 
+  // node_modules/jimp/dist/browser/index.js
+  var browser_exports = {};
+  var init_browser = __esm({
+    "node_modules/jimp/dist/browser/index.js"() {
+      init_polyfills();
+    }
+  });
+
+  // src/utils/MediaUtils.ts
+  var MediaUtils;
+  var init_MediaUtils = __esm({
+    "src/utils/MediaUtils.ts"() {
+      "use strict";
+      init_polyfills();
+      init_Logger();
+      init_Errors();
+      MediaUtils = class {
+        /**
+         * Compresses an image data URL to stay under a target size in bytes.
+         * Only works in browser environments where 'document' and 'Image' are available.
+         */
+        static async compressImage(dataUrl, targetSizeBytes) {
+          if (typeof document === "undefined") {
+            try {
+              const jimpModule = await Promise.resolve().then(() => (init_browser(), browser_exports));
+              const Jimp = jimpModule.Jimp || jimpModule.Jimp || jimpModule;
+              const match = dataUrl.match(/^data:image\/([a-zA-Z+]+);base64,(.+)$/);
+              if (!match) {
+                Logger.warn("MediaUtils", "No regex match for data URL");
+                return dataUrl;
+              }
+              const buffer = Buffer.from(match[2], "base64");
+              const image = await Jimp.read(buffer);
+              const maxDim = 1200;
+              if (image.width > maxDim || image.height > maxDim) {
+                const ratio = Math.min(maxDim / image.width, maxDim / image.height);
+                image.resize({ w: Math.floor(image.width * ratio), h: Math.floor(image.height * ratio) });
+              }
+              let quality = 80;
+              let resultBuffer = await image.getBuffer("image/jpeg", { quality });
+              while (resultBuffer.length > targetSizeBytes && (quality > 10 || image.width > 200)) {
+                if (quality > 20) {
+                  quality -= 20;
+                } else {
+                  const newWidth = Math.floor(image.width * 0.7);
+                  const newHeight = Math.floor(image.height * 0.7);
+                  image.resize({ w: newWidth, h: newHeight });
+                }
+                resultBuffer = await image.getBuffer("image/jpeg", { quality });
+              }
+              return `data:image/jpeg;base64,${resultBuffer.toString("base64")}`;
+            } catch (err) {
+              Logger.error("MediaUtils", "Node.js image compression failed:", err.message || JSON.stringify(err));
+              return dataUrl;
+            }
+          }
+          return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.src = dataUrl;
+            img.onload = () => {
+              const canvas = document.createElement("canvas");
+              let width = img.width;
+              let height = img.height;
+              const maxDim = 1200;
+              if (width > maxDim || height > maxDim) {
+                const ratio = Math.min(maxDim / width, maxDim / height);
+                width *= ratio;
+                height *= ratio;
+              }
+              canvas.width = width;
+              canvas.height = height;
+              const ctx = canvas.getContext("2d");
+              if (!ctx) return reject(new StorageError("Canvas context failed"));
+              ctx.drawImage(img, 0, 0, width, height);
+              let quality = 0.9;
+              let result = dataUrl;
+              const attempt = () => {
+                result = canvas.toDataURL("image/jpeg", quality);
+                const size = Math.floor((result.length - 81) * 0.75);
+                if (size > targetSizeBytes && quality > 0.1) {
+                  quality -= 0.1;
+                  attempt();
+                } else if (size > targetSizeBytes && width > 100) {
+                  width *= 0.7;
+                  height *= 0.7;
+                  canvas.width = width;
+                  canvas.height = height;
+                  ctx.drawImage(img, 0, 0, width, height);
+                  quality = 0.8;
+                  attempt();
+                } else {
+                  resolve(result);
+                }
+              };
+              attempt();
+            };
+            img.onerror = (e2) => reject(e2);
+          });
+        }
+        /**
+         * Converts a data URL (e.g. data:image/jpeg;base64,...) to a Uint8Array.
+         * Operates in-memory without using fetch(), avoiding CSP connect-src restrictions.
+         */
+        static dataUrlToBytes(dataUrl) {
+          const commaIdx = dataUrl.indexOf(",");
+          const base64 = commaIdx >= 0 ? dataUrl.substring(commaIdx + 1) : dataUrl;
+          if (typeof Buffer !== "undefined") {
+            return new Uint8Array(Buffer.from(base64, "base64"));
+          }
+          const binary = atob(base64);
+          const bytes = new Uint8Array(binary.length);
+          for (let i2 = 0; i2 < binary.length; i2++) {
+            bytes[i2] = binary.charCodeAt(i2);
+          }
+          return bytes;
+        }
+      };
+    }
+  });
+
+  // src/modules/Profile.ts
+  var Profile_exports = {};
+  __export(Profile_exports, {
+    ProfileModule: () => ProfileModule
+  });
+  var ProfileModule;
+  var init_Profile = __esm({
+    "src/modules/Profile.ts"() {
+      "use strict";
+      init_polyfills();
+      init_Logger();
+      init_MediaUtils();
+      init_Constants();
+      init_Errors();
+      ProfileModule = class {
+        constructor(contextOrDb) {
+          this.MODULE_NAME = "profile";
+          this.context = "sovereign" in contextOrDb ? contextOrDb : contextOrDb.createModuleContext(this.MODULE_NAME);
+        }
+        /**
+         * Backward-compatible reference to the host SovereignS3nc instance.
+         */
+        get db() {
+          return this.context.sovereign;
+        }
+        get sovereign() {
+          return this.context.sovereign;
+        }
+        /**
+         * Sets or updates user profile attributes via an object.
+         */
+        async setProfile(profile) {
+          const current = await this.getProfile() || { name: "", bio: "", avatar: void 0, userId: this.context.userId, updatedAt: 0 };
+          return this.updateProfile(
+            profile.name !== void 0 ? profile.name : current.name,
+            profile.bio !== void 0 ? profile.bio : current.bio,
+            profile.avatar !== void 0 ? profile.avatar : current.avatar
+          );
+        }
+        /**
+         * Updates the current user's profile.
+         */
+        async updateProfile(name, bio, avatar) {
+          if (name.length > DEFAULTS.MAX_NAME_LENGTH) {
+            throw new ModuleError("profile", `Name exceeds maximum length of ${DEFAULTS.MAX_NAME_LENGTH} characters`);
+          }
+          if (bio.length > DEFAULTS.MAX_BIO_LENGTH) {
+            throw new ModuleError("profile", `Bio exceeds maximum length of ${DEFAULTS.MAX_BIO_LENGTH} characters`);
+          }
+          let finalAvatar = avatar;
+          if (avatar && avatar.startsWith("data:image")) {
+            try {
+              finalAvatar = await MediaUtils.compressImage(avatar, 100 * 1024);
+            } catch (e2) {
+              Logger.warn("Profile", `Failed to compress avatar: ${e2.message}`);
+            }
+          }
+          const profile = {
+            name,
+            bio,
+            avatar: finalAvatar,
+            updatedAt: Date.now(),
+            userId: this.context.userId
+          };
+          const data = new TextEncoder().encode(JSON.stringify(profile));
+          await this.context.storage.savePublicUserFile(data);
+        }
+        /**
+         * Retrieves a profile for a given user.
+         */
+        async getProfile(userId) {
+          const myId = this.context.userId;
+          const targetId = userId || myId;
+          if (targetId === myId) {
+            const data2 = await this.context.storage.getPublicUserFile();
+            return data2 ? JSON.parse(new TextDecoder().decode(data2)) : null;
+          }
+          const data = await this.context.storage.getFile(`${targetId}/profile`, "followed");
+          if (data) {
+            return JSON.parse(new TextDecoder().decode(data));
+          }
+          return null;
+        }
+        /**
+         * Syncs profiles of followed users from their remotes.
+         */
+        async syncOtherProfiles() {
+          const following = await this.context.getFollowing();
+          for (const user of following) {
+            try {
+              const userRemote = this.context.remotes.createRemote(user.userId);
+              const cachedEtag = await this.context.storage.raw.getGenericRemoteHashCache(`${user.userId}:${PATHS.USER_PROFILE}`);
+              const result = await userRemote.downloadFile(PATHS.USER_PROFILE, cachedEtag || void 0);
+              if (result && !result.notModified && result.data) {
+                const data = result.data;
+                let finalData = data;
+                try {
+                  JSON.parse(new TextDecoder().decode(data));
+                } catch (e2) {
+                  try {
+                    finalData = await this.context.decrypt(data, user.publicKey);
+                  } catch (de) {
+                    continue;
+                  }
+                }
+                await this.context.storage.saveFile(`${user.userId}/profile`, finalData, "followed");
+                if (result.etag) {
+                  await this.context.storage.raw.setGenericRemoteHashCache(`${user.userId}:${PATHS.USER_PROFILE}`, result.etag);
+                }
+              }
+            } catch (e2) {
+              Logger.debug("Profile", `Failed to sync profile for ${user.userId}: ${e2.message}`);
+            }
+          }
+        }
+        /**
+         * Follow a new user.
+         */
+        async follow(userId) {
+          await this.context.follow(userId);
+          await this.syncOtherProfiles();
+        }
+        /**
+         * Unfollow a user.
+         */
+        async unfollow(userId) {
+          await this.context.unfollow(userId);
+        }
+        /**
+         * Get list of followed users.
+         */
+        async getFollowing() {
+          return this.context.getFollowing();
+        }
+      };
+    }
+  });
+
+  // src/modules/Feed.ts
+  var Feed_exports = {};
+  __export(Feed_exports, {
+    FEED_MODULE_DEFINITION: () => FEED_MODULE_DEFINITION,
+    FeedModule: () => FeedModule
+  });
+  var FEED_MODULE_DEFINITION, FeedModule;
+  var init_Feed = __esm({
+    "src/modules/Feed.ts"() {
+      "use strict";
+      init_polyfills();
+      init_Logger();
+      init_Environment();
+      init_Errors();
+      init_Constants();
+      init_Pagination();
+      FEED_MODULE_DEFINITION = {
+        name: "feed",
+        tables: [
+          {
+            name: "posts",
+            schema: `
+                id TEXT PRIMARY KEY,
+                content TEXT,
+                timestamp INTEGER,
+                userId TEXT,
+                image TEXT,
+                parentId TEXT,
+                parentUserId TEXT,
+                isEdited INTEGER DEFAULT 0,
+                isDeleted INTEGER DEFAULT 0,
+                type TEXT DEFAULT 'text'
+            `
+          },
+          {
+            name: "likes",
+            schema: `
+                postId TEXT,
+                userId TEXT,
+                timestamp INTEGER,
+                PRIMARY KEY (postId, userId)
+            `
+          },
+          {
+            name: "moderation",
+            schema: `
+                targetId TEXT PRIMARY KEY,
+                action TEXT,
+                timestamp INTEGER
+            `
+          }
+        ],
+        migrations: [
+          {
+            version: 2,
+            sql: ["ALTER TABLE posts ADD COLUMN expiresAt INTEGER DEFAULT NULL;"]
+          },
+          {
+            version: 3,
+            sql: ["CREATE INDEX IF NOT EXISTS idx_posts_timestamp_id ON posts(timestamp DESC, id DESC);"]
+          }
+        ]
+      };
+      FeedModule = class {
+        constructor(contextOrDb) {
+          this.MODULE_NAME = "feed";
+          this.context = "sovereign" in contextOrDb ? contextOrDb : contextOrDb.createModuleContext(this.MODULE_NAME);
+          this.dailyDb = this.context.getDailyDatabase({ debounceMs: 500 });
+          this.context.registerDefinition(FEED_MODULE_DEFINITION);
+          this.context.registerInstance(this);
+        }
+        get db() {
+          return this.context.sovereign;
+        }
+        get sovereign() {
+          return this.context.sovereign;
+        }
+        async getDb(date2, type, groupId, sharedKey) {
+          let dbPath;
+          if (type === "group" && groupId) {
+            dbPath = `public/groups/${groupId}/${date2}.db`;
+            const session2 = await this.dailyDb.openDatabase(dbPath, {
+              applySchema: true,
+              encryptKey: sharedKey,
+              decryptKey: sharedKey
+            });
+            return session2.db;
+          } else if (type === "followed") {
+            dbPath = this.context.storage.getPath(`${date2}.db`, "followed");
+          } else {
+            dbPath = this.context.storage.getPath(`${date2}.db`, type);
+          }
+          const session = await this.dailyDb.openDatabase(dbPath, { applySchema: true });
+          return session.db;
+        }
+        async post(content, isPublic = true, image, parentId, parentUserId, expiresAt) {
+          if (content.length > DEFAULTS.MAX_POST_LENGTH) {
+            throw new ModuleError("feed", `Post exceeds maximum length of ${DEFAULTS.MAX_POST_LENGTH} characters`);
+          }
+          const date2 = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
+          const type = isPublic ? "public" : "private";
+          const id = env.generateId(12);
+          const timestamp = Date.now();
+          const userId = this.context.userId;
+          let imagePath = null;
+          if (image) {
+            imagePath = await this.context.saveBlob(image, isPublic);
+          }
+          const sql = "INSERT INTO posts (id, content, timestamp, userId, image, parentId, parentUserId, isEdited, isDeleted, expiresAt) VALUES (?, ?, ?, ?, ?, ?, ?, 0, 0, ?)";
+          await this.dailyDb.withDailyDatabase(date2, type, (db) => {
+            db.run(sql, [id, content, timestamp, userId, imagePath, parentId || null, parentUserId || null, expiresAt ?? null]);
+          }, { save: true, emitUpdate: true });
+        }
+        async editPost(postId, date2, newContent, isPublic = true) {
+          const type = isPublic ? "public" : "private";
+          await this.dailyDb.withDailyDatabase(date2, type, (db) => {
+            db.run("UPDATE posts SET content = ?, isEdited = 1, timestamp = ? WHERE id = ?", [newContent, Date.now(), postId]);
+          }, { save: true, emitUpdate: true });
+        }
+        async deletePost(postId, date2, isPublic = true) {
+          const type = isPublic ? "public" : "private";
+          await this.dailyDb.withDailyDatabase(date2, type, (db) => {
+            db.run('UPDATE posts SET content = "", image = NULL, isDeleted = 1, timestamp = ? WHERE id = ?', [Date.now(), postId]);
+          }, { save: true, emitUpdate: true });
+          await this.compactDatabase(date2, isPublic, false).catch(() => {
+          });
+        }
+        async like(postId, isPublic = true) {
+          const date2 = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
+          const type = isPublic ? "public" : "private";
+          const userId = this.context.userId;
+          const timestamp = Date.now();
+          await this.dailyDb.withDailyDatabase(date2, type, (db) => {
+            db.run("INSERT OR REPLACE INTO likes (postId, userId, timestamp) VALUES (?, ?, ?)", [postId, userId, timestamp]);
+          }, { save: true, emitUpdate: true });
+        }
+        async comment(parentId, parentUserId, content, image) {
+          await this.post(content, true, image, parentId, parentUserId);
+        }
+        /**
+         * Retrieves paginated posts from a single date partition database using keyset cursor pagination.
+         */
+        async getPostsPaginated(date2, type, options) {
+          const dbPath = this.context.storage.getPath(`${date2}.db`, type);
+          if (!await this.dailyDb.exists(dbPath)) {
+            return { items: [], nextCursor: null, prevCursor: null, hasMore: false, total: 0 };
+          }
+          const limit = Math.max(1, options?.limit ?? 50);
+          const direction = options?.direction ?? "before";
+          const decoded = PaginationCursor.decode(options?.cursor);
+          return await this.dailyDb.withDatabase(dbPath, (db) => {
+            const now = Date.now();
+            const qb = this.context.createQueryBuilder("posts").where("(expiresAt IS NULL OR expiresAt > ?)", now);
+            if (decoded) {
+              if (direction === "before") {
+                qb.where("(timestamp < ? OR (timestamp = ? AND id < ?))", decoded.timestamp, decoded.timestamp, decoded.id);
+                qb.orderBy("timestamp", "DESC").orderBy("id", "DESC");
+              } else {
+                qb.where("(timestamp > ? OR (timestamp = ? AND id > ?))", decoded.timestamp, decoded.timestamp, decoded.id);
+                qb.orderBy("timestamp", "ASC").orderBy("id", "ASC");
+              }
+            } else {
+              if (direction === "before") {
+                qb.orderBy("timestamp", "DESC").orderBy("id", "DESC");
+              } else {
+                qb.orderBy("timestamp", "ASC").orderBy("id", "ASC");
+              }
+            }
+            qb.limit(limit + 1);
+            const rawPosts = qb.execute(db);
+            const posts = rawPosts.map((row) => {
+              const post = { ...row };
+              if (typeof post.isEdited === "number") post.isEdited = !!post.isEdited;
+              if (typeof post.isDeleted === "number") post.isDeleted = !!post.isDeleted;
+              if (!post.userId && type === "followed") {
+                post.userId = date2.split("/")[0];
+              }
+              return post;
+            });
+            const hasMore = posts.length > limit;
+            const items = posts.slice(0, limit);
+            const nextCursor = hasMore && items.length > 0 ? PaginationCursor.encode(items[items.length - 1].timestamp, items[items.length - 1].id) : null;
+            const prevCursor = items.length > 0 ? PaginationCursor.encode(items[0].timestamp, items[0].id) : null;
+            return {
+              items,
+              nextCursor,
+              prevCursor,
+              hasMore
+            };
+          }, { applySchema: true });
+        }
+        async getPosts(date2, type) {
+          const res = await this.getPostsPaginated(date2, type, { limit: 1e5 });
+          return res.items;
+        }
+        /**
+         * Retrieves paginated feed posts across a sliding date window (including UTC tomorrow for clock skew),
+         * combining own public posts and followed users' posts, with like enrichment for the returned page.
+         */
+        async getFeedPostsPaginated(options) {
+          const days = options?.days ?? 5;
+          const includeFollowed = options?.includeFollowed ?? true;
+          const dates = [];
+          for (let i2 = -1; i2 < days; i2++) {
+            const d2 = /* @__PURE__ */ new Date();
+            d2.setUTCDate(d2.getUTCDate() - i2);
+            dates.push(d2.toISOString().split("T")[0]);
+          }
+          const allPosts = [];
+          for (const date2 of dates) {
+            const posts = await this.getPosts(date2, "public");
+            allPosts.push(...posts);
+          }
+          if (includeFollowed) {
+            const following = await this.context.getFollowing();
+            for (const user of following) {
+              for (const date2 of dates) {
+                const posts = await this.getPosts(`${user.userId}/${date2}`, "followed");
+                allPosts.push(...posts);
+              }
+            }
+          }
+          const postMap = /* @__PURE__ */ new Map();
+          for (const p2 of allPosts) {
+            const existing = postMap.get(p2.id);
+            if (!existing || p2.timestamp > existing.timestamp) {
+              postMap.set(p2.id, p2);
+            }
+          }
+          const deduplicated = Array.from(postMap.values());
+          const paginated = paginateItems(deduplicated, options);
+          await this.enrichLikes(paginated.items, days);
+          return paginated;
+        }
+        /**
+         * Retrieves feed posts across a sliding date window (including UTC tomorrow for clock skew),
+         * combining own public posts and followed users' posts, with like enrichment and sorting.
+         */
+        async getFeedPosts(days = 5, includeFollowed = true) {
+          const res = await this.getFeedPostsPaginated({ days, includeFollowed, limit: 1e5 });
+          return res.items;
+        }
+        /**
+         * Purges expired posts from a given date partition.
+         */
+        async cleanupExpired(date2, isPublic = true) {
+          const type = isPublic ? "public" : "private";
+          const dbPath = this.context.storage.getPath(`${date2}.db`, type);
+          if (!await this.dailyDb.exists(dbPath)) return 0;
+          const now = Date.now();
+          return await this.dailyDb.withDatabase(dbPath, (db) => {
+            let deletedCount = 0;
+            const countRes = db.exec("SELECT COUNT(*) FROM posts WHERE expiresAt IS NOT NULL AND expiresAt <= ?", [now]);
+            if (countRes && countRes.length > 0 && countRes[0].values[0]) {
+              deletedCount = Number(countRes[0].values[0][0]);
+            }
+            if (deletedCount > 0) {
+              db.run("DELETE FROM posts WHERE expiresAt IS NOT NULL AND expiresAt <= ?", [now]);
+              db.run("VACUUM");
+            }
+            return deletedCount;
+          }, { save: true, emitUpdate: true, applySchema: true, immediate: true });
+        }
+        /**
+         * Compacts feed SQLite databases by permanently purging deleted/tombstoned/expired posts
+         * and running SQLite VACUUM to reclaim storage and IndexedDB quota.
+         * Compaction runs if tombstone ratio >= 50% or if force is true.
+         */
+        async compactDatabase(date2, isPublic = true, force = false) {
+          const type = isPublic ? "public" : "private";
+          const dbPath = this.context.storage.getPath(`${date2}.db`, type);
+          if (!await this.dailyDb.exists(dbPath)) {
+            return { compacted: false, originalSize: 0, newSize: 0, freedBytes: 0, tombstoneRatio: 0 };
+          }
+          const data = await this.db.getStorage().getFile(dbPath);
+          const originalSize = data ? data.byteLength : 0;
+          const now = Date.now();
+          let compacted = false;
+          let newSize = originalSize;
+          let tombstoneRatio = 0;
+          await this.dailyDb.withDatabase(dbPath, (db) => {
+            const totalRes = db.exec("SELECT COUNT(*) FROM posts");
+            const total = totalRes && totalRes.length > 0 && totalRes[0].values[0] ? Number(totalRes[0].values[0][0]) : 0;
+            const tombstoneRes = db.exec("SELECT COUNT(*) FROM posts WHERE isDeleted = 1 OR (expiresAt IS NOT NULL AND expiresAt <= ?)", [now]);
+            const tombstones = tombstoneRes && tombstoneRes.length > 0 && tombstoneRes[0].values[0] ? Number(tombstoneRes[0].values[0][0]) : 0;
+            tombstoneRatio = total > 0 ? tombstones / total : 0;
+            if (force || tombstones >= 50 && tombstoneRatio >= 0.5) {
+              db.run("DELETE FROM posts WHERE isDeleted = 1 OR (expiresAt IS NOT NULL AND expiresAt <= ?)", [now]);
+              db.run("VACUUM");
+              const compactedBinary = db.export();
+              newSize = compactedBinary.byteLength;
+              compacted = true;
+            }
+          }, { save: true, emitUpdate: true, applySchema: true, immediate: true });
+          return {
+            compacted,
+            originalSize,
+            newSize,
+            freedBytes: originalSize - newSize,
+            tombstoneRatio
+          };
+        }
+        async enrichLikes(posts, days = 5) {
+          if (posts.length === 0) return;
+          const postMap = /* @__PURE__ */ new Map();
+          posts.forEach((p2) => {
+            p2.likesCount = 0;
+            p2.likedByMe = false;
+            postMap.set(p2.id, p2);
+          });
+          const myId = this.context.userId;
+          const following = await this.context.getFollowing();
+          const dates = [];
+          for (let i2 = 0; i2 < days; i2++) {
+            const d2 = /* @__PURE__ */ new Date();
+            d2.setUTCDate(d2.getUTCDate() - i2);
+            dates.push(d2.toISOString().split("T")[0]);
+          }
+          const processDb = async (date2, type) => {
+            const dbPath = type === "followed" ? this.context.storage.getPath(`${date2}.db`, "followed") : this.context.storage.getPath(`${date2}.db`, type);
+            if (!await this.dailyDb.exists(dbPath)) return;
+            await this.dailyDb.withDatabase(dbPath, (db) => {
+              const tableCheck = db.exec("SELECT name FROM sqlite_master WHERE type='table' AND name='likes'");
+              if (tableCheck.length > 0) {
+                const res = db.exec("SELECT postId, userId FROM likes");
+                if (res && res.length > 0) {
+                  for (const row of res[0].values) {
+                    const postId = row[0];
+                    const likerId = row[1];
+                    const post = postMap.get(postId);
+                    if (post) {
+                      post.likesCount = (post.likesCount || 0) + 1;
+                      if (likerId === myId) post.likedByMe = true;
+                    }
+                  }
+                }
+              }
+            }, { applySchema: true });
+          };
+          for (const date2 of dates) await processDb(date2, "public");
+          for (const user of following) {
+            for (const date2 of dates) await processDb(`${user.userId}/${date2}`, "followed");
+          }
+        }
+        // --- Group logic ---
+        async postToGroup(groupId, sharedKey, content, image, type = "text") {
+          const groups = await this.context.sovereign.getGroups();
+          const group3 = groups.find((g3) => g3.id === groupId);
+          const userId = this.context.userId;
+          if (group3) {
+            const member2 = group3.members.find((m2) => m2.userId === userId);
+            if (member2?.permissions?.canPost === false) {
+              throw new ModuleError("feed", `Permission denied: User ${userId} is not allowed to post in group ${groupId}`);
+            }
+          }
+          const date2 = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
+          const id = env.generateId(12);
+          const timestamp = Date.now();
+          let imagePath = null;
+          if (image) {
+            imagePath = await this.context.saveBlob(image, true);
+          }
+          const dbPath = `public/groups/${groupId}/${date2}.db`;
+          await this.dailyDb.withDatabase(dbPath, (db) => {
+            const sql = "INSERT INTO posts (id, content, timestamp, userId, image, isEdited, isDeleted, type) VALUES (?, ?, ?, ?, ?, 0, 0, ?)";
+            db.run(sql, [id, content, timestamp, userId, imagePath, type]);
+          }, {
+            save: true,
+            encryptKey: sharedKey,
+            decryptKey: sharedKey,
+            applySchema: true,
+            emitUpdate: true
+          });
+          this.context.emit(`group:${groupId}:update`, { path: dbPath });
+        }
+        async editGroupPost(groupId, sharedKey, postId, date2, newContent) {
+          const dbPath = `public/groups/${groupId}/${date2}.db`;
+          const userId = this.context.userId;
+          await this.dailyDb.withDatabase(dbPath, (db) => {
+            const sql = `
+                INSERT OR REPLACE INTO posts 
+                (id, content, timestamp, userId, isEdited, isDeleted) 
+                VALUES (?, ?, ?, ?, 1, 0)
+            `;
+            db.run(sql, [postId, newContent, Date.now(), userId]);
+          }, {
+            save: true,
+            encryptKey: sharedKey,
+            decryptKey: sharedKey,
+            applySchema: true,
+            emitUpdate: true
+          });
+          this.context.emit(`group:${groupId}:update`, { path: dbPath });
+        }
+        async deleteGroupPost(groupId, sharedKey, postId, date2, authorId) {
+          const myId = this.context.userId;
+          const dbPath = `public/groups/${groupId}/${date2}.db`;
+          await this.dailyDb.withDatabase(dbPath, async (db) => {
+            if (authorId === myId) {
+              db.run('UPDATE posts SET content = "", image = NULL, isDeleted = 1, timestamp = ? WHERE id = ?', [Date.now(), postId]);
+            } else {
+              const groups = await this.context.sovereign.getGroups();
+              const group3 = groups.find((g3) => g3.id === groupId);
+              const member2 = group3?.members.find((m2) => m2.userId === myId);
+              const canModerate = member2?.role === "owner" || member2?.role === "admin" || member2?.permissions?.canModerate === true;
+              if (!canModerate) {
+                throw new ModuleError("feed", `Permission denied: User ${myId} does not have moderation permission in group ${groupId}`);
+              }
+              db.run("CREATE TABLE IF NOT EXISTS moderation (targetId TEXT PRIMARY KEY, action TEXT, timestamp INTEGER)");
+              db.run("INSERT OR REPLACE INTO moderation (targetId, action, timestamp) VALUES (?, ?, ?)", [postId, "delete", Date.now()]);
+            }
+          }, {
+            save: true,
+            encryptKey: sharedKey,
+            decryptKey: sharedKey,
+            applySchema: true,
+            emitUpdate: true
+          });
+          this.context.emit(`group:${groupId}:update`, { path: dbPath });
+        }
+        async getGroupPostsPaginated(groupId, date2, options) {
+          const posts = await this._fetchGroupPostsRaw(groupId, date2);
+          return paginateItems(posts, options);
+        }
+        async getGroupPosts(groupId, date2) {
+          const res = await this.getGroupPostsPaginated(groupId, date2, { limit: 1e5 });
+          return res.items;
+        }
+        async _fetchGroupPostsRaw(groupId, date2) {
+          const deletedPostIds = /* @__PURE__ */ new Set();
+          const groups = await this.context.sovereign.getGroups();
+          const group3 = groups.find((g3) => g3.id === groupId);
+          if (!group3) return [];
+          const processModeration = (db, memberId) => {
+            try {
+              const member2 = group3.members.find((m2) => m2.userId === memberId);
+              const canModerate = member2?.role === "owner" || member2?.role === "admin" || member2?.permissions?.canModerate === true;
+              if (!canModerate) return;
+              const res = db.exec('SELECT targetId FROM moderation WHERE action = "delete"');
+              if (res && res.length > 0) {
+                res[0].values.forEach((row) => {
+                  deletedPostIds.add(row[0]);
+                });
+              }
+            } catch (e2) {
+              Logger.warn("Feed", `Failed to process moderation entries for member ${memberId}: ${e2.message}`);
+            }
+          };
+          const postsMap = /* @__PURE__ */ new Map();
+          const processPosts = async (db) => {
+            try {
+              const res = db.exec("SELECT * FROM posts");
+              if (res && res.length > 0) {
+                const columns = res[0].columns;
+                const batch = res[0].values.map((row) => {
+                  const post = {};
+                  columns.forEach((col, i2) => {
+                    let val = row[i2];
+                    if ((col === "isEdited" || col === "isDeleted") && typeof val === "number") val = !!val;
+                    post[col] = val;
+                  });
+                  return post;
+                });
+                batch.forEach((p2) => {
+                  if (p2.isDeleted || deletedPostIds.has(p2.id)) return;
+                  const existing = postsMap.get(p2.id);
+                  if (!existing || p2.timestamp > existing.timestamp) {
+                    postsMap.set(p2.id, p2);
+                  }
+                });
+              }
+            } catch (e2) {
+              Logger.warn("Feed", `Failed to process group posts: ${e2.message}`);
+            }
+          };
+          const myPath = `public/groups/${groupId}/${date2}.db`;
+          if (await this.dailyDb.exists(myPath)) {
+            await this.dailyDb.withDatabase(myPath, async (db) => {
+              processModeration(db, this.context.userId);
+              await processPosts(db);
+            }, { decryptKey: group3.sharedKey, applySchema: true });
+          }
+          for (const member2 of group3.members) {
+            if (member2.userId === this.context.userId) continue;
+            const memberPath = `followed/${member2.userId}/groups/${groupId}/${date2}.db`;
+            if (await this.dailyDb.exists(memberPath)) {
+              await this.dailyDb.withDatabase(memberPath, async (db) => {
+                processModeration(db, member2.userId);
+                await processPosts(db);
+              }, { decryptKey: group3.sharedKey, applySchema: true });
+            }
+          }
+          const posts = Array.from(postsMap.values());
+          posts.sort((a2, b2) => b2.timestamp - a2.timestamp);
+          return posts;
+        }
+      };
+    }
+  });
+
+  // src/modules/Messaging.ts
+  var Messaging_exports = {};
+  __export(Messaging_exports, {
+    MessagingModule: () => MessagingModule
+  });
+  var MessagingModule;
+  var init_Messaging = __esm({
+    "src/modules/Messaging.ts"() {
+      "use strict";
+      init_polyfills();
+      init_Logger();
+      init_Environment();
+      init_Errors();
+      init_Constants();
+      init_DailyDatabase();
+      init_Pagination();
+      MessagingModule = class {
+        constructor(contextOrDb, options) {
+          this.MODULE_NAME = "messaging";
+          this.context = "sovereign" in contextOrDb ? contextOrDb : contextOrDb.createModuleContext(this.MODULE_NAME);
+          this.options = {
+            minProtocolVersion: options?.minProtocolVersion ?? "v1",
+            ...options
+          };
+          this.context.registerDefinition({
+            name: this.MODULE_NAME,
+            tables: [
+              {
+                name: "messages",
+                schema: `
+                        id TEXT PRIMARY KEY,
+                        content TEXT,
+                        timestamp INTEGER,
+                        senderId TEXT,
+                        recipientId TEXT,
+                        image TEXT,
+                        isEdited INTEGER DEFAULT 0,
+                        isDeleted INTEGER DEFAULT 0
+                    `
+              }
+            ],
+            migrations: [
+              {
+                version: 2,
+                sql: ['ALTER TABLE messages ADD COLUMN status TEXT DEFAULT "sent";']
+              },
+              {
+                version: 3,
+                sql: ["ALTER TABLE messages ADD COLUMN expiresAt INTEGER DEFAULT NULL;"]
+              },
+              {
+                version: 4,
+                sql: ["ALTER TABLE messages ADD COLUMN localImage TEXT DEFAULT NULL;"]
+              },
+              {
+                version: 5,
+                sql: ["ALTER TABLE messages ADD COLUMN imageEphemeralPk TEXT DEFAULT NULL;"]
+              },
+              {
+                version: 6,
+                sql: ["CREATE INDEX IF NOT EXISTS idx_messages_timestamp_id ON messages(timestamp DESC, id DESC);"]
+              }
+            ]
+          });
+          this.dailyDb = this.context.getDailyDatabase({ debounceMs: 500 });
+          this.context.registerInstance(this);
+        }
+        get db() {
+          return this.context.sovereign;
+        }
+        get sovereign() {
+          return this.context.sovereign;
+        }
+        /**
+         * Set the minimum accepted protocol version.
+         */
+        setMinProtocolVersion(version) {
+          this.options.minProtocolVersion = version;
+        }
+        /**
+         * Get the current minimum accepted protocol version.
+         */
+        getMinProtocolVersion() {
+          return this.options.minProtocolVersion ?? "v1";
+        }
+        /**
+         * Send a direct encrypted message to a recipient.
+         * @param recipientId - Target user's ID
+         * @param content - Message text
+         * @param image - Optional image blob
+         * @param expiresAt - Optional Unix timestamp (ms) after which the message should be purged
+         */
+        async sendDirectMessage(recipientId, content, image, expiresAt) {
+          if (content.length > DEFAULTS.MAX_MESSAGE_LENGTH) {
+            throw new ModuleError("messaging", `Message exceeds maximum length of ${DEFAULTS.MAX_MESSAGE_LENGTH} characters`);
+          }
+          const date2 = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
+          const id = env.generateId(12);
+          const timestamp = Date.now();
+          const senderId = this.context.userId;
+          const message = { id, content, timestamp, senderId, recipientId, isEdited: false, isDeleted: false, status: "sent", expiresAt };
+          await this._saveAndSendDM(recipientId, message, date2, image);
+        }
+        async _saveAndSendDM(recipientId, message, date2, image) {
+          const registry = await this.context.getPublicRegistry();
+          let recipient = registry.find((u2) => u2.userId === recipientId);
+          if (!recipient) {
+            const following = await this.context.getFollowing();
+            const f2 = following.find((u2) => u2.userId === recipientId);
+            if (f2?.publicKey) recipient = { userId: f2.userId, publicKey: f2.publicKey };
+          }
+          if (!recipient?.publicKey) throw new AuthError("Recipient public key not found");
+          const { ephemeralPublicKey, sharedSecret } = this.context.deriveEphemeralSharedSecret(recipient.publicKey);
+          let outgoing = { ...message };
+          let localImage;
+          if (image?.byteLength) {
+            const encryptedImage = await this.context.encrypt(image, sharedSecret);
+            outgoing.image = await this.context.saveBlob(encryptedImage, true);
+            outgoing.imageEncryption = { version: 1, ephemeralPublicKey };
+            localImage = `private/dm-attachments/${env.generateId(32)}`;
+            await this.context.storage.raw.saveFile(localImage, image);
+          }
+          const outboxPath = this.context.storage.getPath(`dms/outbox/${date2}.db`, "private");
+          const localMessage = { ...outgoing, localImage: localImage || outgoing.localImage };
+          await this.dailyDb.withDatabase(outboxPath, (outboxDb) => {
+            outboxDb.run(
+              "INSERT OR REPLACE INTO messages (id, content, timestamp, senderId, recipientId, image, isEdited, isDeleted, status, expiresAt, localImage, imageEphemeralPk) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+              [localMessage.id, localMessage.content, localMessage.timestamp, localMessage.senderId, localMessage.recipientId, localMessage.image || null, localMessage.isEdited ? 1 : 0, localMessage.isDeleted ? 1 : 0, localMessage.status || "sent", localMessage.expiresAt ?? null, localMessage.localImage || null, localMessage.imageEncryption?.ephemeralPublicKey || null]
+            );
+          }, { save: true, emitUpdate: true, applySchema: true });
+          const publicDmPath = this.context.storage.getPath(`dms/${recipientId}/${date2}.db`, "public");
+          await this.dailyDb.withDatabase(publicDmPath, async (publicDb) => {
+            publicDb.exec(`CREATE TABLE IF NOT EXISTS messages (id TEXT PRIMARY KEY, encrypted_data BLOB, ephemeral_pk TEXT);`);
+            try {
+              publicDb.exec(`ALTER TABLE messages ADD COLUMN ephemeral_pk TEXT;`);
+            } catch (e2) {
+              Logger.debug("Messaging", "Column ephemeral_pk already exists or alter table ignored");
+            }
+            const { localImage: _localOnly, ...wireMessage } = outgoing;
+            const encrypted = await this.context.encrypt(new TextEncoder().encode(JSON.stringify(wireMessage)), sharedSecret);
+            publicDb.run("INSERT OR REPLACE INTO messages (id, encrypted_data, ephemeral_pk) VALUES (?, ?, ?)", [message.id, encrypted, ephemeralPublicKey]);
+          }, { save: true, applySchema: false });
+          this.context.emit(`${this.MODULE_NAME}:update`, { path: outboxPath });
+        }
+        /** Loads a DM attachment and decrypts it on the recipient device. Legacy attachments remain readable. */
+        async getMessageImage(message) {
+          if (message.localImage) return this.context.getBlob(message.localImage);
+          const path2 = message.image;
+          if (!path2) return null;
+          const data = await this.context.getBlob(path2, message.senderId);
+          if (!data) return null;
+          if (!message.imageEncryption) {
+            if ((this.options.minProtocolVersion ?? "v1") === "v3") {
+              throw new AuthError("Unencrypted or legacy DM attachment rejected under V3 policy");
+            }
+            return data;
+          }
+          if (message.imageEncryption.version !== 1 || !message.imageEncryption.ephemeralPublicKey) {
+            throw new AuthError("Unsupported encrypted DM attachment format");
+          }
+          const key = this.context.deriveRecipientSharedSecret(message.imageEncryption.ephemeralPublicKey);
+          return this.context.decrypt(data, key);
+        }
+        async editMessage(recipientId, messageId, date2, newContent) {
+          const timestamp = Date.now();
+          const senderId = this.context.userId;
+          const outboxPath = this.context.storage.getPath(`dms/outbox/${date2}.db`, "private");
+          let imagePath = null;
+          let localImagePath = null;
+          let imageEphemeralPk = null;
+          if (await this.dailyDb.exists(outboxPath)) {
+            await this.dailyDb.withDatabase(outboxPath, (outboxDb) => {
+              const res = outboxDb.exec("SELECT image, localImage, imageEphemeralPk FROM messages WHERE id = ?", [messageId]);
+              if (res && res.length > 0 && res[0].values.length > 0) {
+                imagePath = res[0].values[0][0];
+                localImagePath = res[0].values[0][1];
+                imageEphemeralPk = res[0].values[0][2];
+              }
+            }, { applySchema: true });
+          }
+          const message = {
+            id: messageId,
+            content: newContent,
+            timestamp,
+            senderId,
+            recipientId,
+            image: imagePath || void 0,
+            localImage: localImagePath || void 0,
+            imageEncryption: imageEphemeralPk ? { version: 1, ephemeralPublicKey: imageEphemeralPk } : void 0,
+            isEdited: true,
+            isDeleted: false,
+            status: "sent"
+          };
+          await this._saveAndSendDM(recipientId, message, date2);
+        }
+        async deleteMessage(recipientId, messageId, date2) {
+          const timestamp = Date.now();
+          const senderId = this.context.userId;
+          const message = {
+            id: messageId,
+            content: "",
+            timestamp,
+            senderId,
+            recipientId,
+            image: void 0,
+            isEdited: false,
+            isDeleted: true,
+            status: "sent"
+          };
+          await this._saveAndSendDM(recipientId, message, date2);
+          await this.compactDatabase(date2, false).catch(() => {
+          });
+        }
+        async markAsRead(senderId, messageId, date2) {
+          const path2 = this.context.storage.getPath(`receipts/${senderId}/${date2}.db`, "public");
+          await this.dailyDb.withDatabase(path2, (db) => {
+            db.exec(`CREATE TABLE IF NOT EXISTS receipts (messageId TEXT PRIMARY KEY, status TEXT, timestamp INTEGER);`);
+            db.run("INSERT OR REPLACE INTO receipts (messageId, status, timestamp) VALUES (?, ?, ?)", [messageId, "read", Date.now()]);
+          }, { save: true, emitUpdate: true, applySchema: false, immediate: true });
+        }
+        async markBatchAsRead(senderId, messages) {
+          const dates = [...new Set(messages.map((m2) => m2.date))];
+          for (const date2 of dates) {
+            const path2 = this.context.storage.getPath(`receipts/${senderId}/${date2}.db`, "public");
+            const msgsForDate = messages.filter((m2) => m2.date === date2);
+            await this.dailyDb.withDatabase(path2, (db) => {
+              db.exec(`CREATE TABLE IF NOT EXISTS receipts (messageId TEXT PRIMARY KEY, status TEXT, timestamp INTEGER);`);
+              for (const m2 of msgsForDate) {
+                db.run("INSERT OR REPLACE INTO receipts (messageId, status, timestamp) VALUES (?, ?, ?)", [m2.id, "read", Date.now()]);
+              }
+            }, { save: true, emitUpdate: true, applySchema: false, immediate: true });
+          }
+        }
+        async markAsDelivered(senderId, messageId, date2) {
+          const path2 = this.context.storage.getPath(`receipts/${senderId}/${date2}.db`, "public");
+          await this.dailyDb.withDatabase(path2, (db) => {
+            db.exec(`CREATE TABLE IF NOT EXISTS receipts (messageId TEXT PRIMARY KEY, status TEXT, timestamp INTEGER);`);
+            const existing = db.exec("SELECT status FROM receipts WHERE messageId = ?", [messageId]);
+            if (existing && existing.length > 0 && existing[0].values.length > 0 && existing[0].values[0][0] === "read") {
+              return false;
+            }
+            db.run("INSERT OR REPLACE INTO receipts (messageId, status, timestamp) VALUES (?, ?, ?)", [messageId, "delivered", Date.now()]);
+            return true;
+          }, { save: (changed) => !!changed, emitUpdate: true, applySchema: false, immediate: true });
+        }
+        async markBatchAsDelivered(senderId, messages) {
+          const dates = [...new Set(messages.map((m2) => m2.date))];
+          for (const date2 of dates) {
+            const path2 = this.context.storage.getPath(`receipts/${senderId}/${date2}.db`, "public");
+            const msgsForDate = messages.filter((m2) => m2.date === date2);
+            await this.dailyDb.withDatabase(path2, (db) => {
+              db.exec(`CREATE TABLE IF NOT EXISTS receipts (messageId TEXT PRIMARY KEY, status TEXT, timestamp INTEGER);`);
+              let changed = false;
+              for (const m2 of msgsForDate) {
+                const existing = db.exec("SELECT status FROM receipts WHERE messageId = ?", [m2.id]);
+                if (!(existing && existing.length > 0 && existing[0].values.length > 0 && existing[0].values[0][0] === "read")) {
+                  db.run("INSERT OR REPLACE INTO receipts (messageId, status, timestamp) VALUES (?, ?, ?)", [m2.id, "delivered", Date.now()]);
+                  changed = true;
+                }
+              }
+              return changed;
+            }, { save: (changed) => !!changed, emitUpdate: true, applySchema: false, immediate: true });
+          }
+        }
+        /**
+         * Gets the delivery or read receipt status of an outgoing message from the outbox.
+         */
+        async getMessageReceipt(messageId, date2) {
+          const outboxPath = this.context.storage.getPath(`dms/outbox/${date2}.db`, "private");
+          if (!await this.dailyDb.exists(outboxPath)) return null;
+          return await this.dailyDb.withDatabase(outboxPath, (db) => {
+            const res = db.exec("SELECT status FROM messages WHERE id = ?", [messageId]);
+            if (res && res.length > 0 && res[0].values.length > 0) {
+              return res[0].values[0][0] || "sent";
+            }
+            return null;
+          }, { applySchema: true });
+        }
+        /**
+         * Retrieves paginated inbox and outbox messages across a sliding date window (including UTC tomorrow for clock skew),
+         * applying receipt updates, decryption across supported protocol versions, and keyset cursor pagination.
+         */
+        async getInboxMessagesPaginated(options) {
+          const days = options?.days ?? 5;
+          const conversationWith = options?.conversationWith;
+          const messages = [];
+          const following = await this.context.getFollowing();
+          const myId = this.context.userId;
+          const sqliteInstance = await DailyDatabase.getSqliteInstance();
+          const dates = [];
+          for (let i2 = -1; i2 < days; i2++) {
+            const d2 = /* @__PURE__ */ new Date();
+            d2.setUTCDate(d2.getUTCDate() - i2);
+            dates.push(d2.toISOString().split("T")[0]);
+          }
+          const targetUsers = conversationWith ? following.filter((u2) => u2.userId === conversationWith) : following;
+          for (const user of targetUsers) {
+            for (const date2 of dates) {
+              const receiptPath = this.context.storage.getPath(`${user.userId}/receipts/${myId}/${date2}.db`, "followed");
+              const receiptData = await this.context.storage.raw.getFile(receiptPath);
+              if (receiptData) {
+                const rdb = new sqliteInstance.Database(receiptData);
+                try {
+                  const res = rdb.exec("SELECT messageId, status FROM receipts");
+                  if (res && res.length > 0) {
+                    const outboxPath = this.context.storage.getPath(`dms/outbox/${date2}.db`, "private");
+                    await this.dailyDb.withDatabase(outboxPath, (outboxDb) => {
+                      for (const row of res[0].values) {
+                        const [mid, status] = row;
+                        outboxDb.run(`
+                                        UPDATE messages SET status = ? 
+                                        WHERE id = ? AND (
+                                            (status = 'sent' AND ? IN ('delivered', 'read')) OR
+                                            (status = 'delivered' AND ? = 'read')
+                                        )
+                                    `, [status, mid, status, status]);
+                      }
+                    }, { save: true, emitUpdate: true, applySchema: true });
+                  }
+                } catch (e2) {
+                  Logger.warn("Messaging", `Failed to apply receipt update from ${user.userId}: ${e2.message}`);
+                }
+                rdb.close();
+              }
+            }
+          }
+          for (const user of targetUsers) {
+            const sharedSecretV2 = this.context.deriveSharedSecret(user.publicKey);
+            const sharedSecretV1 = this.context.deriveSharedSecret(user.publicKey, "SovereignS3nc-DM-v1-raw");
+            for (const date2 of dates) {
+              const localPath = this.context.storage.getPath(`${user.userId}/dms/${myId}/${date2}.db`, "followed");
+              const data = await this.context.storage.raw.getFile(localPath);
+              if (data) {
+                const db = new sqliteInstance.Database(data);
+                try {
+                  let hasEphemeralCol = false;
+                  try {
+                    const tableInfo = db.exec("PRAGMA table_info(messages)");
+                    if (tableInfo && tableInfo.length > 0) {
+                      hasEphemeralCol = tableInfo[0].values.some((col) => col[1] === "ephemeral_pk");
+                    }
+                  } catch (e2) {
+                    Logger.debug("Messaging", `PRAGMA table_info check failed: ${e2.message}`);
+                  }
+                  const query = hasEphemeralCol ? "SELECT encrypted_data, ephemeral_pk FROM messages" : "SELECT encrypted_data FROM messages";
+                  const res = db.exec(query);
+                  if (res && res.length > 0) {
+                    const newMsgsForUser = [];
+                    for (const row of res[0].values) {
+                      try {
+                        const encryptedData = row[0];
+                        const ephemeralPk = hasEphemeralCol ? row[1] : null;
+                        let decrypted = null;
+                        const minVersion = this.options.minProtocolVersion ?? "v1";
+                        if (ephemeralPk) {
+                          try {
+                            const sharedSecretV3 = this.context.deriveRecipientSharedSecret(ephemeralPk);
+                            decrypted = await this.context.decrypt(encryptedData, sharedSecretV3);
+                          } catch (e2) {
+                            Logger.debug("Messaging", `V3 ephemeral decrypt failed: ${e2.message}`);
+                          }
+                        } else if (minVersion === "v3") {
+                          Logger.warn("Messaging", `Protocol downgrade rejected: message missing required V3 ephemeral key from user ${user.userId}`);
+                        }
+                        if (!decrypted && minVersion !== "v3") {
+                          try {
+                            decrypted = await this.context.decrypt(encryptedData, sharedSecretV2);
+                          } catch (e2) {
+                            Logger.debug("Messaging", `V2 static HKDF decrypt failed: ${e2.message}`);
+                          }
+                        }
+                        if (!decrypted && minVersion === "v1") {
+                          try {
+                            decrypted = await this.context.decrypt(encryptedData, sharedSecretV1);
+                          } catch (e2) {
+                            Logger.debug("Messaging", `V1 raw legacy decrypt failed: ${e2.message}`);
+                          }
+                        }
+                        if (decrypted) {
+                          const parsed = JSON.parse(new TextDecoder().decode(decrypted));
+                          if (typeof parsed.isEdited === "number") parsed.isEdited = !!parsed.isEdited;
+                          if (typeof parsed.isDeleted === "number") parsed.isDeleted = !!parsed.isDeleted;
+                          if (!conversationWith || parsed.senderId === conversationWith || parsed.recipientId === conversationWith) {
+                            messages.push(parsed);
+                          }
+                          newMsgsForUser.push(parsed);
+                        }
+                      } catch (e2) {
+                        Logger.warn("Messaging", `Failed to decrypt/parse message: ${e2.message}`);
+                      }
+                    }
+                    if (newMsgsForUser.length > 0) {
+                      await this.markBatchAsDelivered(user.userId, newMsgsForUser.map((m2) => ({
+                        id: m2.id,
+                        date: date2
+                      })));
+                    }
+                  }
+                } catch (e2) {
+                  Logger.warn("Messaging", `Failed to process incoming DM SQLite db from ${user.userId}: ${e2.message}`);
+                }
+                db.close();
+              }
+            }
+          }
+          for (const date2 of dates) {
+            const outboxPath = this.context.storage.getPath(`dms/outbox/${date2}.db`, "private");
+            if (await this.dailyDb.exists(outboxPath)) {
+              await this.dailyDb.withDatabase(outboxPath, (db) => {
+                const res = db.exec("SELECT * FROM messages");
+                if (res && res.length > 0 && res[0].values && res[0].columns) {
+                  const columns = res[0].columns;
+                  const myMsgs = res[0].values.map((row) => {
+                    const msg = {};
+                    columns.forEach((col, i2) => {
+                      let val = row[i2];
+                      if ((col === "isEdited" || col === "isDeleted") && typeof val === "number") {
+                        val = !!val;
+                      }
+                      msg[col] = val;
+                    });
+                    if (msg.imageEphemeralPk) {
+                      msg.imageEncryption = { version: 1, ephemeralPublicKey: msg.imageEphemeralPk };
+                      delete msg.imageEphemeralPk;
+                    }
+                    return msg;
+                  }).filter((m2) => !conversationWith || m2.recipientId === conversationWith || m2.senderId === conversationWith);
+                  messages.push(...myMsgs);
+                }
+              }, { applySchema: true });
+            }
+          }
+          const now = Date.now();
+          const msgMap = /* @__PURE__ */ new Map();
+          for (const m2 of messages) {
+            if (m2.expiresAt && m2.expiresAt <= now) {
+              continue;
+            }
+            const existing = msgMap.get(m2.id);
+            if (!existing || m2.timestamp > existing.timestamp) {
+              msgMap.set(m2.id, m2);
+            }
+          }
+          const finalMsgs = Array.from(msgMap.values());
+          return paginateItems(finalMsgs, options);
+        }
+        async getInboxMessages(days = 5) {
+          const res = await this.getInboxMessagesPaginated({ days, limit: 1e5 });
+          return res.items;
+        }
+        /**
+         * Purges expired messages from outbox database partitions.
+         */
+        async cleanupExpired(dates) {
+          const targetDates = dates && dates.length > 0 ? dates : [(/* @__PURE__ */ new Date()).toISOString().split("T")[0]];
+          let deleted = 0;
+          const now = Date.now();
+          for (const date2 of targetDates) {
+            const outboxPath = this.context.storage.getPath(`dms/outbox/${date2}.db`, "private");
+            if (await this.dailyDb.exists(outboxPath)) {
+              const count = await this.dailyDb.withDatabase(outboxPath, (db) => {
+                const countRes = db.exec("SELECT COUNT(*) FROM messages WHERE expiresAt IS NOT NULL AND expiresAt <= ?", [now]);
+                let c2 = 0;
+                if (countRes && countRes.length > 0 && countRes[0].values[0]) {
+                  c2 = Number(countRes[0].values[0][0]);
+                  if (c2 > 0) {
+                    db.run("DELETE FROM messages WHERE expiresAt IS NOT NULL AND expiresAt <= ?", [now]);
+                    db.run("VACUUM");
+                  }
+                }
+                return c2;
+              }, { save: true, emitUpdate: true, applySchema: true, immediate: true });
+              deleted += count;
+            }
+          }
+          return deleted;
+        }
+        /**
+         * Compacts outbox SQLite databases by permanently purging deleted/tombstoned/expired records
+         * and running SQLite VACUUM to reclaim disk and IndexedDB quota.
+         * Compaction runs if tombstone ratio >= 50% or if force is true.
+         */
+        async compactDatabase(date2, force = false) {
+          const targetDate = date2 || (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
+          const outboxPath = this.context.storage.getPath(`dms/outbox/${targetDate}.db`, "private");
+          if (!await this.dailyDb.exists(outboxPath)) {
+            return { compacted: false, originalSize: 0, newSize: 0, freedBytes: 0, tombstoneRatio: 0 };
+          }
+          const data = await this.context.storage.raw.getFile(outboxPath);
+          const originalSize = data ? data.byteLength : 0;
+          const now = Date.now();
+          let compacted = false;
+          let newSize = originalSize;
+          let tombstoneRatio = 0;
+          await this.dailyDb.withDatabase(outboxPath, (db) => {
+            const totalRes = db.exec("SELECT COUNT(*) FROM messages");
+            const total = totalRes && totalRes.length > 0 && totalRes[0].values[0] ? Number(totalRes[0].values[0][0]) : 0;
+            const tombstoneRes = db.exec("SELECT COUNT(*) FROM messages WHERE isDeleted = 1 OR (expiresAt IS NOT NULL AND expiresAt <= ?)", [now]);
+            const tombstones = tombstoneRes && tombstoneRes.length > 0 && tombstoneRes[0].values[0] ? Number(tombstoneRes[0].values[0][0]) : 0;
+            tombstoneRatio = total > 0 ? tombstones / total : 0;
+            if (force || tombstones >= 50 && tombstoneRatio >= 0.5) {
+              db.run("DELETE FROM messages WHERE isDeleted = 1 OR (expiresAt IS NOT NULL AND expiresAt <= ?)", [now]);
+              db.run("VACUUM");
+              const compactedBinary = db.export();
+              newSize = compactedBinary.byteLength;
+              compacted = true;
+            }
+          }, { save: true, emitUpdate: true, applySchema: true, immediate: true });
+          return {
+            compacted,
+            originalSize,
+            newSize,
+            freedBytes: originalSize - newSize,
+            tombstoneRatio
+          };
+        }
+      };
+    }
+  });
+
   // node_modules/path-browserify/index.js
   var require_path_browserify = __commonJS({
     "node_modules/path-browserify/index.js"(exports, module) {
@@ -98358,12 +99646,6 @@ ${toHex(hashedRequest)}`;
         createModuleContext(moduleName) {
           return new ModuleContext(this, moduleName);
         }
-        /**
-         * Retrieves an active module instance by constructor class or registered module name.
-         */
-        getModule(predicateOrName) {
-          return this.getModuleInstance(predicateOrName);
-        }
         getModulePath(moduleName, subPath, type) {
           if (!/^[a-z0-9_-]+$/i.test(moduleName)) {
             throw new ModuleError(moduleName, `Invalid module name: "${moduleName}". Only alphanumeric, underscore, and hyphen are allowed.`);
@@ -98400,6 +99682,27 @@ ${toHex(hashedRequest)}`;
           } else {
             return this.moduleInstances.find((m2) => m2 instanceof predicateOrName);
           }
+        }
+        getModule(predicateOrName) {
+          let instance = this.getModuleInstance(predicateOrName);
+          if (!instance && typeof predicateOrName === "string") {
+            const key = predicateOrName.toLowerCase();
+            try {
+              if (key === "profile") {
+                const { ProfileModule: ProfileModule2 } = (init_Profile(), __toCommonJS(Profile_exports));
+                instance = new ProfileModule2(this);
+              } else if (key === "feed") {
+                const { FeedModule: FeedModule2 } = (init_Feed(), __toCommonJS(Feed_exports));
+                instance = new FeedModule2(this);
+              } else if (key === "messaging") {
+                const { MessagingModule: MessagingModule2 } = (init_Messaging(), __toCommonJS(Messaging_exports));
+                instance = new MessagingModule2(this);
+              }
+            } catch (e2) {
+              Logger.warn("Sovereign", `Auto-instantiation of module ${predicateOrName} failed`, e2);
+            }
+          }
+          return instance;
         }
         connectNativeRTC(transport) {
           if (this.config.enableP2PPairing === false) {
@@ -99085,744 +100388,6 @@ ${toHex(hashedRequest)}`;
       };
       _SovereignS3nc.VERSION = "3.2.1";
       SovereignS3nc = _SovereignS3nc;
-    }
-  });
-
-  // src/modules/Feed.ts
-  var FEED_MODULE_DEFINITION, FeedModule;
-  var init_Feed = __esm({
-    "src/modules/Feed.ts"() {
-      "use strict";
-      init_polyfills();
-      init_Logger();
-      init_Environment();
-      init_Errors();
-      init_Constants();
-      init_Pagination();
-      FEED_MODULE_DEFINITION = {
-        name: "feed",
-        tables: [
-          {
-            name: "posts",
-            schema: `
-                id TEXT PRIMARY KEY,
-                content TEXT,
-                timestamp INTEGER,
-                userId TEXT,
-                image TEXT,
-                parentId TEXT,
-                parentUserId TEXT,
-                isEdited INTEGER DEFAULT 0,
-                isDeleted INTEGER DEFAULT 0,
-                type TEXT DEFAULT 'text'
-            `
-          },
-          {
-            name: "likes",
-            schema: `
-                postId TEXT,
-                userId TEXT,
-                timestamp INTEGER,
-                PRIMARY KEY (postId, userId)
-            `
-          },
-          {
-            name: "moderation",
-            schema: `
-                targetId TEXT PRIMARY KEY,
-                action TEXT,
-                timestamp INTEGER
-            `
-          }
-        ],
-        migrations: [
-          {
-            version: 2,
-            sql: ["ALTER TABLE posts ADD COLUMN expiresAt INTEGER DEFAULT NULL;"]
-          },
-          {
-            version: 3,
-            sql: ["CREATE INDEX IF NOT EXISTS idx_posts_timestamp_id ON posts(timestamp DESC, id DESC);"]
-          }
-        ]
-      };
-      FeedModule = class {
-        constructor(contextOrDb) {
-          this.MODULE_NAME = "feed";
-          this.context = "sovereign" in contextOrDb ? contextOrDb : contextOrDb.createModuleContext(this.MODULE_NAME);
-          this.dailyDb = this.context.getDailyDatabase({ debounceMs: 500 });
-          this.context.registerDefinition(FEED_MODULE_DEFINITION);
-          this.context.registerInstance(this);
-        }
-        get db() {
-          return this.context.sovereign;
-        }
-        get sovereign() {
-          return this.context.sovereign;
-        }
-        async getDb(date2, type, groupId, sharedKey) {
-          let dbPath;
-          if (type === "group" && groupId) {
-            dbPath = `public/groups/${groupId}/${date2}.db`;
-            const session2 = await this.dailyDb.openDatabase(dbPath, {
-              applySchema: true,
-              encryptKey: sharedKey,
-              decryptKey: sharedKey
-            });
-            return session2.db;
-          } else if (type === "followed") {
-            dbPath = this.context.storage.getPath(`${date2}.db`, "followed");
-          } else {
-            dbPath = this.context.storage.getPath(`${date2}.db`, type);
-          }
-          const session = await this.dailyDb.openDatabase(dbPath, { applySchema: true });
-          return session.db;
-        }
-        async post(content, isPublic = true, image, parentId, parentUserId, expiresAt) {
-          if (content.length > DEFAULTS.MAX_POST_LENGTH) {
-            throw new ModuleError("feed", `Post exceeds maximum length of ${DEFAULTS.MAX_POST_LENGTH} characters`);
-          }
-          const date2 = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
-          const type = isPublic ? "public" : "private";
-          const id = env.generateId(12);
-          const timestamp = Date.now();
-          const userId = this.context.userId;
-          let imagePath = null;
-          if (image) {
-            imagePath = await this.context.saveBlob(image, isPublic);
-          }
-          const sql = "INSERT INTO posts (id, content, timestamp, userId, image, parentId, parentUserId, isEdited, isDeleted, expiresAt) VALUES (?, ?, ?, ?, ?, ?, ?, 0, 0, ?)";
-          await this.dailyDb.withDailyDatabase(date2, type, (db) => {
-            db.run(sql, [id, content, timestamp, userId, imagePath, parentId || null, parentUserId || null, expiresAt ?? null]);
-          }, { save: true, emitUpdate: true });
-        }
-        async editPost(postId, date2, newContent, isPublic = true) {
-          const type = isPublic ? "public" : "private";
-          await this.dailyDb.withDailyDatabase(date2, type, (db) => {
-            db.run("UPDATE posts SET content = ?, isEdited = 1, timestamp = ? WHERE id = ?", [newContent, Date.now(), postId]);
-          }, { save: true, emitUpdate: true });
-        }
-        async deletePost(postId, date2, isPublic = true) {
-          const type = isPublic ? "public" : "private";
-          await this.dailyDb.withDailyDatabase(date2, type, (db) => {
-            db.run('UPDATE posts SET content = "", image = NULL, isDeleted = 1, timestamp = ? WHERE id = ?', [Date.now(), postId]);
-          }, { save: true, emitUpdate: true });
-          await this.compactDatabase(date2, isPublic, false).catch(() => {
-          });
-        }
-        async like(postId, isPublic = true) {
-          const date2 = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
-          const type = isPublic ? "public" : "private";
-          const userId = this.context.userId;
-          const timestamp = Date.now();
-          await this.dailyDb.withDailyDatabase(date2, type, (db) => {
-            db.run("INSERT OR REPLACE INTO likes (postId, userId, timestamp) VALUES (?, ?, ?)", [postId, userId, timestamp]);
-          }, { save: true, emitUpdate: true });
-        }
-        async comment(parentId, parentUserId, content, image) {
-          await this.post(content, true, image, parentId, parentUserId);
-        }
-        /**
-         * Retrieves paginated posts from a single date partition database using keyset cursor pagination.
-         */
-        async getPostsPaginated(date2, type, options) {
-          const dbPath = this.context.storage.getPath(`${date2}.db`, type);
-          if (!await this.dailyDb.exists(dbPath)) {
-            return { items: [], nextCursor: null, prevCursor: null, hasMore: false, total: 0 };
-          }
-          const limit = Math.max(1, options?.limit ?? 50);
-          const direction = options?.direction ?? "before";
-          const decoded = PaginationCursor.decode(options?.cursor);
-          return await this.dailyDb.withDatabase(dbPath, (db) => {
-            const now = Date.now();
-            const qb = this.context.createQueryBuilder("posts").where("(expiresAt IS NULL OR expiresAt > ?)", now);
-            if (decoded) {
-              if (direction === "before") {
-                qb.where("(timestamp < ? OR (timestamp = ? AND id < ?))", decoded.timestamp, decoded.timestamp, decoded.id);
-                qb.orderBy("timestamp", "DESC").orderBy("id", "DESC");
-              } else {
-                qb.where("(timestamp > ? OR (timestamp = ? AND id > ?))", decoded.timestamp, decoded.timestamp, decoded.id);
-                qb.orderBy("timestamp", "ASC").orderBy("id", "ASC");
-              }
-            } else {
-              if (direction === "before") {
-                qb.orderBy("timestamp", "DESC").orderBy("id", "DESC");
-              } else {
-                qb.orderBy("timestamp", "ASC").orderBy("id", "ASC");
-              }
-            }
-            qb.limit(limit + 1);
-            const rawPosts = qb.execute(db);
-            const posts = rawPosts.map((row) => {
-              const post = { ...row };
-              if (typeof post.isEdited === "number") post.isEdited = !!post.isEdited;
-              if (typeof post.isDeleted === "number") post.isDeleted = !!post.isDeleted;
-              if (!post.userId && type === "followed") {
-                post.userId = date2.split("/")[0];
-              }
-              return post;
-            });
-            const hasMore = posts.length > limit;
-            const items = posts.slice(0, limit);
-            const nextCursor = hasMore && items.length > 0 ? PaginationCursor.encode(items[items.length - 1].timestamp, items[items.length - 1].id) : null;
-            const prevCursor = items.length > 0 ? PaginationCursor.encode(items[0].timestamp, items[0].id) : null;
-            return {
-              items,
-              nextCursor,
-              prevCursor,
-              hasMore
-            };
-          }, { applySchema: true });
-        }
-        async getPosts(date2, type) {
-          const res = await this.getPostsPaginated(date2, type, { limit: 1e5 });
-          return res.items;
-        }
-        /**
-         * Retrieves paginated feed posts across a sliding date window (including UTC tomorrow for clock skew),
-         * combining own public posts and followed users' posts, with like enrichment for the returned page.
-         */
-        async getFeedPostsPaginated(options) {
-          const days = options?.days ?? 5;
-          const includeFollowed = options?.includeFollowed ?? true;
-          const dates = [];
-          for (let i2 = -1; i2 < days; i2++) {
-            const d2 = /* @__PURE__ */ new Date();
-            d2.setUTCDate(d2.getUTCDate() - i2);
-            dates.push(d2.toISOString().split("T")[0]);
-          }
-          const allPosts = [];
-          for (const date2 of dates) {
-            const posts = await this.getPosts(date2, "public");
-            allPosts.push(...posts);
-          }
-          if (includeFollowed) {
-            const following = await this.context.getFollowing();
-            for (const user of following) {
-              for (const date2 of dates) {
-                const posts = await this.getPosts(`${user.userId}/${date2}`, "followed");
-                allPosts.push(...posts);
-              }
-            }
-          }
-          const postMap = /* @__PURE__ */ new Map();
-          for (const p2 of allPosts) {
-            const existing = postMap.get(p2.id);
-            if (!existing || p2.timestamp > existing.timestamp) {
-              postMap.set(p2.id, p2);
-            }
-          }
-          const deduplicated = Array.from(postMap.values());
-          const paginated = paginateItems(deduplicated, options);
-          await this.enrichLikes(paginated.items, days);
-          return paginated;
-        }
-        /**
-         * Retrieves feed posts across a sliding date window (including UTC tomorrow for clock skew),
-         * combining own public posts and followed users' posts, with like enrichment and sorting.
-         */
-        async getFeedPosts(days = 5, includeFollowed = true) {
-          const res = await this.getFeedPostsPaginated({ days, includeFollowed, limit: 1e5 });
-          return res.items;
-        }
-        /**
-         * Purges expired posts from a given date partition.
-         */
-        async cleanupExpired(date2, isPublic = true) {
-          const type = isPublic ? "public" : "private";
-          const dbPath = this.context.storage.getPath(`${date2}.db`, type);
-          if (!await this.dailyDb.exists(dbPath)) return 0;
-          const now = Date.now();
-          return await this.dailyDb.withDatabase(dbPath, (db) => {
-            let deletedCount = 0;
-            const countRes = db.exec("SELECT COUNT(*) FROM posts WHERE expiresAt IS NOT NULL AND expiresAt <= ?", [now]);
-            if (countRes && countRes.length > 0 && countRes[0].values[0]) {
-              deletedCount = Number(countRes[0].values[0][0]);
-            }
-            if (deletedCount > 0) {
-              db.run("DELETE FROM posts WHERE expiresAt IS NOT NULL AND expiresAt <= ?", [now]);
-              db.run("VACUUM");
-            }
-            return deletedCount;
-          }, { save: true, emitUpdate: true, applySchema: true, immediate: true });
-        }
-        /**
-         * Compacts feed SQLite databases by permanently purging deleted/tombstoned/expired posts
-         * and running SQLite VACUUM to reclaim storage and IndexedDB quota.
-         * Compaction runs if tombstone ratio >= 50% or if force is true.
-         */
-        async compactDatabase(date2, isPublic = true, force = false) {
-          const type = isPublic ? "public" : "private";
-          const dbPath = this.context.storage.getPath(`${date2}.db`, type);
-          if (!await this.dailyDb.exists(dbPath)) {
-            return { compacted: false, originalSize: 0, newSize: 0, freedBytes: 0, tombstoneRatio: 0 };
-          }
-          const data = await this.db.getStorage().getFile(dbPath);
-          const originalSize = data ? data.byteLength : 0;
-          const now = Date.now();
-          let compacted = false;
-          let newSize = originalSize;
-          let tombstoneRatio = 0;
-          await this.dailyDb.withDatabase(dbPath, (db) => {
-            const totalRes = db.exec("SELECT COUNT(*) FROM posts");
-            const total = totalRes && totalRes.length > 0 && totalRes[0].values[0] ? Number(totalRes[0].values[0][0]) : 0;
-            const tombstoneRes = db.exec("SELECT COUNT(*) FROM posts WHERE isDeleted = 1 OR (expiresAt IS NOT NULL AND expiresAt <= ?)", [now]);
-            const tombstones = tombstoneRes && tombstoneRes.length > 0 && tombstoneRes[0].values[0] ? Number(tombstoneRes[0].values[0][0]) : 0;
-            tombstoneRatio = total > 0 ? tombstones / total : 0;
-            if (force || tombstones >= 50 && tombstoneRatio >= 0.5) {
-              db.run("DELETE FROM posts WHERE isDeleted = 1 OR (expiresAt IS NOT NULL AND expiresAt <= ?)", [now]);
-              db.run("VACUUM");
-              const compactedBinary = db.export();
-              newSize = compactedBinary.byteLength;
-              compacted = true;
-            }
-          }, { save: true, emitUpdate: true, applySchema: true, immediate: true });
-          return {
-            compacted,
-            originalSize,
-            newSize,
-            freedBytes: originalSize - newSize,
-            tombstoneRatio
-          };
-        }
-        async enrichLikes(posts, days = 5) {
-          if (posts.length === 0) return;
-          const postMap = /* @__PURE__ */ new Map();
-          posts.forEach((p2) => {
-            p2.likesCount = 0;
-            p2.likedByMe = false;
-            postMap.set(p2.id, p2);
-          });
-          const myId = this.context.userId;
-          const following = await this.context.getFollowing();
-          const dates = [];
-          for (let i2 = 0; i2 < days; i2++) {
-            const d2 = /* @__PURE__ */ new Date();
-            d2.setUTCDate(d2.getUTCDate() - i2);
-            dates.push(d2.toISOString().split("T")[0]);
-          }
-          const processDb = async (date2, type) => {
-            const dbPath = type === "followed" ? this.context.storage.getPath(`${date2}.db`, "followed") : this.context.storage.getPath(`${date2}.db`, type);
-            if (!await this.dailyDb.exists(dbPath)) return;
-            await this.dailyDb.withDatabase(dbPath, (db) => {
-              const tableCheck = db.exec("SELECT name FROM sqlite_master WHERE type='table' AND name='likes'");
-              if (tableCheck.length > 0) {
-                const res = db.exec("SELECT postId, userId FROM likes");
-                if (res && res.length > 0) {
-                  for (const row of res[0].values) {
-                    const postId = row[0];
-                    const likerId = row[1];
-                    const post = postMap.get(postId);
-                    if (post) {
-                      post.likesCount = (post.likesCount || 0) + 1;
-                      if (likerId === myId) post.likedByMe = true;
-                    }
-                  }
-                }
-              }
-            }, { applySchema: true });
-          };
-          for (const date2 of dates) await processDb(date2, "public");
-          for (const user of following) {
-            for (const date2 of dates) await processDb(`${user.userId}/${date2}`, "followed");
-          }
-        }
-        // --- Group logic ---
-        async postToGroup(groupId, sharedKey, content, image, type = "text") {
-          const groups = await this.context.sovereign.getGroups();
-          const group3 = groups.find((g3) => g3.id === groupId);
-          const userId = this.context.userId;
-          if (group3) {
-            const member2 = group3.members.find((m2) => m2.userId === userId);
-            if (member2?.permissions?.canPost === false) {
-              throw new ModuleError("feed", `Permission denied: User ${userId} is not allowed to post in group ${groupId}`);
-            }
-          }
-          const date2 = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
-          const id = env.generateId(12);
-          const timestamp = Date.now();
-          let imagePath = null;
-          if (image) {
-            imagePath = await this.context.saveBlob(image, true);
-          }
-          const dbPath = `public/groups/${groupId}/${date2}.db`;
-          await this.dailyDb.withDatabase(dbPath, (db) => {
-            const sql = "INSERT INTO posts (id, content, timestamp, userId, image, isEdited, isDeleted, type) VALUES (?, ?, ?, ?, ?, 0, 0, ?)";
-            db.run(sql, [id, content, timestamp, userId, imagePath, type]);
-          }, {
-            save: true,
-            encryptKey: sharedKey,
-            decryptKey: sharedKey,
-            applySchema: true,
-            emitUpdate: true
-          });
-          this.context.emit(`group:${groupId}:update`, { path: dbPath });
-        }
-        async editGroupPost(groupId, sharedKey, postId, date2, newContent) {
-          const dbPath = `public/groups/${groupId}/${date2}.db`;
-          const userId = this.context.userId;
-          await this.dailyDb.withDatabase(dbPath, (db) => {
-            const sql = `
-                INSERT OR REPLACE INTO posts 
-                (id, content, timestamp, userId, isEdited, isDeleted) 
-                VALUES (?, ?, ?, ?, 1, 0)
-            `;
-            db.run(sql, [postId, newContent, Date.now(), userId]);
-          }, {
-            save: true,
-            encryptKey: sharedKey,
-            decryptKey: sharedKey,
-            applySchema: true,
-            emitUpdate: true
-          });
-          this.context.emit(`group:${groupId}:update`, { path: dbPath });
-        }
-        async deleteGroupPost(groupId, sharedKey, postId, date2, authorId) {
-          const myId = this.context.userId;
-          const dbPath = `public/groups/${groupId}/${date2}.db`;
-          await this.dailyDb.withDatabase(dbPath, async (db) => {
-            if (authorId === myId) {
-              db.run('UPDATE posts SET content = "", image = NULL, isDeleted = 1, timestamp = ? WHERE id = ?', [Date.now(), postId]);
-            } else {
-              const groups = await this.context.sovereign.getGroups();
-              const group3 = groups.find((g3) => g3.id === groupId);
-              const member2 = group3?.members.find((m2) => m2.userId === myId);
-              const canModerate = member2?.role === "owner" || member2?.role === "admin" || member2?.permissions?.canModerate === true;
-              if (!canModerate) {
-                throw new ModuleError("feed", `Permission denied: User ${myId} does not have moderation permission in group ${groupId}`);
-              }
-              db.run("CREATE TABLE IF NOT EXISTS moderation (targetId TEXT PRIMARY KEY, action TEXT, timestamp INTEGER)");
-              db.run("INSERT OR REPLACE INTO moderation (targetId, action, timestamp) VALUES (?, ?, ?)", [postId, "delete", Date.now()]);
-            }
-          }, {
-            save: true,
-            encryptKey: sharedKey,
-            decryptKey: sharedKey,
-            applySchema: true,
-            emitUpdate: true
-          });
-          this.context.emit(`group:${groupId}:update`, { path: dbPath });
-        }
-        async getGroupPostsPaginated(groupId, date2, options) {
-          const posts = await this._fetchGroupPostsRaw(groupId, date2);
-          return paginateItems(posts, options);
-        }
-        async getGroupPosts(groupId, date2) {
-          const res = await this.getGroupPostsPaginated(groupId, date2, { limit: 1e5 });
-          return res.items;
-        }
-        async _fetchGroupPostsRaw(groupId, date2) {
-          const deletedPostIds = /* @__PURE__ */ new Set();
-          const groups = await this.context.sovereign.getGroups();
-          const group3 = groups.find((g3) => g3.id === groupId);
-          if (!group3) return [];
-          const processModeration = (db, memberId) => {
-            try {
-              const member2 = group3.members.find((m2) => m2.userId === memberId);
-              const canModerate = member2?.role === "owner" || member2?.role === "admin" || member2?.permissions?.canModerate === true;
-              if (!canModerate) return;
-              const res = db.exec('SELECT targetId FROM moderation WHERE action = "delete"');
-              if (res && res.length > 0) {
-                res[0].values.forEach((row) => {
-                  deletedPostIds.add(row[0]);
-                });
-              }
-            } catch (e2) {
-              Logger.warn("Feed", `Failed to process moderation entries for member ${memberId}: ${e2.message}`);
-            }
-          };
-          const postsMap = /* @__PURE__ */ new Map();
-          const processPosts = async (db) => {
-            try {
-              const res = db.exec("SELECT * FROM posts");
-              if (res && res.length > 0) {
-                const columns = res[0].columns;
-                const batch = res[0].values.map((row) => {
-                  const post = {};
-                  columns.forEach((col, i2) => {
-                    let val = row[i2];
-                    if ((col === "isEdited" || col === "isDeleted") && typeof val === "number") val = !!val;
-                    post[col] = val;
-                  });
-                  return post;
-                });
-                batch.forEach((p2) => {
-                  if (p2.isDeleted || deletedPostIds.has(p2.id)) return;
-                  const existing = postsMap.get(p2.id);
-                  if (!existing || p2.timestamp > existing.timestamp) {
-                    postsMap.set(p2.id, p2);
-                  }
-                });
-              }
-            } catch (e2) {
-              Logger.warn("Feed", `Failed to process group posts: ${e2.message}`);
-            }
-          };
-          const myPath = `public/groups/${groupId}/${date2}.db`;
-          if (await this.dailyDb.exists(myPath)) {
-            await this.dailyDb.withDatabase(myPath, async (db) => {
-              processModeration(db, this.context.userId);
-              await processPosts(db);
-            }, { decryptKey: group3.sharedKey, applySchema: true });
-          }
-          for (const member2 of group3.members) {
-            if (member2.userId === this.context.userId) continue;
-            const memberPath = `followed/${member2.userId}/groups/${groupId}/${date2}.db`;
-            if (await this.dailyDb.exists(memberPath)) {
-              await this.dailyDb.withDatabase(memberPath, async (db) => {
-                processModeration(db, member2.userId);
-                await processPosts(db);
-              }, { decryptKey: group3.sharedKey, applySchema: true });
-            }
-          }
-          const posts = Array.from(postsMap.values());
-          posts.sort((a2, b2) => b2.timestamp - a2.timestamp);
-          return posts;
-        }
-      };
-    }
-  });
-
-  // node_modules/jimp/dist/browser/index.js
-  var browser_exports = {};
-  var init_browser = __esm({
-    "node_modules/jimp/dist/browser/index.js"() {
-      init_polyfills();
-    }
-  });
-
-  // src/utils/MediaUtils.ts
-  var MediaUtils;
-  var init_MediaUtils = __esm({
-    "src/utils/MediaUtils.ts"() {
-      "use strict";
-      init_polyfills();
-      init_Logger();
-      init_Errors();
-      MediaUtils = class {
-        /**
-         * Compresses an image data URL to stay under a target size in bytes.
-         * Only works in browser environments where 'document' and 'Image' are available.
-         */
-        static async compressImage(dataUrl, targetSizeBytes) {
-          if (typeof document === "undefined") {
-            try {
-              const jimpModule = await Promise.resolve().then(() => (init_browser(), browser_exports));
-              const Jimp = jimpModule.Jimp || jimpModule.Jimp || jimpModule;
-              const match = dataUrl.match(/^data:image\/([a-zA-Z+]+);base64,(.+)$/);
-              if (!match) {
-                Logger.warn("MediaUtils", "No regex match for data URL");
-                return dataUrl;
-              }
-              const buffer = Buffer.from(match[2], "base64");
-              const image = await Jimp.read(buffer);
-              const maxDim = 1200;
-              if (image.width > maxDim || image.height > maxDim) {
-                const ratio = Math.min(maxDim / image.width, maxDim / image.height);
-                image.resize({ w: Math.floor(image.width * ratio), h: Math.floor(image.height * ratio) });
-              }
-              let quality = 80;
-              let resultBuffer = await image.getBuffer("image/jpeg", { quality });
-              while (resultBuffer.length > targetSizeBytes && (quality > 10 || image.width > 200)) {
-                if (quality > 20) {
-                  quality -= 20;
-                } else {
-                  const newWidth = Math.floor(image.width * 0.7);
-                  const newHeight = Math.floor(image.height * 0.7);
-                  image.resize({ w: newWidth, h: newHeight });
-                }
-                resultBuffer = await image.getBuffer("image/jpeg", { quality });
-              }
-              return `data:image/jpeg;base64,${resultBuffer.toString("base64")}`;
-            } catch (err) {
-              Logger.error("MediaUtils", "Node.js image compression failed:", err.message || JSON.stringify(err));
-              return dataUrl;
-            }
-          }
-          return new Promise((resolve, reject) => {
-            const img = new Image();
-            img.src = dataUrl;
-            img.onload = () => {
-              const canvas = document.createElement("canvas");
-              let width = img.width;
-              let height = img.height;
-              const maxDim = 1200;
-              if (width > maxDim || height > maxDim) {
-                const ratio = Math.min(maxDim / width, maxDim / height);
-                width *= ratio;
-                height *= ratio;
-              }
-              canvas.width = width;
-              canvas.height = height;
-              const ctx = canvas.getContext("2d");
-              if (!ctx) return reject(new StorageError("Canvas context failed"));
-              ctx.drawImage(img, 0, 0, width, height);
-              let quality = 0.9;
-              let result = dataUrl;
-              const attempt = () => {
-                result = canvas.toDataURL("image/jpeg", quality);
-                const size = Math.floor((result.length - 81) * 0.75);
-                if (size > targetSizeBytes && quality > 0.1) {
-                  quality -= 0.1;
-                  attempt();
-                } else if (size > targetSizeBytes && width > 100) {
-                  width *= 0.7;
-                  height *= 0.7;
-                  canvas.width = width;
-                  canvas.height = height;
-                  ctx.drawImage(img, 0, 0, width, height);
-                  quality = 0.8;
-                  attempt();
-                } else {
-                  resolve(result);
-                }
-              };
-              attempt();
-            };
-            img.onerror = (e2) => reject(e2);
-          });
-        }
-        /**
-         * Converts a data URL (e.g. data:image/jpeg;base64,...) to a Uint8Array.
-         * Operates in-memory without using fetch(), avoiding CSP connect-src restrictions.
-         */
-        static dataUrlToBytes(dataUrl) {
-          const commaIdx = dataUrl.indexOf(",");
-          const base64 = commaIdx >= 0 ? dataUrl.substring(commaIdx + 1) : dataUrl;
-          if (typeof Buffer !== "undefined") {
-            return new Uint8Array(Buffer.from(base64, "base64"));
-          }
-          const binary = atob(base64);
-          const bytes = new Uint8Array(binary.length);
-          for (let i2 = 0; i2 < binary.length; i2++) {
-            bytes[i2] = binary.charCodeAt(i2);
-          }
-          return bytes;
-        }
-      };
-    }
-  });
-
-  // src/modules/Profile.ts
-  var ProfileModule;
-  var init_Profile = __esm({
-    "src/modules/Profile.ts"() {
-      "use strict";
-      init_polyfills();
-      init_Logger();
-      init_MediaUtils();
-      init_Constants();
-      init_Errors();
-      ProfileModule = class {
-        constructor(contextOrDb) {
-          this.MODULE_NAME = "profile";
-          this.context = "sovereign" in contextOrDb ? contextOrDb : contextOrDb.createModuleContext(this.MODULE_NAME);
-        }
-        /**
-         * Backward-compatible reference to the host SovereignS3nc instance.
-         */
-        get db() {
-          return this.context.sovereign;
-        }
-        get sovereign() {
-          return this.context.sovereign;
-        }
-        /**
-         * Updates the current user's profile.
-         */
-        async updateProfile(name, bio, avatar) {
-          if (name.length > DEFAULTS.MAX_NAME_LENGTH) {
-            throw new ModuleError("profile", `Name exceeds maximum length of ${DEFAULTS.MAX_NAME_LENGTH} characters`);
-          }
-          if (bio.length > DEFAULTS.MAX_BIO_LENGTH) {
-            throw new ModuleError("profile", `Bio exceeds maximum length of ${DEFAULTS.MAX_BIO_LENGTH} characters`);
-          }
-          let finalAvatar = avatar;
-          if (avatar && avatar.startsWith("data:image")) {
-            try {
-              finalAvatar = await MediaUtils.compressImage(avatar, 100 * 1024);
-            } catch (e2) {
-              Logger.warn("Profile", `Failed to compress avatar: ${e2.message}`);
-            }
-          }
-          const profile = {
-            name,
-            bio,
-            avatar: finalAvatar,
-            updatedAt: Date.now(),
-            userId: this.context.userId
-          };
-          const data = new TextEncoder().encode(JSON.stringify(profile));
-          await this.context.storage.savePublicUserFile(data);
-        }
-        /**
-         * Retrieves a profile for a given user.
-         */
-        async getProfile(userId) {
-          const myId = this.context.userId;
-          const targetId = userId || myId;
-          if (targetId === myId) {
-            const data2 = await this.context.storage.getPublicUserFile();
-            return data2 ? JSON.parse(new TextDecoder().decode(data2)) : null;
-          }
-          const data = await this.context.storage.getFile(`${targetId}/profile`, "followed");
-          if (data) {
-            return JSON.parse(new TextDecoder().decode(data));
-          }
-          return null;
-        }
-        /**
-         * Syncs profiles of followed users from their remotes.
-         */
-        async syncOtherProfiles() {
-          const following = await this.context.getFollowing();
-          for (const user of following) {
-            try {
-              const userRemote = this.context.remotes.createRemote(user.userId);
-              const cachedEtag = await this.context.storage.raw.getGenericRemoteHashCache(`${user.userId}:${PATHS.USER_PROFILE}`);
-              const result = await userRemote.downloadFile(PATHS.USER_PROFILE, cachedEtag || void 0);
-              if (result && !result.notModified && result.data) {
-                const data = result.data;
-                let finalData = data;
-                try {
-                  JSON.parse(new TextDecoder().decode(data));
-                } catch (e2) {
-                  try {
-                    finalData = await this.context.decrypt(data, user.publicKey);
-                  } catch (de) {
-                    continue;
-                  }
-                }
-                await this.context.storage.saveFile(`${user.userId}/profile`, finalData, "followed");
-                if (result.etag) {
-                  await this.context.storage.raw.setGenericRemoteHashCache(`${user.userId}:${PATHS.USER_PROFILE}`, result.etag);
-                }
-              }
-            } catch (e2) {
-              Logger.debug("Profile", `Failed to sync profile for ${user.userId}: ${e2.message}`);
-            }
-          }
-        }
-        /**
-         * Follow a new user.
-         */
-        async follow(userId) {
-          await this.context.follow(userId);
-          await this.syncOtherProfiles();
-        }
-        /**
-         * Unfollow a user.
-         */
-        async unfollow(userId) {
-          await this.context.unfollow(userId);
-        }
-        /**
-         * Get list of followed users.
-         */
-        async getFollowing() {
-          return this.context.getFollowing();
-        }
-      };
     }
   });
 
