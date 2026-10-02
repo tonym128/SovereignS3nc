@@ -138,6 +138,20 @@ async function buildAllDemos() {
         }
     }
 
+    // 8. Copy video and poster assets to demo-dist/videos
+    const videoDistDir = path.join(outDir, 'videos');
+    const videoSrcDir = fs.existsSync(path.join(rootDir, 'demo/videos'))
+        ? path.join(rootDir, 'demo/videos')
+        : path.join(rootDir, 'docs/public/videos');
+    if (fs.existsSync(videoSrcDir)) {
+        fs.mkdirSync(videoDistDir, { recursive: true });
+        for (const file of fs.readdirSync(videoSrcDir)) {
+            if (file.endsWith('.mp4') || file.endsWith('.png') || file.endsWith('.webm')) {
+                fs.copyFileSync(path.join(videoSrcDir, file), path.join(videoDistDir, file));
+            }
+        }
+    }
+
     console.log('✅ SovereignS3nc Demo Sandbox build completed successfully!');
     console.log(`📁 Target distribution: ${outDir}`);
 }

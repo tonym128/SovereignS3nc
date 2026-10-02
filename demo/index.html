@@ -177,6 +177,11 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link text-white fw-semibold d-flex align-items-center gap-1" href="#video-walkthrough">
+                            <i class="bi bi-film text-danger"></i> Video Guide
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 rounded-pill d-flex align-items-center gap-2">
                             <span class="live-dot"></span> WebRTC Mesh Active
                         </span>
@@ -218,12 +223,63 @@
                 <a href="./playground/" class="btn btn-primary btn-lg fw-bold shadow-sm d-flex align-items-center gap-2 px-4">
                     <i class="bi bi-play-circle-fill fs-5"></i> Try In-Browser Playground
                 </a>
+                <a href="#video-walkthrough" class="btn btn-outline-danger btn-lg fw-semibold d-flex align-items-center gap-2 px-4">
+                    <i class="bi bi-play-btn-fill"></i> Watch 3-Min Video Guide
+                </a>
                 <a href="https://stackblitz.com/github/tonym128/SovereignS3nc/tree/master/examples/quickstart" target="_blank" rel="noopener" class="btn btn-outline-light btn-lg fw-semibold d-flex align-items-center gap-2 px-4">
                     <i class="bi bi-lightning-charge-fill text-warning"></i> Open in StackBlitz
                 </a>
                 <a href="./social/?debug=inspect" class="btn btn-outline-secondary btn-lg text-secondary d-flex align-items-center gap-2 px-3">
                     <i class="bi bi-binoculars"></i> Storage Inspector
                 </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Walkthrough Section -->
+    <section id="video-walkthrough" class="py-4">
+        <div class="container">
+            <div class="feature-box p-4 p-lg-5" style="border: 1px solid rgba(88, 166, 255, 0.25); background: linear-gradient(180deg, #161b22 0%, #0d1117 100%);">
+                <div class="row align-items-center g-4">
+                    <div class="col-lg-7">
+                        <div class="ratio ratio-16x9 rounded-3 overflow-hidden shadow-lg border border-secondary border-opacity-25" style="background: #000;">
+                            <video controls playsinline preload="metadata" poster="./videos/poster.png" style="width: 100%; height: 100%; object-fit: contain;">
+                                <source src="./videos/sovereigns3nc-quickstart.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="d-inline-flex align-items-center gap-2 mb-2">
+                            <span class="badge bg-danger bg-opacity-25 text-danger border border-danger-subtle px-2 py-1 rounded-pill small">
+                                <i class="bi bi-play-circle-fill me-1"></i> 3-Minute Walkthrough
+                            </span>
+                            <span class="badge bg-primary bg-opacity-25 text-primary border border-primary-subtle px-2 py-1 rounded-pill small">
+                                Screencast &amp; Code
+                            </span>
+                        </div>
+                        <h3 class="fw-bold text-white mb-3">Build an E2EE Offline-First App in 3 Minutes</h3>
+                        <p class="text-secondary small mb-3">
+                            Watch how SovereignS3nc delivers local-first SQLite, client-side X25519 &amp; AES-256-GCM encryption, and zero-server synchronization to any standard S3 bucket or WebRTC peer mesh.
+                        </p>
+                        <ul class="list-unstyled text-secondary small mb-4">
+                            <li class="mb-2"><i class="bi bi-check2-circle text-success me-2"></i><strong>Scene 1:</strong> The centralized cloud database trap vs. zero-knowledge S3</li>
+                            <li class="mb-2"><i class="bi bi-check2-circle text-success me-2"></i><strong>Scene 2:</strong> 60-Second reactive React app using <code>useRepository</code></li>
+                            <li class="mb-2"><i class="bi bi-check2-circle text-success me-2"></i><strong>Scene 3:</strong> S3 sync &amp; multi-user WebRTC mesh in action</li>
+                        </ul>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a href="./videos/sovereigns3nc-quickstart.mp4" target="_blank" class="btn btn-outline-light btn-sm d-flex align-items-center gap-1">
+                                <i class="bi bi-box-arrow-up-right"></i> Direct Video (.mp4)
+                            </a>
+                            <a href="./videos/poster.png" target="_blank" class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1">
+                                <i class="bi bi-image"></i> Poster Image
+                            </a>
+                            <a href="https://github.com/tonym128/SovereignS3nc/blob/master/docs/video-tutorial.md" target="_blank" rel="noopener" class="btn btn-outline-primary btn-sm d-flex align-items-center gap-1">
+                                <i class="bi bi-file-text"></i> Full Script &amp; Storyboard
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
