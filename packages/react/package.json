@@ -1,6 +1,6 @@
 {
   "name": "@sovereigns3nc/react",
-  "version": "3.2.2",
+  "version": "3.2.3",
   "private": true,
   "description": "Official React hooks and context provider for SovereignS3nc",
   "main": "dist/index.js",

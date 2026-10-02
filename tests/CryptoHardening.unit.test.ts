@@ -457,9 +457,9 @@ describe('Goal 4 — Message Expiration & Read Receipts', () => {
 // Goal 5: Release — ManifestManager tracks receipts
 // ──────────────────────────────────────────────────────────────────────────
 
-describe('Goal 5 — Manifest Receipt Tracking & Version 3.2.2', () => {
-    test('SovereignS3nc.VERSION is 3.2.2', () => {
-        expect(SovereignS3nc.VERSION).toBe('3.2.2');
+describe('Goal 5 — Manifest Receipt Tracking & Version 3.2.3', () => {
+    test('SovereignS3nc.VERSION is 3.2.3', () => {
+        expect(SovereignS3nc.VERSION).toBe('3.2.3');
     });
 
     test('SovereignManifest type includes receipts field', () => {
