@@ -36,15 +36,15 @@ Welcome to the 3-minute video walkthrough for **SovereignS3nc**! This page inclu
 
 ### 🎬 Scene 2: Live Code: 60-Second Reactive Notes App (0:40 – 1:40)
 
-- **Visual**: Split screen in VS Code. Terminal runs `npm install sovereigns3nc @sovereigns3nc/react`. The developer creates an `App.tsx` file using the React provider and `useRepository` hook.
+- **Visual**: Split screen in VS Code. Terminal runs `npm install sovereigns3nc`. The developer creates an `App.tsx` file using the React provider and `useRepository` hook.
 - **Narration**:
   > *"Let's build a fully syncing, encrypted notes application in under 60 seconds.*
   >
-  > *First, we install `sovereigns3nc` and `@sovereigns3nc/react`. We wrap our application with `<SovereignProvider>`, specifying our user credentials and S3 endpoint. Now, we use the `useRepository` hook to read and write notes directly into local SQLite."*
+  > *First, we install `sovereigns3nc`. We wrap our application with `<SovereignProvider>`, specifying our user credentials and S3 endpoint. Now, we use the `useRepository` hook to read and write notes directly into local SQLite."*
 
 ```tsx
 import React, { useState } from 'react';
-import { SovereignProvider, useRepository } from '@sovereigns3nc/react';
+import { SovereignProvider, useRepository } from 'sovereigns3nc/react';
 
 interface Note {
   id: string;

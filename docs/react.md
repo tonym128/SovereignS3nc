@@ -1,13 +1,13 @@
-# React Hooks (`@sovereigns3nc/react`)
+# React Hooks (`sovereigns3nc/react`)
 
-The `@sovereigns3nc/react` package provides official idiomatic React 19 hooks and context providers for SovereignS3nc.
+SovereignS3nc includes first-class idiomatic React 19 hooks and context providers via the built-in `sovereigns3nc/react` subpath export.
 
 ---
 
 ## 📦 Installation
 
 ```bash
-npm install sovereigns3nc @sovereigns3nc/react
+npm install sovereigns3nc
 ```
 
 ---
@@ -19,7 +19,7 @@ Wrap your application root with `<SovereignProvider>`:
 ```tsx
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { SovereignProvider } from '@sovereigns3nc/react';
+import { SovereignProvider } from 'sovereigns3nc/react';
 import { App } from './App';
 
 const config = {
@@ -56,7 +56,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 Access the underlying `SovereignS3nc` instance directly.
 
 ```tsx
-import { useSovereign } from '@sovereigns3nc/react';
+import { useSovereign } from 'sovereigns3nc/react';
 
 function UserProfile() {
   const sov = useSovereign();
@@ -72,7 +72,7 @@ function UserProfile() {
 Track active synchronization state, progress, and trigger manual syncs.
 
 ```tsx
-import { useSyncStatus } from '@sovereigns3nc/react';
+import { useSyncStatus } from 'sovereigns3nc/react';
 
 function SyncBadge() {
   const { isSyncing, progress, stage, error, sync } = useSyncStatus();
@@ -94,7 +94,7 @@ function SyncBadge() {
 Type-safe, reactive key-value document store with automated change notifications.
 
 ```tsx
-import { useRepository } from '@sovereigns3nc/react';
+import { useRepository } from 'sovereigns3nc/react';
 
 interface Task {
   id: string;
@@ -130,7 +130,7 @@ End-to-end encrypted direct messaging with asymmetric X25519 key exchange.
 
 ```tsx
 import React, { useState } from 'react';
-import { useDirectMessages } from '@sovereigns3nc/react';
+import { useDirectMessages } from 'sovereigns3nc/react';
 
 function ChatBox({ friendId }: { friendId: string }) {
   const { messages, sendDM, isLoading } = useDirectMessages(friendId);
@@ -168,7 +168,7 @@ Public social posting with comments and reactions.
 
 ```tsx
 import React, { useState } from 'react';
-import { useFeed } from '@sovereigns3nc/react';
+import { useFeed } from 'sovereigns3nc/react';
 
 function Feed() {
   const { posts, createPost, likePost, isLoading } = useFeed();

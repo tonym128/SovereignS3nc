@@ -29,7 +29,7 @@ describe('Public Documentation Portal (VitePress) (WT-63)', () => {
         expect(content).toContain('Quick Start Guide');
         expect(content).toContain('60-Second Quickstart');
         expect(content).toContain('npm install sovereigns3nc');
-        expect(content).toContain('@sovereigns3nc/react');
+        expect(content).toContain('sovereigns3nc/react');
     });
 
     test('Architecture guide (docs/architecture.md) includes Mermaid flowcharts', () => {

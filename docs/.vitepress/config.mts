@@ -43,7 +43,7 @@ export default defineConfig({
         items: [
           { text: 'Building Modules', link: '/module-tutorial' },
           { text: 'API Reference', link: '/api' },
-          { text: 'React Hooks (@sovereigns3nc/react)', link: '/react' },
+          { text: 'React Hooks (sovereigns3nc/react)', link: '/react' },
           { text: 'AI Agent / Gemini Skill', link: '/gemini-skill' },
         ]
       },

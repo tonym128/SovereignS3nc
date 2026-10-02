@@ -30,18 +30,16 @@ features:
     details: Run full relational SQL engines in the browser via WebAssembly. Features transaction compaction and hierarchical Merkle tree diffing.
   - title: 🧩 Pluggable Module System
     details: Build specialized domain modules (Feeds, Messaging, Profiles, Ledgers) with auto-namespaced paths and reactive sync hooks.
-  - title: ⚛️ Official React Package
-    details: First-class reactive integration with @sovereigns3nc/react — `<SovereignProvider>`, `useSovereign`, `useSyncStatus`, and `useRepository`.
+  - title: ⚛️ Official React Integration
+    details: First-class reactive integration with sovereigns3nc/react — `<SovereignProvider>`, `useSovereign`, `useSyncStatus`, and `useRepository`.
 ---
 
 ## ⚡ 60-Second Quickstart
 
-Install the core engine and optional React bindings:
+Install the library:
 
 ```bash
 npm install sovereigns3nc
-# or with React:
-npm install sovereigns3nc @sovereigns3nc/react
 ```
 
 ### Initialize and Store Encrypted Data
@@ -84,7 +82,7 @@ console.log('Synchronized successfully!');
 
 ```tsx
 import React from 'react';
-import { SovereignProvider, useSyncStatus, useRepository } from '@sovereigns3nc/react';
+import { SovereignProvider, useSyncStatus, useRepository } from 'sovereigns3nc/react';
 
 interface Note {
   id: string;

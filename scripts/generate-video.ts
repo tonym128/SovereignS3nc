@@ -64,7 +64,7 @@ const SCENES: Scene[] = [
         <div class="slide">
             <div class="badge-pill">Developer Experience</div>
             <h1 class="hero-title">Reactive React Hooks</h1>
-            <p class="hero-subtitle">Build encrypted, offline-first apps with @sovereigns3nc/react</p>
+            <p class="hero-subtitle">Build encrypted, offline-first apps with sovereigns3nc/react</p>
 
             <div class="code-terminal">
                 <div class="terminal-header">
@@ -74,7 +74,7 @@ const SCENES: Scene[] = [
                     <span class="terminal-title">Terminal</span>
                 </div>
                 <div class="terminal-body">
-                    <span class="prompt">$</span> npm install sovereigns3nc @sovereigns3nc/react
+                    <span class="prompt">$</span> npm install sovereigns3nc
                 </div>
             </div>
 
@@ -83,7 +83,7 @@ const SCENES: Scene[] = [
                     <span class="file-tab">App.tsx</span>
                 </div>
                 <pre class="code-snippet"><code><span class="kw">import</span> React, { useState } <span class="kw">from</span> <span class="str">'react'</span>;
-<span class="kw">import</span> { SovereignProvider, useRepository } <span class="kw">from</span> <span class="str">'@sovereigns3nc/react'</span>;
+<span class="kw">import</span> { SovereignProvider, useRepository } <span class="kw">from</span> <span class="str">'sovereigns3nc/react'</span>;
 
 <span class="kw">function</span> <span class="fn">NotesApp</span>() {
   <span class="kw">const</span> { data: notes, create } = <span class="fn">useRepository</span>&lt;<span class="type">Note</span>&gt;(<span class="str">'notes'</span>);
@@ -196,7 +196,7 @@ const SCENES: Scene[] = [
             </div>
 
             <div class="cta-box">
-                <div class="cta-command">npm install sovereigns3nc @sovereigns3nc/react</div>
+                <div class="cta-command">npm install sovereigns3nc</div>
                 <div class="cta-links">
                     <span>📖 Docs: https://tonym128.github.io/SovereignS3nc/</span>
                     <span>⭐ GitHub: tonym128/SovereignS3nc</span>

@@ -71,8 +71,8 @@ describe('Item 11: Hosted Interactive Playground & Cloud Sandboxes', () => {
         const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
         expect(pkg.name).toBe('sovereigns3nc-quickstart');
         expect(pkg.dependencies.sovereigns3nc).toBeDefined();
-        expect(pkg.dependencies['@sovereigns3nc/react']).toBeDefined();
         expect(pkg.dependencies.react).toBeDefined();
+        expect(pkg.dependencies['react-dom']).toBeDefined();
 
         // stackblitz.json
         const sbPath = path.join(quickstartDir, 'stackblitz.json');

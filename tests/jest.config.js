@@ -4,6 +4,7 @@ module.exports = {
   testTimeout: 120000,
   moduleNameMapper: {
     '^sovereigns3nc$': '<rootDir>/src/index.ts',
+    '^sovereigns3nc/react$': '<rootDir>/packages/react/src/index.ts',
     '^@sovereigns3nc/react$': '<rootDir>/packages/react/src/index.ts',
     '^@sovereigns3nc/demo-shared$': '<rootDir>/demo/shared/src/index.ts',
     '^@sovereign-s3nc/demo-shared$': '<rootDir>/demo/shared/src/index.ts',

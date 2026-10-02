@@ -10,7 +10,7 @@ SovereignS3nc is engineered from the ground up as a **zero-trust, offline-first 
 flowchart TD
     subgraph ClientBrowser["Client Device (Browser / Node.js)"]
         UI["Application UI / React Components"]
-        Hooks["@sovereigns3nc/react Hooks"]
+        Hooks["sovereigns3nc/react Hooks"]
         Repo["Repository<T> & Modules (Feed, DMs, Profile)"]
         
         subgraph CoreEngine["SovereignS3nc Core Engine"]

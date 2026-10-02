@@ -1,8 +1,7 @@
-# @sovereigns3nc/react
+# sovereigns3nc/react
 
 Official React hooks and context provider for [SovereignS3nc](https://github.com/tonym128/SovereignS3nc) — the zero-trust, offline-first, end-to-end encrypted data storage library for S3-compatible backends.
 
-[![npm version](https://img.shields.io/npm/v/@sovereigns3nc/react.svg)](https://www.npmjs.com/package/@sovereigns3nc/react)
 [![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
 
 ---
@@ -19,8 +18,10 @@ Official React hooks and context provider for [SovereignS3nc](https://github.com
 
 ## Installation
 
+The React hooks are built directly into `sovereigns3nc`:
+
 ```bash
-npm install sovereigns3nc @sovereigns3nc/react
+npm install sovereigns3nc
 ```
 
 > **Peer Dependencies**: Requires `react` and `react-dom` (`^18.0.0` or `^19.0.0`).
@@ -34,7 +35,7 @@ Wrap your application tree in `<SovereignProvider>`. You can pass either a pre-c
 ```tsx
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { SovereignProvider } from '@sovereigns3nc/react';
+import { SovereignProvider } from 'sovereigns3nc/react';
 import App from './App';
 
 const sovereignConfig = {
@@ -73,7 +74,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 Provides access to the underlying `SovereignS3nc` instance:
 
 ```tsx
-import { useSovereign } from '@sovereigns3nc/react';
+import { useSovereign } from 'sovereigns3nc/react';
 
 function StatusBadge() {
   const sov = useSovereign();
@@ -90,7 +91,7 @@ function StatusBadge() {
 Provides reactive sync progress, stage tracking, error handling, and manual triggers:
 
 ```tsx
-import { useSync } from '@sovereigns3nc/react';
+import { useSync } from 'sovereigns3nc/react';
 
 function SyncButton() {
   const { isSyncing, progress, stage, error, sync } = useSync();
@@ -114,7 +115,7 @@ Provides access to the social feed with cursor-based pagination and optimistic w
 
 ```tsx
 import { useState } from 'react';
-import { useFeed } from '@sovereigns3nc/react';
+import { useFeed } from 'sovereigns3nc/react';
 
 function Feed() {
   const [content, setContent] = useState('');
@@ -170,7 +171,7 @@ End-to-end encrypted direct messaging with automatic receipt tracking and keyset
 
 ```tsx
 import { useState } from 'react';
-import { useMessaging } from '@sovereigns3nc/react';
+import { useMessaging } from 'sovereigns3nc/react';
 
 function Chat({ peerId }: { peerId: string }) {
   const [text, setText] = useState('');
@@ -208,7 +209,7 @@ function Chat({ peerId }: { peerId: string }) {
 Access and update user profiles (name, bio, avatar) with automatic image compression:
 
 ```tsx
-import { useProfile } from '@sovereigns3nc/react';
+import { useProfile } from 'sovereigns3nc/react';
 
 function UserProfile() {
   const { profile, isLoading, updateProfile } = useProfile();
@@ -235,7 +236,7 @@ function UserProfile() {
 Type-safe CRUD repository hook for custom data models:
 
 ```tsx
-import { useRepository } from '@sovereigns3nc/react';
+import { useRepository } from 'sovereigns3nc/react';
 
 interface Note {
   id: string;

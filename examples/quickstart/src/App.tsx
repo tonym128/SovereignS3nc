@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSovereign, useProfile, useFeed, useSyncStatus } from '@sovereigns3nc/react';
+import { useSovereign, useProfile, useFeed, useSyncStatus } from 'sovereigns3nc/react';
 
 export const App: React.FC = () => {
   const { client, isInitialized } = useSovereign();
