@@ -356,7 +356,12 @@ function stop() {
     [ -f .blog_web.pid ] && kill $(cat .blog_web.pid) 2>/dev/null && rm .blog_web.pid || true
     [ -f .proxy.pid ] && kill $(cat .proxy.pid) 2>/dev/null && rm .proxy.pid || true
     [ -f .rustfs.pid ] && kill $(cat .rustfs.pid) 2>/dev/null && rm .rustfs.pid || true
-    
+
+    # Stop ngrok tunnels if running
+    [ -f .ngrok_s3.pid ]  && kill "$(cat .ngrok_s3.pid)"  2>/dev/null && rm -f .ngrok_s3.pid  || true
+    [ -f .ngrok_web.pid ] && kill "$(cat .ngrok_web.pid)" 2>/dev/null && rm -f .ngrok_web.pid || true
+    pkill -u "$(whoami)" -f "ngrok http" 2>/dev/null || true
+
     # Backup cleanup - more specific to avoid self-kill
     pkill -9 -u $(whoami) -f "./bin/rustfs" 2>/dev/null || true
     pkill -9 -u $(whoami) -f "python3 -m http.server 8888" 2>/dev/null || true
@@ -397,8 +402,195 @@ function stop() {
     fi
 }
 
+# ─── ngrok subcommand ─────────────────────────────────────────────────────────
+# Usage: ./dev.sh ngrok
+#
+# Starts RustFS + the Social demo, opens two ngrok tunnels (S3 on :9000, web
+# on :8888), auto-detects both public URLs via the ngrok local API, patches
+# demo/social/config.json with the public S3 URL, rebuilds the Social bundle,
+# then prints the shareable demo link.
+#
+# Prerequisites:
+#   ngrok installed and authenticated:  ngrok config add-authtoken <token>
+#   jq installed:                       pacman -S jq
+# ──────────────────────────────────────────────────────────────────────────────
+function ngrok_start() {
+    # ── Sanity checks ──────────────────────────────────────────────────────────
+    if ! command -v ngrok &>/dev/null; then
+        echo "❌  ngrok not found. Install it with: paru -S ngrok"
+        exit 1
+    fi
+    if ! command -v jq &>/dev/null; then
+        echo "❌  jq not found. Install it with: pacman -S jq"
+        exit 1
+    fi
+
+    echo ""
+    echo "════════════════════════════════════════════════════"
+    echo "  🚇  SovereignS3nc  ×  ngrok  —  Public Demo Mode"
+    echo "════════════════════════════════════════════════════"
+    echo ""
+
+    # ── Kill any leftover ngrok processes ──────────────────────────────────────
+    pkill -u "$(whoami)" -f "ngrok http" 2>/dev/null || true
+
+    # ── Start RustFS ──────────────────────────────────────────────────────────
+    check_binaries
+    echo "--- Cleaning up previous runs ---"
+    set +e; stop; set -e
+    sleep 2
+
+    echo "--- Preparing Local Environment ---"
+    mkdir -p "$DATA_DIR"
+
+    echo "--- Starting RustFS Binary ---"
+    RUST_LOG=error setsid $RUSTFS_BINARY server \
+        --address "127.0.0.1:$RUSTFS_PORT" \
+        --access-key "$RUSTFS_ROOT_KEY" \
+        --secret-key "$RUSTFS_ROOT_SECRET" \
+        --console-enable \
+        "$(pwd)/$DATA_DIR" < /dev/null > "$LOG_FILE" 2>&1 &
+    RUSTFS_PID=$!
+    disown $RUSTFS_PID
+    echo $RUSTFS_PID > .rustfs.pid
+
+    echo "Waiting for RustFS to initialize..."
+    for i in {1..30}; do
+        if curl -s "http://127.0.0.1:$RUSTFS_PORT" > /dev/null; then break; fi
+        if ! ps -p $RUSTFS_PID > /dev/null; then
+            echo "Error: RustFS failed to start. Check $LOG_FILE"; exit 1
+        fi
+        sleep 1
+    done
+    sleep 5
+
+    # ── Configure bucket & IAM ────────────────────────────────────────────────
+    echo "Configuring RustFS buckets and keys..."
+    $RC_BINARY alias set local "http://127.0.0.1:$RUSTFS_PORT" "$RUSTFS_ROOT_KEY" "$RUSTFS_ROOT_SECRET" > /dev/null
+
+    ADMIN_ACCESS="${ADMIN_ACCESS:-admin-key}"
+    ADMIN_SECRET="${ADMIN_SECRET:-admin-secret-123}"
+    USER_ACCESS="${USER_ACCESS:-user-key}"
+    USER_SECRET="${USER_SECRET:-user-secret-123}"
+
+    $RC_BINARY admin user add local "$ADMIN_ACCESS" "$ADMIN_SECRET" > /dev/null || true
+    $RC_BINARY admin user add local "$USER_ACCESS"  "$USER_SECRET"  > /dev/null || true
+
+    cat <<'POLICY' > /tmp/ngrok-admin-policy.json
+{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Action":["s3:*"],"Resource":["arn:aws:s3:::*","arn:aws:s3:::*/*"]}]}
+POLICY
+    cat <<'POLICY' > /tmp/ngrok-user-policy.json
+{"Version":"2012-10-17","Statement":[
+  {"Sid":"List","Effect":"Allow","Action":["s3:ListBucket"],"Resource":["arn:aws:s3:::*"]},
+  {"Sid":"All","Effect":"Allow","Action":["s3:*"],"Resource":["arn:aws:s3:::*/*"]},
+  {"Sid":"DenyAdmin","Effect":"Deny","Action":["s3:*"],"Resource":["arn:aws:s3:::*/*/admin/data/*","arn:aws:s3:::*/*/admin/admin.probe"]},
+  {"Sid":"DenyKeyWrite","Effect":"Deny","Action":["s3:PutObject","s3:DeleteObject"],"Resource":["arn:aws:s3:::*/*/admin/public_key.json"]},
+  {"Sid":"AllowKeyRead","Effect":"Allow","Action":["s3:GetObject"],"Resource":["arn:aws:s3:::*/*/admin/public_key.json"]}
+]}
+POLICY
+
+    $RC_BINARY admin policy rm local sov-admin > /dev/null || true
+    $RC_BINARY admin policy create local sov-admin /tmp/ngrok-admin-policy.json > /dev/null
+    $RC_BINARY admin policy attach local sov-admin --user "$ADMIN_ACCESS" > /dev/null
+
+    $RC_BINARY admin policy rm local sov-user > /dev/null || true
+    $RC_BINARY admin policy create local sov-user /tmp/ngrok-user-policy.json > /dev/null
+    $RC_BINARY admin policy attach local sov-user --user "$USER_ACCESS" > /dev/null
+    rm -f /tmp/ngrok-admin-policy.json /tmp/ngrok-user-policy.json
+
+    $RC_BINARY mb "local/$BUCKET_NAME" > /dev/null || true
+
+    # ── CORS (AllowedOrigins ["*"] is already the default in set-cors.js) ─────
+    echo "Configuring CORS..."
+    node scripts/set-cors.js "http://127.0.0.1:$RUSTFS_PORT" "rustfs" "$ADMIN_ACCESS" "$ADMIN_SECRET" "$BUCKET_NAME"
+
+    # ── Start ngrok S3 tunnel first so we know its public URL ─────────────────
+    echo ""
+    echo "--- Launching ngrok S3 tunnel (port $RUSTFS_PORT) ---"
+    setsid ngrok http "$RUSTFS_PORT" --log=stdout < /dev/null > ngrok_s3.log 2>&1 &
+    echo $! > .ngrok_s3.pid
+    disown "$(cat .ngrok_s3.pid)"
+
+    echo "Waiting for ngrok S3 tunnel URL..."
+    S3_PUBLIC_URL=""
+    for i in {1..30}; do
+        sleep 1
+        S3_PUBLIC_URL=$(curl -s http://127.0.0.1:4040/api/tunnels 2>/dev/null \
+            | jq -r --arg p "$RUSTFS_PORT" \
+                '.tunnels[] | select(.config.addr | test($p)) | .public_url' 2>/dev/null \
+            | grep "^https" | head -1)
+        [ -n "$S3_PUBLIC_URL" ] && break
+    done
+
+    if [ -z "$S3_PUBLIC_URL" ]; then
+        echo "❌  Could not detect ngrok S3 tunnel URL after 30s."
+        echo "    Check ngrok_s3.log. Is your authtoken configured?"
+        exit 1
+    fi
+    echo "✅  S3 public URL: $S3_PUBLIC_URL"
+
+    # ── Patch Social demo config with public S3 URL and rebuild ───────────────
+    echo "Updating Social demo config to use public S3 endpoint..."
+    cat <<EOF > "$SOCIAL_CONFIG"
+{
+    "endpoint": "$S3_PUBLIC_URL",
+    "region": "rustfs",
+    "accessKeyId": "$USER_ACCESS",
+    "secretAccessKey": "$USER_SECRET",
+    "bucketName": "$BUCKET_NAME",
+    "requireTLS": false,
+    "forcePathStyle": true
+}
+EOF
+
+    echo "--- Rebuilding Social Demo bundle ---"
+    npm run build:social
+
+    # ── Start local social web server ─────────────────────────────────────────
+    echo "--- Starting Social Web Server (port 8888) ---"
+    setsid python3 -m http.server 8888 --bind 127.0.0.1 --directory demo/social < /dev/null > social_web.log 2>&1 &
+    SOCIAL_PID=$!
+    disown $SOCIAL_PID
+    echo $SOCIAL_PID > .social_web.pid
+
+    # ── Start ngrok web tunnel ────────────────────────────────────────────────
+    echo "--- Launching ngrok Web tunnel (port 8888) ---"
+    setsid ngrok http 8888 --log=stdout < /dev/null > ngrok_web.log 2>&1 &
+    echo $! > .ngrok_web.pid
+    disown "$(cat .ngrok_web.pid)"
+
+    echo "Waiting for ngrok Web tunnel URL..."
+    WEB_PUBLIC_URL=""
+    for i in {1..30}; do
+        sleep 1
+        WEB_PUBLIC_URL=$(curl -s http://127.0.0.1:4040/api/tunnels 2>/dev/null \
+            | jq -r '.tunnels[] | select(.config.addr | test("8888")) | .public_url' 2>/dev/null \
+            | grep "^https" | head -1)
+        [ -n "$WEB_PUBLIC_URL" ] && break
+    done
+
+    [ -z "$WEB_PUBLIC_URL" ] && WEB_PUBLIC_URL="(check http://127.0.0.1:4040 or ngrok_web.log)"
+
+    # ── Summary ───────────────────────────────────────────────────────────────
+    echo ""
+    echo "════════════════════════════════════════════════════"
+    echo "  ✅  SovereignS3nc ngrok demo is LIVE!"
+    echo "════════════════════════════════════════════════════"
+    echo ""
+    echo "  🌐  Social Demo (public):  $WEB_PUBLIC_URL"
+    echo "  🗄️   S3 API (ngrok):        $S3_PUBLIC_URL"
+    echo "  🗄️   S3 API (local):        http://127.0.0.1:$RUSTFS_PORT"
+    echo "  📊  ngrok dashboard:       http://127.0.0.1:4040"
+    echo ""
+    echo "  Share the Social Demo URL above — it is fully public!"
+    echo ""
+    echo "  Stop everything with:  ./dev.sh stop"
+    echo "════════════════════════════════════════════════════"
+}
+
 case "$1" in
     start) dev ;;
     stop) stop ;;
-    *) echo "Usage: $0 {start|stop}"; exit 1 ;;
+    ngrok) ngrok_start ;;
+    *) echo "Usage: $0 {start|stop|ngrok}"; exit 1 ;;
 esac
