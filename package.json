@@ -1,6 +1,6 @@
 {
   "name": "sovereigns3nc",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "Offline-first, zero-trust encrypted data storage library with S3 synchronization",
   "main": "dist/index.js",
   "module": "dist/sovereigns3nc.esm.js",
