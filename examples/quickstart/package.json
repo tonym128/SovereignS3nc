@@ -1,6 +1,6 @@
 {
   "name": "sovereigns3nc-quickstart",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "private": true,
   "description": "Zero-trust, offline-first sovereign data starter sandbox",
   "scripts": {

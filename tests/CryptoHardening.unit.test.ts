@@ -1,5 +1,5 @@
 /**
- * v3.2.0 Feature Tests — Cryptographic Hardening, Forward Secrecy, Multi-Device,
+ * v3.2.1 Feature Tests — Cryptographic Hardening, Forward Secrecy, Multi-Device,
  * Message Expiration & Read Receipts, and Manifest-driven Receipt Sync.
  *
  * These tests verify the completeness and correctness of all five release goals.
@@ -457,9 +457,9 @@ describe('Goal 4 — Message Expiration & Read Receipts', () => {
 // Goal 5: Release — ManifestManager tracks receipts
 // ──────────────────────────────────────────────────────────────────────────
 
-describe('Goal 5 — Manifest Receipt Tracking & Version 3.2.0', () => {
-    test('SovereignS3nc.VERSION is 3.2.0', () => {
-        expect(SovereignS3nc.VERSION).toBe('3.2.0');
+describe('Goal 5 — Manifest Receipt Tracking & Version 3.2.1', () => {
+    test('SovereignS3nc.VERSION is 3.2.1', () => {
+        expect(SovereignS3nc.VERSION).toBe('3.2.1');
     });
 
     test('SovereignManifest type includes receipts field', () => {
