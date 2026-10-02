@@ -518,33 +518,44 @@ POLICY
     echo "Configuring CORS..."
     node scripts/set-cors.js "http://127.0.0.1:$RUSTFS_PORT" "rustfs" "$ADMIN_ACCESS" "$ADMIN_SECRET" "$BUCKET_NAME"
 
-    echo ""
-    echo "--- Launching ngrok agent with both tunnels (S3 + Web) ---"
-
-    # Write a temp ngrok config defining both tunnels in one agent session.
-    # Free tier: one agent session, but unlimited named tunnels within it.
+    # ── Launch a single ngrok tunnel pointing at RustFS ───────────────────────
+    # We serve the social demo FROM the same RustFS bucket, so only one tunnel
+    # is needed — no separate web server, no two-session limit issues.
+    #
+    # Auth fix: pass the user's default ngrok config (contains authtoken) first,
+    # then overlay our tunnels-only config. ngrok v3 merges multiple --config files.
+    NGROK_DEFAULT_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/ngrok/ngrok.yml"
     NGROK_TMP_CONFIG="/tmp/sovereigns3nc-ngrok.yml"
+
     cat > "$NGROK_TMP_CONFIG" <<EOF
 version: "3"
 tunnels:
-  s3:
+  rustfs:
     proto: http
     addr: $RUSTFS_PORT
-  web:
-    proto: http
-    addr: 8888
 EOF
 
-    # Start the single ngrok agent running both tunnels
-    setsid ngrok start --all --config "$NGROK_TMP_CONFIG" --log=stdout \
+    NGROK_CFG_ARGS="--config $NGROK_TMP_CONFIG"
+    if [ -f "$NGROK_DEFAULT_CONFIG" ]; then
+        NGROK_CFG_ARGS="--config $NGROK_DEFAULT_CONFIG --config $NGROK_TMP_CONFIG"
+        echo "Using ngrok config: $NGROK_DEFAULT_CONFIG + $NGROK_TMP_CONFIG"
+    else
+        echo "⚠️  No default ngrok config at $NGROK_DEFAULT_CONFIG"
+        echo "   If this fails with ERR_NGROK_4018, run: ngrok config add-authtoken <token>"
+    fi
+
+    echo ""
+    echo "--- Launching ngrok tunnel for RustFS (port $RUSTFS_PORT) ---"
+    # shellcheck disable=SC2086
+    setsid ngrok start rustfs $NGROK_CFG_ARGS --log=stdout \
         < /dev/null > ngrok_agent.log 2>&1 &
     NGROK_PID=$!
     disown $NGROK_PID
-    echo $NGROK_PID > .ngrok_s3.pid   # reuse .ngrok_s3.pid to track the agent
+    echo $NGROK_PID > .ngrok_s3.pid
 
-    # Detect ngrok local API port (4040 default, may fall back to 4041)
+    # Detect ngrok local API port (4040 default, may fall back to 4041+)
     NGROK_API_PORT=""
-    for i in {1..15}; do
+    for i in {1..20}; do
         sleep 1
         for p in 4040 4041 4042 4043; do
             if curl -s "http://127.0.0.1:$p/api/tunnels" &>/dev/null; then
@@ -555,35 +566,29 @@ EOF
     done
 
     if [ -z "$NGROK_API_PORT" ]; then
-        echo "❌  ngrok agent did not start. Check ngrok_agent.log for errors."
-        tail -20 ngrok_agent.log
+        echo "❌  ngrok agent did not start. Tail of ngrok_agent.log:"
+        tail -25 ngrok_agent.log
         exit 1
     fi
 
-    echo "Waiting for ngrok tunnels to come online (API: http://127.0.0.1:$NGROK_API_PORT)..."
+    echo "Waiting for ngrok tunnel URL (API: http://127.0.0.1:$NGROK_API_PORT)..."
     S3_PUBLIC_URL=""
-    WEB_PUBLIC_URL=""
     for i in {1..30}; do
         sleep 1
-        TUNNELS=$(curl -s "http://127.0.0.1:$NGROK_API_PORT/api/tunnels" 2>/dev/null)
-        S3_PUBLIC_URL=$(echo "$TUNNELS" | jq -r --arg p "$RUSTFS_PORT" \
-            '[.tunnels[] | select(.config.addr | test($p)) | .public_url] | map(select(startswith("https"))) | first' \
+        S3_PUBLIC_URL=$(curl -s "http://127.0.0.1:$NGROK_API_PORT/api/tunnels" 2>/dev/null \
+            | jq -r '[.tunnels[] | .public_url] | map(select(startswith("https"))) | first' \
             2>/dev/null | grep -v "^null$" || true)
-        WEB_PUBLIC_URL=$(echo "$TUNNELS" | jq -r \
-            '[.tunnels[] | select(.config.addr | test("8888")) | .public_url] | map(select(startswith("https"))) | first' \
-            2>/dev/null | grep -v "^null$" || true)
-        [ -n "$S3_PUBLIC_URL" ] && [ -n "$WEB_PUBLIC_URL" ] && break
+        [ -n "$S3_PUBLIC_URL" ] && break
     done
 
     if [ -z "$S3_PUBLIC_URL" ]; then
-        echo "❌  Could not get S3 tunnel URL. Check ngrok_agent.log."
-        tail -20 ngrok_agent.log
+        echo "❌  Could not get tunnel URL. Tail of ngrok_agent.log:"
+        tail -25 ngrok_agent.log
         exit 1
     fi
-    echo "✅  S3  public URL: $S3_PUBLIC_URL"
-    echo "✅  Web public URL: ${WEB_PUBLIC_URL:-detecting...}"
+    echo "✅  RustFS public URL: $S3_PUBLIC_URL"
 
-    # ── Patch Social demo config with public S3 URL and rebuild ───────────────
+    # ── Build social demo with the public S3 URL baked in ─────────────────────
     echo "Updating Social demo config to use public S3 endpoint..."
     cat <<EOF2 > "$SOCIAL_CONFIG"
 {
@@ -600,21 +605,14 @@ EOF2
     echo "--- Rebuilding Social Demo bundle ---"
     npm run build:social
 
-    # ── Start local social web server ─────────────────────────────────────────
-    echo "--- Starting Social Web Server (port 8888) ---"
-    setsid python3 -m http.server 8888 --bind 127.0.0.1 --directory demo/social \
-        < /dev/null > social_web.log 2>&1 &
-    SOCIAL_PID=$!
-    disown $SOCIAL_PID
-    echo $SOCIAL_PID > .social_web.pid
+    # ── Upload social demo to RustFS and make it publicly readable ────────────
+    echo "--- Uploading Social Demo to RustFS ($BUCKET_NAME/website/) ---"
+    node scripts/upload-to-rustfs.js \
+        "http://127.0.0.1:$RUSTFS_PORT" \
+        "$ADMIN_ACCESS" "$ADMIN_SECRET" \
+        "$BUCKET_NAME" "demo/social" "website"
 
-    # Give web server a moment, then re-fetch WEB_PUBLIC_URL if still missing
-    if [ -z "$WEB_PUBLIC_URL" ]; then
-        sleep 3
-        WEB_PUBLIC_URL=$(curl -s "http://127.0.0.1:$NGROK_API_PORT/api/tunnels" 2>/dev/null \
-            | jq -r '[.tunnels[] | select(.config.addr | test("8888")) | .public_url] | map(select(startswith("https"))) | first' \
-            2>/dev/null | grep -v "^null$" || echo "(check http://127.0.0.1:$NGROK_API_PORT)")
-    fi
+    DEMO_PUBLIC_URL="$S3_PUBLIC_URL/$BUCKET_NAME/website/index.html"
 
     # ── Summary ───────────────────────────────────────────────────────────────
     echo ""
@@ -622,12 +620,12 @@ EOF2
     echo "  ✅  SovereignS3nc ngrok demo is LIVE!"
     echo "════════════════════════════════════════════════════"
     echo ""
-    echo "  🌐  Social Demo (public):  $WEB_PUBLIC_URL"
-    echo "  🗄️   S3 API (ngrok):        $S3_PUBLIC_URL"
-    echo "  🗄️   S3 API (local):        http://127.0.0.1:$RUSTFS_PORT"
-    echo "  📊  ngrok dashboard:       http://127.0.0.1:$NGROK_API_PORT"
+    echo "  🌐  Social Demo (public):  $DEMO_PUBLIC_URL"
+    echo "  🗄️   RustFS S3 (public):   $S3_PUBLIC_URL"
+    echo "  🗄️   RustFS S3 (local):    http://127.0.0.1:$RUSTFS_PORT"
+    echo "  📊  ngrok dashboard:      http://127.0.0.1:$NGROK_API_PORT"
     echo ""
-    echo "  Share the Social Demo URL above — it is fully public!"
+    echo "  Share the 🌐 URL above — it is fully public!"
     echo ""
     echo "  Stop everything with:  ./dev.sh stop"
     echo "════════════════════════════════════════════════════"
@@ -639,3 +637,4 @@ case "$1" in
     ngrok) ngrok_start ;;
     *) echo "Usage: $0 {start|stop|ngrok}"; exit 1 ;;
 esac
+
